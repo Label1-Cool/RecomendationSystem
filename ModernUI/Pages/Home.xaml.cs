@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModernUI.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,16 +14,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UI
+namespace ModernUI.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Interaction logic for Home.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Home : UserControl
     {
-        public MainWindow()
+        public Home()
         {
             InitializeComponent();
+            DataContext = new HomeViewModel();
         }
     }
 }
