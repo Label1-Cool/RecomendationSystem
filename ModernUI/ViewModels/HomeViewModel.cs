@@ -9,9 +9,9 @@ using Logic.Models;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace UI.ViewModels
+namespace ModernUI.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class HomeViewModel : INotifyPropertyChanged
     {   
         #region Fields
         Progress<int> progressIndicator = new Progress<int>();
@@ -173,7 +173,7 @@ namespace UI.ViewModels
          
         #endregion
 
-        public MainViewModel()
+        public HomeViewModel()
         {
             progressIndicator.ProgressChanged += progressIndicator_ProgressChanged;
             Init();
