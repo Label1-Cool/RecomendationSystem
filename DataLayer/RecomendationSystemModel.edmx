@@ -1,0 +1,1648 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RecomendationSystemModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="RecomendationSystemModelStoreContainer">
+    <EntitySet Name="Sections" EntityType="RecomendationSystemModel.Store.Sections" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="RecomendationSystemModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SchoolTypes" EntityType="RecomendationSystemModel.Store.SchoolTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Schools" EntityType="RecomendationSystemModel.Store.Schools" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Preferences" EntityType="RecomendationSystemModel.Store.Preferences" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Hobbies" EntityType="RecomendationSystemModel.Store.Hobbies" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ParticipationInCompetitions" EntityType="RecomendationSystemModel.Store.ParticipationInCompetitions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Competitions" EntityType="RecomendationSystemModel.Store.Competitions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UnitedStateExams" EntityType="RecomendationSystemModel.Store.UnitedStateExams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SchoolMarks" EntityType="RecomendationSystemModel.Store.SchoolMarks" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Disciplines" EntityType="RecomendationSystemModel.Store.Disciplines" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Clusters" EntityType="RecomendationSystemModel.Store.Clusters" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HighSchools" EntityType="RecomendationSystemModel.Store.HighSchools" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Cities" EntityType="RecomendationSystemModel.Store.Cities" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UniversityDepartments" EntityType="RecomendationSystemModel.Store.UniversityDepartments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DepartmentEducationLines" EntityType="RecomendationSystemModel.Store.DepartmentEducationLines" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GeneralEducationLines" EntityType="RecomendationSystemModel.Store.GeneralEducationLines" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DepartmentLinesRequirements" EntityType="RecomendationSystemModel.Store.DepartmentLinesRequirements" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SchoolDisciplines" EntityType="RecomendationSystemModel.Store.SchoolDisciplines" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Weights" EntityType="RecomendationSystemModel.Store.Weights" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserSection" EntityType="RecomendationSystemModel.Store.UserSection" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserHobbie" EntityType="RecomendationSystemModel.Store.UserHobbie" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserSchool" EntityType="RecomendationSystemModel.Store.UserSchool" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PreferenceCity" EntityType="RecomendationSystemModel.Store.PreferenceCity" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_UserSection_User" Association="RecomendationSystemModel.Store.FK_UserSection_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserSection" EntitySet="UserSection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserSection_Section" Association="RecomendationSystemModel.Store.FK_UserSection_Section">
+      <End Role="Section" EntitySet="Sections" />
+      <End Role="UserSection" EntitySet="UserSection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserHobbie_User" Association="RecomendationSystemModel.Store.FK_UserHobbie_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserHobbie" EntitySet="UserHobbie" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserHobbie_Hobbie" Association="RecomendationSystemModel.Store.FK_UserHobbie_Hobbie">
+      <End Role="Hobbie" EntitySet="Hobbies" />
+      <End Role="UserHobbie" EntitySet="UserHobbie" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserSchool_User" Association="RecomendationSystemModel.Store.FK_UserSchool_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserSchool" EntitySet="UserSchool" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserSchool_School" Association="RecomendationSystemModel.Store.FK_UserSchool_School">
+      <End Role="School" EntitySet="Schools" />
+      <End Role="UserSchool" EntitySet="UserSchool" />
+    </AssociationSet>
+    <AssociationSet Name="SchoolTypeSchool" Association="RecomendationSystemModel.Store.SchoolTypeSchool">
+      <End Role="SchoolType" EntitySet="SchoolTypes" />
+      <End Role="School" EntitySet="Schools" />
+    </AssociationSet>
+    <AssociationSet Name="UserPreference" Association="RecomendationSystemModel.Store.UserPreference">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Preference" EntitySet="Preferences" />
+    </AssociationSet>
+    <AssociationSet Name="UserParticipationInCompetition" Association="RecomendationSystemModel.Store.UserParticipationInCompetition">
+      <End Role="User" EntitySet="Users" />
+      <End Role="ParticipationInCompetition" EntitySet="ParticipationInCompetitions" />
+    </AssociationSet>
+    <AssociationSet Name="CompetitionParticipationInCompetition" Association="RecomendationSystemModel.Store.CompetitionParticipationInCompetition">
+      <End Role="Competition" EntitySet="Competitions" />
+      <End Role="ParticipationInCompetition" EntitySet="ParticipationInCompetitions" />
+    </AssociationSet>
+    <AssociationSet Name="DisciplineUnitedStateExam" Association="RecomendationSystemModel.Store.DisciplineUnitedStateExam">
+      <End Role="Discipline" EntitySet="Disciplines" />
+      <End Role="UnitedStateExam" EntitySet="UnitedStateExams" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PreferenceCity_Preference" Association="RecomendationSystemModel.Store.FK_PreferenceCity_Preference">
+      <End Role="Preference" EntitySet="Preferences" />
+      <End Role="PreferenceCity" EntitySet="PreferenceCity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PreferenceCity_City" Association="RecomendationSystemModel.Store.FK_PreferenceCity_City">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="PreferenceCity" EntitySet="PreferenceCity" />
+    </AssociationSet>
+    <AssociationSet Name="CityUniversity" Association="RecomendationSystemModel.Store.CityUniversity">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="University" EntitySet="HighSchools" />
+    </AssociationSet>
+    <AssociationSet Name="ClusterGeneralEducationLine" Association="RecomendationSystemModel.Store.ClusterGeneralEducationLine">
+      <End Role="Cluster" EntitySet="Clusters" />
+      <End Role="GeneralEducationLine" EntitySet="GeneralEducationLines" />
+    </AssociationSet>
+    <AssociationSet Name="GeneralEducationLineDepartmentEducationLine" Association="RecomendationSystemModel.Store.GeneralEducationLineDepartmentEducationLine">
+      <End Role="GeneralEducationLine" EntitySet="GeneralEducationLines" />
+      <End Role="DepartmentEducationLine" EntitySet="DepartmentEducationLines" />
+    </AssociationSet>
+    <AssociationSet Name="UniversityUniversityDepartment" Association="RecomendationSystemModel.Store.UniversityUniversityDepartment">
+      <End Role="University" EntitySet="HighSchools" />
+      <End Role="UniversityDepartment" EntitySet="UniversityDepartments" />
+    </AssociationSet>
+    <AssociationSet Name="UniversityDepartmentDepartmentEducationLine" Association="RecomendationSystemModel.Store.UniversityDepartmentDepartmentEducationLine">
+      <End Role="UniversityDepartment" EntitySet="UniversityDepartments" />
+      <End Role="DepartmentEducationLine" EntitySet="DepartmentEducationLines" />
+    </AssociationSet>
+    <AssociationSet Name="DepartmentEducationLineDepartmentLinesRequirement" Association="RecomendationSystemModel.Store.DepartmentEducationLineDepartmentLinesRequirement">
+      <End Role="DepartmentEducationLine" EntitySet="DepartmentEducationLines" />
+      <End Role="DepartmentLinesRequirement" EntitySet="DepartmentLinesRequirements" />
+    </AssociationSet>
+    <AssociationSet Name="DepartmentLinesRequirementDiscipline" Association="RecomendationSystemModel.Store.DepartmentLinesRequirementDiscipline">
+      <End Role="DepartmentLinesRequirement" EntitySet="DepartmentLinesRequirements" />
+      <End Role="Discipline" EntitySet="Disciplines" />
+    </AssociationSet>
+    <AssociationSet Name="UserUnitedStateExam" Association="RecomendationSystemModel.Store.UserUnitedStateExam">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UnitedStateExam" EntitySet="UnitedStateExams" />
+    </AssociationSet>
+    <AssociationSet Name="UserSchoolMark" Association="RecomendationSystemModel.Store.UserSchoolMark">
+      <End Role="User" EntitySet="Users" />
+      <End Role="SchoolMark" EntitySet="SchoolMarks" />
+    </AssociationSet>
+    <AssociationSet Name="SchoolCity" Association="RecomendationSystemModel.Store.SchoolCity">
+      <End Role="School" EntitySet="Schools" />
+      <End Role="City" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="SchoolDisciplineSchoolMark" Association="RecomendationSystemModel.Store.SchoolDisciplineSchoolMark">
+      <End Role="SchoolDiscipline" EntitySet="SchoolDisciplines" />
+      <End Role="SchoolMark" EntitySet="SchoolMarks" />
+    </AssociationSet>
+    <AssociationSet Name="ClusterWeight" Association="RecomendationSystemModel.Store.ClusterWeight">
+      <End Role="Cluster" EntitySet="Clusters" />
+      <End Role="Weight" EntitySet="Weights" />
+    </AssociationSet>
+    <AssociationSet Name="SchoolTypeWeight" Association="RecomendationSystemModel.Store.SchoolTypeWeight">
+      <End Role="SchoolType" EntitySet="SchoolTypes" />
+      <End Role="Weight" EntitySet="Weights" />
+    </AssociationSet>
+    <AssociationSet Name="SchoolDisciplineWeight" Association="RecomendationSystemModel.Store.SchoolDisciplineWeight">
+      <End Role="SchoolDiscipline" EntitySet="SchoolDisciplines" />
+      <End Role="Weight" EntitySet="Weights" />
+    </AssociationSet>
+    <AssociationSet Name="SectionWeight" Association="RecomendationSystemModel.Store.SectionWeight">
+      <End Role="Section" EntitySet="Sections" />
+      <End Role="Weight" EntitySet="Weights" />
+    </AssociationSet>
+    <AssociationSet Name="HobbieWeight" Association="RecomendationSystemModel.Store.HobbieWeight">
+      <End Role="Hobbie" EntitySet="Hobbies" />
+      <End Role="Weight" EntitySet="Weights" />
+    </AssociationSet>
+    <AssociationSet Name="CompetitionWeight" Association="RecomendationSystemModel.Store.CompetitionWeight">
+      <End Role="Competition" EntitySet="Competitions" />
+      <End Role="Weight" EntitySet="Weights" />
+    </AssociationSet>
+    <AssociationSet Name="DisciplineWeight" Association="RecomendationSystemModel.Store.DisciplineWeight">
+      <End Role="Discipline" EntitySet="Disciplines" />
+      <End Role="Weight" EntitySet="Weights" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Sections">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ActivityType" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Period" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SchoolEducation" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SchoolTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Schools">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="EducationQuality" Type="int" Nullable="false" />
+    <Property Name="SchoolTypeId" Type="int" Nullable="false" />
+    <Property Name="City_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Preferences">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Presige" Type="int" Nullable="false" />
+    <Property Name="EducationFrom" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Hobbies">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ParticipationInCompetitions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Result" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="CompetitionId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Competitions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UnitedStateExams">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Result" Type="int" Nullable="false" />
+    <Property Name="DisciplineId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SchoolMarks">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Result" Type="smallint" Nullable="false" />
+    <Property Name="Respect" Type="int" Nullable="true" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="SchoolDisciplineId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Disciplines">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Clusters">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HighSchools">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Prestige" Type="int" Nullable="false" />
+    <Property Name="CityId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cities">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Prestige" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UniversityDepartments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Prestige" Type="int" Nullable="false" />
+    <Property Name="UniversityId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DepartmentEducationLines">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="GeneralEducationLineId" Type="int" Nullable="false" />
+    <Property Name="UniversityDepartmentId" Type="int" Nullable="false" />
+    <Property Name="EducationForm" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GeneralEducationLines">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Actual" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ClusterId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DepartmentLinesRequirements">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Requirement" Type="int" Nullable="false" />
+    <Property Name="DepartmentEducationLineId" Type="int" Nullable="false" />
+    <Property Name="DisciplineId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SchoolDisciplines">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Weights">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Coefficient" Type="float" Nullable="false" />
+    <Property Name="ClusterId" Type="int" Nullable="false" />
+    <Property Name="SchoolTypeId" Type="int" Nullable="true" />
+    <Property Name="SchoolDisciplineId" Type="int" Nullable="true" />
+    <Property Name="SectionId" Type="int" Nullable="true" />
+    <Property Name="HobbieId" Type="int" Nullable="true" />
+    <Property Name="CompetitionId" Type="int" Nullable="true" />
+    <Property Name="DisciplineId" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="UserSection">
+    <Key>
+      <PropertyRef Name="User_Id" />
+      <PropertyRef Name="Section_Id" />
+    </Key>
+    <Property Name="User_Id" Type="int" Nullable="false" />
+    <Property Name="Section_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserHobbie">
+    <Key>
+      <PropertyRef Name="User_Id" />
+      <PropertyRef Name="Hobbie_Id" />
+    </Key>
+    <Property Name="User_Id" Type="int" Nullable="false" />
+    <Property Name="Hobbie_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserSchool">
+    <Key>
+      <PropertyRef Name="User_Id" />
+      <PropertyRef Name="School_Id" />
+    </Key>
+    <Property Name="User_Id" Type="int" Nullable="false" />
+    <Property Name="School_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PreferenceCity">
+    <Key>
+      <PropertyRef Name="Preference_Id" />
+      <PropertyRef Name="City_Id" />
+    </Key>
+    <Property Name="Preference_Id" Type="int" Nullable="false" />
+    <Property Name="City_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="SchoolTypeSchool">
+    <End Role="SchoolType" Type="RecomendationSystemModel.Store.SchoolTypes" Multiplicity="1" />
+    <End Role="School" Type="RecomendationSystemModel.Store.Schools" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SchoolType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="School">
+        <PropertyRef Name="SchoolTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserPreference">
+    <End Role="User" Type="RecomendationSystemModel.Store.Users" Multiplicity="1" />
+    <End Role="Preference" Type="RecomendationSystemModel.Store.Preferences" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Preference">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserParticipationInCompetition">
+    <End Role="User" Type="RecomendationSystemModel.Store.Users" Multiplicity="1" />
+    <End Role="ParticipationInCompetition" Type="RecomendationSystemModel.Store.ParticipationInCompetitions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ParticipationInCompetition">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CompetitionParticipationInCompetition">
+    <End Role="Competition" Type="RecomendationSystemModel.Store.Competitions" Multiplicity="1" />
+    <End Role="ParticipationInCompetition" Type="RecomendationSystemModel.Store.ParticipationInCompetitions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Competition">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ParticipationInCompetition">
+        <PropertyRef Name="CompetitionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DisciplineUnitedStateExam">
+    <End Role="Discipline" Type="RecomendationSystemModel.Store.Disciplines" Multiplicity="1" />
+    <End Role="UnitedStateExam" Type="RecomendationSystemModel.Store.UnitedStateExams" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Discipline">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UnitedStateExam">
+        <PropertyRef Name="DisciplineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CityUniversity">
+    <End Role="City" Type="RecomendationSystemModel.Store.Cities" Multiplicity="1" />
+    <End Role="University" Type="RecomendationSystemModel.Store.HighSchools" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="University">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ClusterGeneralEducationLine">
+    <End Role="Cluster" Type="RecomendationSystemModel.Store.Clusters" Multiplicity="1" />
+    <End Role="GeneralEducationLine" Type="RecomendationSystemModel.Store.GeneralEducationLines" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cluster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GeneralEducationLine">
+        <PropertyRef Name="ClusterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GeneralEducationLineDepartmentEducationLine">
+    <End Role="GeneralEducationLine" Type="RecomendationSystemModel.Store.GeneralEducationLines" Multiplicity="1" />
+    <End Role="DepartmentEducationLine" Type="RecomendationSystemModel.Store.DepartmentEducationLines" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GeneralEducationLine">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DepartmentEducationLine">
+        <PropertyRef Name="GeneralEducationLineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UniversityUniversityDepartment">
+    <End Role="University" Type="RecomendationSystemModel.Store.HighSchools" Multiplicity="1" />
+    <End Role="UniversityDepartment" Type="RecomendationSystemModel.Store.UniversityDepartments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="University">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UniversityDepartment">
+        <PropertyRef Name="UniversityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UniversityDepartmentDepartmentEducationLine">
+    <End Role="UniversityDepartment" Type="RecomendationSystemModel.Store.UniversityDepartments" Multiplicity="1" />
+    <End Role="DepartmentEducationLine" Type="RecomendationSystemModel.Store.DepartmentEducationLines" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UniversityDepartment">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DepartmentEducationLine">
+        <PropertyRef Name="UniversityDepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DepartmentEducationLineDepartmentLinesRequirement">
+    <End Role="DepartmentEducationLine" Type="RecomendationSystemModel.Store.DepartmentEducationLines" Multiplicity="1" />
+    <End Role="DepartmentLinesRequirement" Type="RecomendationSystemModel.Store.DepartmentLinesRequirements" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DepartmentEducationLine">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DepartmentLinesRequirement">
+        <PropertyRef Name="DepartmentEducationLineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DepartmentLinesRequirementDiscipline">
+    <End Role="DepartmentLinesRequirement" Type="RecomendationSystemModel.Store.DepartmentLinesRequirements" Multiplicity="*" />
+    <End Role="Discipline" Type="RecomendationSystemModel.Store.Disciplines" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Discipline">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DepartmentLinesRequirement">
+        <PropertyRef Name="DisciplineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserUnitedStateExam">
+    <End Role="User" Type="RecomendationSystemModel.Store.Users" Multiplicity="1" />
+    <End Role="UnitedStateExam" Type="RecomendationSystemModel.Store.UnitedStateExams" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UnitedStateExam">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserSchoolMark">
+    <End Role="User" Type="RecomendationSystemModel.Store.Users" Multiplicity="1" />
+    <End Role="SchoolMark" Type="RecomendationSystemModel.Store.SchoolMarks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SchoolMark">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SchoolCity">
+    <End Role="School" Type="RecomendationSystemModel.Store.Schools" Multiplicity="*" />
+    <End Role="City" Type="RecomendationSystemModel.Store.Cities" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="School">
+        <PropertyRef Name="City_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SchoolDisciplineSchoolMark">
+    <End Role="SchoolDiscipline" Type="RecomendationSystemModel.Store.SchoolDisciplines" Multiplicity="1" />
+    <End Role="SchoolMark" Type="RecomendationSystemModel.Store.SchoolMarks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SchoolDiscipline">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SchoolMark">
+        <PropertyRef Name="SchoolDisciplineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ClusterWeight">
+    <End Role="Cluster" Type="RecomendationSystemModel.Store.Clusters" Multiplicity="1" />
+    <End Role="Weight" Type="RecomendationSystemModel.Store.Weights" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cluster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Weight">
+        <PropertyRef Name="ClusterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SchoolTypeWeight">
+    <End Role="SchoolType" Type="RecomendationSystemModel.Store.SchoolTypes" Multiplicity="0..1" />
+    <End Role="Weight" Type="RecomendationSystemModel.Store.Weights" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SchoolType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Weight">
+        <PropertyRef Name="SchoolTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SchoolDisciplineWeight">
+    <End Role="SchoolDiscipline" Type="RecomendationSystemModel.Store.SchoolDisciplines" Multiplicity="0..1" />
+    <End Role="Weight" Type="RecomendationSystemModel.Store.Weights" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SchoolDiscipline">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Weight">
+        <PropertyRef Name="SchoolDisciplineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SectionWeight">
+    <End Role="Section" Type="RecomendationSystemModel.Store.Sections" Multiplicity="0..1" />
+    <End Role="Weight" Type="RecomendationSystemModel.Store.Weights" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Section">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Weight">
+        <PropertyRef Name="SectionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="HobbieWeight">
+    <End Role="Hobbie" Type="RecomendationSystemModel.Store.Hobbies" Multiplicity="0..1" />
+    <End Role="Weight" Type="RecomendationSystemModel.Store.Weights" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hobbie">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Weight">
+        <PropertyRef Name="HobbieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CompetitionWeight">
+    <End Role="Competition" Type="RecomendationSystemModel.Store.Competitions" Multiplicity="0..1" />
+    <End Role="Weight" Type="RecomendationSystemModel.Store.Weights" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Competition">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Weight">
+        <PropertyRef Name="CompetitionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DisciplineWeight">
+    <End Role="Discipline" Type="RecomendationSystemModel.Store.Disciplines" Multiplicity="0..1" />
+    <End Role="Weight" Type="RecomendationSystemModel.Store.Weights" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Discipline">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Weight">
+        <PropertyRef Name="DisciplineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserSection_User">
+    <End Role="User" Type="RecomendationSystemModel.Store.Users" Multiplicity="1" />
+    <End Role="UserSection" Type="RecomendationSystemModel.Store.UserSection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserSection">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserSection_Section">
+    <End Role="UserSection" Type="RecomendationSystemModel.Store.UserSection" Multiplicity="*" />
+    <End Role="Section" Type="RecomendationSystemModel.Store.Sections" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Section">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserSection">
+        <PropertyRef Name="Section_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserHobbie_User">
+    <End Role="User" Type="RecomendationSystemModel.Store.Users" Multiplicity="1" />
+    <End Role="UserHobbie" Type="RecomendationSystemModel.Store.UserHobbie" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserHobbie">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserHobbie_Hobbie">
+    <End Role="UserHobbie" Type="RecomendationSystemModel.Store.UserHobbie" Multiplicity="*" />
+    <End Role="Hobbie" Type="RecomendationSystemModel.Store.Hobbies" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Hobbie">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserHobbie">
+        <PropertyRef Name="Hobbie_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserSchool_User">
+    <End Role="User" Type="RecomendationSystemModel.Store.Users" Multiplicity="1" />
+    <End Role="UserSchool" Type="RecomendationSystemModel.Store.UserSchool" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserSchool">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserSchool_School">
+    <End Role="UserSchool" Type="RecomendationSystemModel.Store.UserSchool" Multiplicity="*" />
+    <End Role="School" Type="RecomendationSystemModel.Store.Schools" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="School">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserSchool">
+        <PropertyRef Name="School_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PreferenceCity_Preference">
+    <End Role="Preference" Type="RecomendationSystemModel.Store.Preferences" Multiplicity="1" />
+    <End Role="PreferenceCity" Type="RecomendationSystemModel.Store.PreferenceCity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Preference">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PreferenceCity">
+        <PropertyRef Name="Preference_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PreferenceCity_City">
+    <End Role="PreferenceCity" Type="RecomendationSystemModel.Store.PreferenceCity" Multiplicity="*" />
+    <End Role="City" Type="RecomendationSystemModel.Store.Cities" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PreferenceCity">
+        <PropertyRef Name="City_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RecomendationSystemModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="RecomendationSystemModelContainer" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+          <EntitySet Name="Sections" EntityType="RecomendationSystemModel.Section" />
+          <EntitySet Name="Users" EntityType="RecomendationSystemModel.User" />
+          <EntitySet Name="SchoolTypes" EntityType="RecomendationSystemModel.SchoolType" />
+          <EntitySet Name="Schools" EntityType="RecomendationSystemModel.School" />
+          <EntitySet Name="Preferences" EntityType="RecomendationSystemModel.Preference" />
+          <EntitySet Name="Hobbies" EntityType="RecomendationSystemModel.Hobbie" />
+          <AssociationSet Name="UserSection" Association="RecomendationSystemModel.UserSection">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Section" EntitySet="Sections" />
+          </AssociationSet>
+          <AssociationSet Name="UserHobbie" Association="RecomendationSystemModel.UserHobbie">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Hobbie" EntitySet="Hobbies" />
+          </AssociationSet>
+          <AssociationSet Name="UserSchool" Association="RecomendationSystemModel.UserSchool">
+            <End Role="User" EntitySet="Users" />
+            <End Role="School" EntitySet="Schools" />
+          </AssociationSet>
+          <AssociationSet Name="SchoolTypeSchool" Association="RecomendationSystemModel.SchoolTypeSchool">
+            <End Role="SchoolType" EntitySet="SchoolTypes" />
+            <End Role="School" EntitySet="Schools" />
+          </AssociationSet>
+          <AssociationSet Name="UserPreference" Association="RecomendationSystemModel.UserPreference">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Preference" EntitySet="Preferences" />
+          </AssociationSet>
+          <EntitySet Name="ParticipationInCompetitions" EntityType="RecomendationSystemModel.ParticipationInCompetition" />
+          <EntitySet Name="Competitions" EntityType="RecomendationSystemModel.Competition" />
+          <EntitySet Name="UnitedStateExams" EntityType="RecomendationSystemModel.UnitedStateExam" />
+          <AssociationSet Name="UserParticipationInCompetition" Association="RecomendationSystemModel.UserParticipationInCompetition">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ParticipationInCompetition" EntitySet="ParticipationInCompetitions" />
+          </AssociationSet>
+          <AssociationSet Name="CompetitionParticipationInCompetition" Association="RecomendationSystemModel.CompetitionParticipationInCompetition">
+            <End Role="Competition" EntitySet="Competitions" />
+            <End Role="ParticipationInCompetition" EntitySet="ParticipationInCompetitions" />
+          </AssociationSet>
+          <EntitySet Name="SchoolMarks" EntityType="RecomendationSystemModel.SchoolMark" />
+          <EntitySet Name="Disciplines" EntityType="RecomendationSystemModel.Discipline" />
+          <EntitySet Name="Clusters" EntityType="RecomendationSystemModel.Cluster" />
+          <AssociationSet Name="DisciplineUnitedStateExam" Association="RecomendationSystemModel.DisciplineUnitedStateExam">
+            <End Role="Discipline" EntitySet="Disciplines" />
+            <End Role="UnitedStateExam" EntitySet="UnitedStateExams" />
+          </AssociationSet>
+          <EntitySet Name="HighSchools" EntityType="RecomendationSystemModel.University" />
+          <EntitySet Name="Cities" EntityType="RecomendationSystemModel.City" />
+          <EntitySet Name="UniversityDepartments" EntityType="RecomendationSystemModel.UniversityDepartment" />
+          <EntitySet Name="DepartmentEducationLines" EntityType="RecomendationSystemModel.DepartmentEducationLine" />
+          <EntitySet Name="GeneralEducationLines" EntityType="RecomendationSystemModel.GeneralEducationLine" />
+          <AssociationSet Name="PreferenceCity" Association="RecomendationSystemModel.PreferenceCity">
+            <End Role="Preference" EntitySet="Preferences" />
+            <End Role="City" EntitySet="Cities" />
+          </AssociationSet>
+          <AssociationSet Name="CityUniversity" Association="RecomendationSystemModel.CityUniversity">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="University" EntitySet="HighSchools" />
+          </AssociationSet>
+          <AssociationSet Name="ClusterGeneralEducationLine" Association="RecomendationSystemModel.ClusterGeneralEducationLine">
+            <End Role="Cluster" EntitySet="Clusters" />
+            <End Role="GeneralEducationLine" EntitySet="GeneralEducationLines" />
+          </AssociationSet>
+          <AssociationSet Name="GeneralEducationLineDepartmentEducationLine" Association="RecomendationSystemModel.GeneralEducationLineDepartmentEducationLine">
+            <End Role="GeneralEducationLine" EntitySet="GeneralEducationLines" />
+            <End Role="DepartmentEducationLine" EntitySet="DepartmentEducationLines" />
+          </AssociationSet>
+          <AssociationSet Name="UniversityUniversityDepartment" Association="RecomendationSystemModel.UniversityUniversityDepartment">
+            <End Role="University" EntitySet="HighSchools" />
+            <End Role="UniversityDepartment" EntitySet="UniversityDepartments" />
+          </AssociationSet>
+          <AssociationSet Name="UniversityDepartmentDepartmentEducationLine" Association="RecomendationSystemModel.UniversityDepartmentDepartmentEducationLine">
+            <End Role="UniversityDepartment" EntitySet="UniversityDepartments" />
+            <End Role="DepartmentEducationLine" EntitySet="DepartmentEducationLines" />
+          </AssociationSet>
+          <EntitySet Name="DepartmentLinesRequirements" EntityType="RecomendationSystemModel.DepartmentLinesRequirement" />
+          <AssociationSet Name="DepartmentEducationLineDepartmentLinesRequirement" Association="RecomendationSystemModel.DepartmentEducationLineDepartmentLinesRequirement">
+            <End Role="DepartmentEducationLine" EntitySet="DepartmentEducationLines" />
+            <End Role="DepartmentLinesRequirement" EntitySet="DepartmentLinesRequirements" />
+          </AssociationSet>
+          <AssociationSet Name="DepartmentLinesRequirementDiscipline" Association="RecomendationSystemModel.DepartmentLinesRequirementDiscipline">
+            <End Role="DepartmentLinesRequirement" EntitySet="DepartmentLinesRequirements" />
+            <End Role="Discipline" EntitySet="Disciplines" />
+          </AssociationSet>
+          <AssociationSet Name="UserUnitedStateExam" Association="RecomendationSystemModel.UserUnitedStateExam">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UnitedStateExam" EntitySet="UnitedStateExams" />
+          </AssociationSet>
+          <AssociationSet Name="UserSchoolMark" Association="RecomendationSystemModel.UserSchoolMark">
+            <End Role="User" EntitySet="Users" />
+            <End Role="SchoolMark" EntitySet="SchoolMarks" />
+          </AssociationSet>
+          <AssociationSet Name="SchoolCity" Association="RecomendationSystemModel.SchoolCity">
+            <End Role="School" EntitySet="Schools" />
+            <End Role="City" EntitySet="Cities" />
+          </AssociationSet>
+          <EntitySet Name="SchoolDisciplines" EntityType="RecomendationSystemModel.SchoolDiscipline" />
+          <AssociationSet Name="SchoolDisciplineSchoolMark" Association="RecomendationSystemModel.SchoolDisciplineSchoolMark">
+            <End Role="SchoolDiscipline" EntitySet="SchoolDisciplines" />
+            <End Role="SchoolMark" EntitySet="SchoolMarks" />
+          </AssociationSet>
+          <EntitySet Name="Weights" EntityType="RecomendationSystemModel.Weight" />
+          <AssociationSet Name="ClusterWeight" Association="RecomendationSystemModel.ClusterWeight">
+            <End Role="Cluster" EntitySet="Clusters" />
+            <End Role="Weight" EntitySet="Weights" />
+          </AssociationSet>
+          <AssociationSet Name="SchoolTypeWeight" Association="RecomendationSystemModel.SchoolTypeWeight">
+            <End Role="SchoolType" EntitySet="SchoolTypes" />
+            <End Role="Weight" EntitySet="Weights" />
+          </AssociationSet>
+          <AssociationSet Name="SchoolDisciplineWeight" Association="RecomendationSystemModel.SchoolDisciplineWeight">
+            <End Role="SchoolDiscipline" EntitySet="SchoolDisciplines" />
+            <End Role="Weight" EntitySet="Weights" />
+          </AssociationSet>
+          <AssociationSet Name="SectionWeight" Association="RecomendationSystemModel.SectionWeight">
+            <End Role="Section" EntitySet="Sections" />
+            <End Role="Weight" EntitySet="Weights" />
+          </AssociationSet>
+          <AssociationSet Name="HobbieWeight" Association="RecomendationSystemModel.HobbieWeight">
+            <End Role="Hobbie" EntitySet="Hobbies" />
+            <End Role="Weight" EntitySet="Weights" />
+          </AssociationSet>
+          <AssociationSet Name="CompetitionWeight" Association="RecomendationSystemModel.CompetitionWeight">
+            <End Role="Competition" EntitySet="Competitions" />
+            <End Role="Weight" EntitySet="Weights" />
+          </AssociationSet>
+          <AssociationSet Name="DisciplineWeight" Association="RecomendationSystemModel.DisciplineWeight">
+            <End Role="Discipline" EntitySet="Disciplines" />
+            <End Role="Weight" EntitySet="Weights" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="ActivityType" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="Int32" Name="Period" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="RecomendationSystemModel.UserSection" FromRole="Section" ToRole="User" />
+          <NavigationProperty Name="Weight" Relationship="RecomendationSystemModel.SectionWeight" FromRole="Section" ToRole="Weight" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="String" Name="SchoolEducation" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Section" Relationship="RecomendationSystemModel.UserSection" FromRole="User" ToRole="Section" />
+          <NavigationProperty Name="Hobbie" Relationship="RecomendationSystemModel.UserHobbie" FromRole="User" ToRole="Hobbie" />
+          <NavigationProperty Name="School" Relationship="RecomendationSystemModel.UserSchool" FromRole="User" ToRole="School" />
+          <NavigationProperty Name="Preference" Relationship="RecomendationSystemModel.UserPreference" FromRole="User" ToRole="Preference" />
+          <NavigationProperty Name="ParticipationInCompetition" Relationship="RecomendationSystemModel.UserParticipationInCompetition" FromRole="User" ToRole="ParticipationInCompetition" />
+          <NavigationProperty Name="UnitedStateExam" Relationship="RecomendationSystemModel.UserUnitedStateExam" FromRole="User" ToRole="UnitedStateExam" />
+          <NavigationProperty Name="SchoolMark" Relationship="RecomendationSystemModel.UserSchoolMark" FromRole="User" ToRole="SchoolMark" />
+        </EntityType>
+        <EntityType Name="SchoolType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <NavigationProperty Name="School" Relationship="RecomendationSystemModel.SchoolTypeSchool" FromRole="SchoolType" ToRole="School" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Weight" Relationship="RecomendationSystemModel.SchoolTypeWeight" FromRole="SchoolType" ToRole="Weight" />
+        </EntityType>
+        <EntityType Name="School">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="Int32" Name="EducationQuality" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="RecomendationSystemModel.UserSchool" FromRole="School" ToRole="User" />
+          <NavigationProperty Name="SchoolType" Relationship="RecomendationSystemModel.SchoolTypeSchool" FromRole="School" ToRole="SchoolType" />
+          <Property Type="Int32" Name="SchoolTypeId" Nullable="false" />
+          <NavigationProperty Name="City" Relationship="RecomendationSystemModel.SchoolCity" FromRole="School" ToRole="City" />
+        </EntityType>
+        <EntityType Name="Preference">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="Presige" Nullable="false" />
+          <Property Type="String" Name="EducationFrom" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="User" Relationship="RecomendationSystemModel.UserPreference" FromRole="Preference" ToRole="User" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <NavigationProperty Name="City" Relationship="RecomendationSystemModel.PreferenceCity" FromRole="Preference" ToRole="City" />
+        </EntityType>
+        <EntityType Name="Hobbie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="User" Relationship="RecomendationSystemModel.UserHobbie" FromRole="Hobbie" ToRole="User" />
+          <NavigationProperty Name="Weight" Relationship="RecomendationSystemModel.HobbieWeight" FromRole="Hobbie" ToRole="Weight" />
+        </EntityType>
+        <Association Name="UserSection">
+          <End Type="RecomendationSystemModel.User" Role="User" Multiplicity="*" />
+          <End Type="RecomendationSystemModel.Section" Role="Section" Multiplicity="*" />
+        </Association>
+        <Association Name="UserHobbie">
+          <End Type="RecomendationSystemModel.User" Role="User" Multiplicity="*" />
+          <End Type="RecomendationSystemModel.Hobbie" Role="Hobbie" Multiplicity="*" />
+        </Association>
+        <Association Name="UserSchool">
+          <End Type="RecomendationSystemModel.User" Role="User" Multiplicity="*" />
+          <End Type="RecomendationSystemModel.School" Role="School" Multiplicity="*" />
+        </Association>
+        <Association Name="SchoolTypeSchool">
+          <End Type="RecomendationSystemModel.SchoolType" Role="SchoolType" Multiplicity="1" />
+          <End Type="RecomendationSystemModel.School" Role="School" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="School">
+              <PropertyRef Name="SchoolTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserPreference">
+          <End Type="RecomendationSystemModel.User" Role="User" Multiplicity="1" />
+          <End Type="RecomendationSystemModel.Preference" Role="Preference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Preference">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ParticipationInCompetition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Result" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="User" Relationship="RecomendationSystemModel.UserParticipationInCompetition" FromRole="ParticipationInCompetition" ToRole="User" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <NavigationProperty Name="Competition" Relationship="RecomendationSystemModel.CompetitionParticipationInCompetition" FromRole="ParticipationInCompetition" ToRole="Competition" />
+          <Property Type="Int32" Name="CompetitionId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Competition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="ParticipationInCompetition" Relationship="RecomendationSystemModel.CompetitionParticipationInCompetition" FromRole="Competition" ToRole="ParticipationInCompetition" />
+          <NavigationProperty Name="Weight" Relationship="RecomendationSystemModel.CompetitionWeight" FromRole="Competition" ToRole="Weight" />
+        </EntityType>
+        <EntityType Name="UnitedStateExam">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="Result" Nullable="false" />
+          <NavigationProperty Name="Discipline" Relationship="RecomendationSystemModel.DisciplineUnitedStateExam" FromRole="UnitedStateExam" ToRole="Discipline" />
+          <Property Type="Int32" Name="DisciplineId" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="RecomendationSystemModel.UserUnitedStateExam" FromRole="UnitedStateExam" ToRole="User" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+        </EntityType>
+        <Association Name="UserParticipationInCompetition">
+          <End Type="RecomendationSystemModel.User" Role="User" Multiplicity="1" />
+          <End Type="RecomendationSystemModel.ParticipationInCompetition" Role="ParticipationInCompetition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParticipationInCompetition">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CompetitionParticipationInCompetition">
+          <End Type="RecomendationSystemModel.Competition" Role="Competition" Multiplicity="1" />
+          <End Type="RecomendationSystemModel.ParticipationInCompetition" Role="ParticipationInCompetition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competition">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParticipationInCompetition">
+              <PropertyRef Name="CompetitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SchoolMark">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int16" Name="Result" Nullable="false" />
+          <Property Type="Int32" Name="Respect" Nullable="true" />
+          <NavigationProperty Name="User" Relationship="RecomendationSystemModel.UserSchoolMark" FromRole="SchoolMark" ToRole="User" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <NavigationProperty Name="SchoolDiscipline" Relationship="RecomendationSystemModel.SchoolDisciplineSchoolMark" FromRole="SchoolMark" ToRole="SchoolDiscipline" />
+          <Property Type="Int32" Name="SchoolDisciplineId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Discipline">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="UnitedStateExam" Relationship="RecomendationSystemModel.DisciplineUnitedStateExam" FromRole="Discipline" ToRole="UnitedStateExam" />
+          <NavigationProperty Name="DepartmentLinesRequirement" Relationship="RecomendationSystemModel.DepartmentLinesRequirementDiscipline" FromRole="Discipline" ToRole="DepartmentLinesRequirement" />
+          <NavigationProperty Name="Weight" Relationship="RecomendationSystemModel.DisciplineWeight" FromRole="Discipline" ToRole="Weight" />
+        </EntityType>
+        <EntityType Name="Cluster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="GeneralEducationLine" Relationship="RecomendationSystemModel.ClusterGeneralEducationLine" FromRole="Cluster" ToRole="GeneralEducationLine" />
+          <NavigationProperty Name="Weight" Relationship="RecomendationSystemModel.ClusterWeight" FromRole="Cluster" ToRole="Weight" />
+        </EntityType>
+        <Association Name="DisciplineUnitedStateExam">
+          <End Type="RecomendationSystemModel.Discipline" Role="Discipline" Multiplicity="1" />
+          <End Type="RecomendationSystemModel.UnitedStateExam" Role="UnitedStateExam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discipline">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitedStateExam">
+              <PropertyRef Name="DisciplineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="University">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="Int32" Name="Prestige" Nullable="false" />
+          <NavigationProperty Name="City" Relationship="RecomendationSystemModel.CityUniversity" FromRole="University" ToRole="City" />
+          <Property Type="Int32" Name="CityId" Nullable="false" />
+          <NavigationProperty Name="UniversityDepartment" Relationship="RecomendationSystemModel.UniversityUniversityDepartment" FromRole="University" ToRole="UniversityDepartment" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="Int32" Name="Prestige" Nullable="false" />
+          <NavigationProperty Name="Preference" Relationship="RecomendationSystemModel.PreferenceCity" FromRole="City" ToRole="Preference" />
+          <NavigationProperty Name="University" Relationship="RecomendationSystemModel.CityUniversity" FromRole="City" ToRole="University" />
+          <NavigationProperty Name="School" Relationship="RecomendationSystemModel.SchoolCity" FromRole="City" ToRole="School" />
+        </EntityType>
+        <EntityType Name="UniversityDepartment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="Int32" Name="Prestige" Nullable="false" />
+          <NavigationProperty Name="University" Relationship="RecomendationSystemModel.UniversityUniversityDepartment" FromRole="UniversityDepartment" ToRole="University" />
+          <Property Type="Int32" Name="UniversityId" Nullable="false" />
+          <NavigationProperty Name="DepartmentEducationLine" Relationship="RecomendationSystemModel.UniversityDepartmentDepartmentEducationLine" FromRole="UniversityDepartment" ToRole="DepartmentEducationLine" />
+        </EntityType>
+        <EntityType Name="DepartmentEducationLine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="GeneralEducationLine" Relationship="RecomendationSystemModel.GeneralEducationLineDepartmentEducationLine" FromRole="DepartmentEducationLine" ToRole="GeneralEducationLine" />
+          <Property Type="Int32" Name="GeneralEducationLineId" Nullable="false" />
+          <NavigationProperty Name="UniversityDepartment" Relationship="RecomendationSystemModel.UniversityDepartmentDepartmentEducationLine" FromRole="DepartmentEducationLine" ToRole="UniversityDepartment" />
+          <Property Type="Int32" Name="UniversityDepartmentId" Nullable="false" />
+          <Property Type="String" Name="EducationForm" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="DepartmentLinesRequirement" Relationship="RecomendationSystemModel.DepartmentEducationLineDepartmentLinesRequirement" FromRole="DepartmentEducationLine" ToRole="DepartmentLinesRequirement" />
+        </EntityType>
+        <EntityType Name="GeneralEducationLine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Cluster" Relationship="RecomendationSystemModel.ClusterGeneralEducationLine" FromRole="GeneralEducationLine" ToRole="Cluster" />
+          <Property Type="String" Name="Actual" Nullable="false" />
+          <Property Type="Int32" Name="ClusterId" Nullable="false" />
+          <NavigationProperty Name="DepartmentEducationLine" Relationship="RecomendationSystemModel.GeneralEducationLineDepartmentEducationLine" FromRole="GeneralEducationLine" ToRole="DepartmentEducationLine" />
+        </EntityType>
+        <Association Name="PreferenceCity">
+          <End Type="RecomendationSystemModel.Preference" Role="Preference" Multiplicity="*" />
+          <End Type="RecomendationSystemModel.City" Role="City" Multiplicity="*" />
+        </Association>
+        <Association Name="CityUniversity">
+          <End Type="RecomendationSystemModel.City" Role="City" Multiplicity="1" />
+          <End Type="RecomendationSystemModel.University" Role="University" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="University">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ClusterGeneralEducationLine">
+          <End Type="RecomendationSystemModel.Cluster" Role="Cluster" Multiplicity="1" />
+          <End Type="RecomendationSystemModel.GeneralEducationLine" Role="GeneralEducationLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cluster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GeneralEducationLine">
+              <PropertyRef Name="ClusterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GeneralEducationLineDepartmentEducationLine">
+          <End Type="RecomendationSystemModel.GeneralEducationLine" Role="GeneralEducationLine" Multiplicity="1" />
+          <End Type="RecomendationSystemModel.DepartmentEducationLine" Role="DepartmentEducationLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GeneralEducationLine">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DepartmentEducationLine">
+              <PropertyRef Name="GeneralEducationLineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UniversityUniversityDepartment">
+          <End Type="RecomendationSystemModel.University" Role="University" Multiplicity="1" />
+          <End Type="RecomendationSystemModel.UniversityDepartment" Role="UniversityDepartment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="University">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UniversityDepartment">
+              <PropertyRef Name="UniversityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UniversityDepartmentDepartmentEducationLine">
+          <End Type="RecomendationSystemModel.UniversityDepartment" Role="UniversityDepartment" Multiplicity="1" />
+          <End Type="RecomendationSystemModel.DepartmentEducationLine" Role="DepartmentEducationLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UniversityDepartment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DepartmentEducationLine">
+              <PropertyRef Name="UniversityDepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DepartmentLinesRequirement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="Requirement" Nullable="false" />
+          <NavigationProperty Name="DepartmentEducationLine" Relationship="RecomendationSystemModel.DepartmentEducationLineDepartmentLinesRequirement" FromRole="DepartmentLinesRequirement" ToRole="DepartmentEducationLine" />
+          <Property Type="Int32" Name="DepartmentEducationLineId" Nullable="false" />
+          <NavigationProperty Name="Discipline" Relationship="RecomendationSystemModel.DepartmentLinesRequirementDiscipline" FromRole="DepartmentLinesRequirement" ToRole="Discipline" />
+          <Property Type="Int32" Name="DisciplineId" Nullable="false" />
+        </EntityType>
+        <Association Name="DepartmentEducationLineDepartmentLinesRequirement">
+          <End Type="RecomendationSystemModel.DepartmentEducationLine" Role="DepartmentEducationLine" Multiplicity="1" />
+          <End Type="RecomendationSystemModel.DepartmentLinesRequirement" Role="DepartmentLinesRequirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmentEducationLine">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DepartmentLinesRequirement">
+              <PropertyRef Name="DepartmentEducationLineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DepartmentLinesRequirementDiscipline">
+          <End Type="RecomendationSystemModel.DepartmentLinesRequirement" Role="DepartmentLinesRequirement" Multiplicity="*" />
+          <End Type="RecomendationSystemModel.Discipline" Role="Discipline" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Discipline">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DepartmentLinesRequirement">
+              <PropertyRef Name="DisciplineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserUnitedStateExam">
+          <End Type="RecomendationSystemModel.User" Role="User" Multiplicity="1" />
+          <End Type="RecomendationSystemModel.UnitedStateExam" Role="UnitedStateExam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitedStateExam">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserSchoolMark">
+          <End Type="RecomendationSystemModel.User" Role="User" Multiplicity="1" />
+          <End Type="RecomendationSystemModel.SchoolMark" Role="SchoolMark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SchoolMark">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SchoolCity">
+          <End Type="RecomendationSystemModel.School" Role="School" Multiplicity="*" />
+          <End Type="RecomendationSystemModel.City" Role="City" Multiplicity="1" />
+        </Association>
+        <EntityType Name="SchoolDiscipline">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="SchoolMark" Relationship="RecomendationSystemModel.SchoolDisciplineSchoolMark" FromRole="SchoolDiscipline" ToRole="SchoolMark" />
+          <NavigationProperty Name="Weight" Relationship="RecomendationSystemModel.SchoolDisciplineWeight" FromRole="SchoolDiscipline" ToRole="Weight" />
+        </EntityType>
+        <Association Name="SchoolDisciplineSchoolMark">
+          <End Type="RecomendationSystemModel.SchoolDiscipline" Role="SchoolDiscipline" Multiplicity="1" />
+          <End Type="RecomendationSystemModel.SchoolMark" Role="SchoolMark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolDiscipline">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SchoolMark">
+              <PropertyRef Name="SchoolDisciplineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Weight">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Double" Name="Coefficient" Nullable="false" />
+          <NavigationProperty Name="Cluster" Relationship="RecomendationSystemModel.ClusterWeight" FromRole="Weight" ToRole="Cluster" />
+          <Property Type="Int32" Name="ClusterId" Nullable="false" />
+          <NavigationProperty Name="SchoolType" Relationship="RecomendationSystemModel.SchoolTypeWeight" FromRole="Weight" ToRole="SchoolType" />
+          <Property Type="Int32" Name="SchoolTypeId" Nullable="true" />
+          <NavigationProperty Name="SchoolDiscipline" Relationship="RecomendationSystemModel.SchoolDisciplineWeight" FromRole="Weight" ToRole="SchoolDiscipline" />
+          <Property Type="Int32" Name="SchoolDisciplineId" Nullable="true" />
+          <NavigationProperty Name="Section" Relationship="RecomendationSystemModel.SectionWeight" FromRole="Weight" ToRole="Section" />
+          <Property Type="Int32" Name="SectionId" Nullable="true" />
+          <NavigationProperty Name="Hobbie" Relationship="RecomendationSystemModel.HobbieWeight" FromRole="Weight" ToRole="Hobbie" />
+          <Property Type="Int32" Name="HobbieId" Nullable="true" />
+          <NavigationProperty Name="Competition" Relationship="RecomendationSystemModel.CompetitionWeight" FromRole="Weight" ToRole="Competition" />
+          <Property Type="Int32" Name="CompetitionId" Nullable="true" />
+          <NavigationProperty Name="Discipline" Relationship="RecomendationSystemModel.DisciplineWeight" FromRole="Weight" ToRole="Discipline" />
+          <Property Type="Int32" Name="DisciplineId" Nullable="true" />
+        </EntityType>
+        <Association Name="ClusterWeight">
+          <End Type="RecomendationSystemModel.Cluster" Role="Cluster" Multiplicity="1" />
+          <End Type="RecomendationSystemModel.Weight" Role="Weight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cluster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Weight">
+              <PropertyRef Name="ClusterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SchoolTypeWeight">
+          <End Type="RecomendationSystemModel.SchoolType" Role="SchoolType" Multiplicity="0..1" />
+          <End Type="RecomendationSystemModel.Weight" Role="Weight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Weight">
+              <PropertyRef Name="SchoolTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SchoolDisciplineWeight">
+          <End Type="RecomendationSystemModel.SchoolDiscipline" Role="SchoolDiscipline" Multiplicity="0..1" />
+          <End Type="RecomendationSystemModel.Weight" Role="Weight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolDiscipline">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Weight">
+              <PropertyRef Name="SchoolDisciplineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SectionWeight">
+          <End Type="RecomendationSystemModel.Section" Role="Section" Multiplicity="0..1" />
+          <End Type="RecomendationSystemModel.Weight" Role="Weight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Weight">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="HobbieWeight">
+          <End Type="RecomendationSystemModel.Hobbie" Role="Hobbie" Multiplicity="0..1" />
+          <End Type="RecomendationSystemModel.Weight" Role="Weight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hobbie">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Weight">
+              <PropertyRef Name="HobbieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CompetitionWeight">
+          <End Type="RecomendationSystemModel.Competition" Role="Competition" Multiplicity="0..1" />
+          <End Type="RecomendationSystemModel.Weight" Role="Weight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competition">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Weight">
+              <PropertyRef Name="CompetitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DisciplineWeight">
+          <End Type="RecomendationSystemModel.Discipline" Role="Discipline" Multiplicity="0..1" />
+          <End Type="RecomendationSystemModel.Weight" Role="Weight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discipline">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Weight">
+              <PropertyRef Name="DisciplineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="RecomendationSystemModelStoreContainer" CdmEntityContainer="RecomendationSystemModelContainer">
+    <EntitySetMapping Name="Sections">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.Section)">
+        <MappingFragment StoreEntitySet="Sections">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ActivityType" ColumnName="ActivityType" />
+          <ScalarProperty Name="Period" ColumnName="Period" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="SchoolEducation" ColumnName="SchoolEducation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SchoolTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.SchoolType)">
+        <MappingFragment StoreEntitySet="SchoolTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Schools">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.School)">
+        <MappingFragment StoreEntitySet="Schools">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="EducationQuality" ColumnName="EducationQuality" />
+          <ScalarProperty Name="SchoolTypeId" ColumnName="SchoolTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Preferences">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.Preference)">
+        <MappingFragment StoreEntitySet="Preferences">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Presige" ColumnName="Presige" />
+          <ScalarProperty Name="EducationFrom" ColumnName="EducationFrom" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Hobbies">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.Hobbie)">
+        <MappingFragment StoreEntitySet="Hobbies">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ParticipationInCompetitions">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.ParticipationInCompetition)">
+        <MappingFragment StoreEntitySet="ParticipationInCompetitions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Result" ColumnName="Result" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="CompetitionId" ColumnName="CompetitionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Competitions">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.Competition)">
+        <MappingFragment StoreEntitySet="Competitions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnitedStateExams">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.UnitedStateExam)">
+        <MappingFragment StoreEntitySet="UnitedStateExams">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Result" ColumnName="Result" />
+          <ScalarProperty Name="DisciplineId" ColumnName="DisciplineId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SchoolMarks">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.SchoolMark)">
+        <MappingFragment StoreEntitySet="SchoolMarks">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Result" ColumnName="Result" />
+          <ScalarProperty Name="Respect" ColumnName="Respect" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="SchoolDisciplineId" ColumnName="SchoolDisciplineId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Disciplines">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.Discipline)">
+        <MappingFragment StoreEntitySet="Disciplines">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clusters">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.Cluster)">
+        <MappingFragment StoreEntitySet="Clusters">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HighSchools">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.University)">
+        <MappingFragment StoreEntitySet="HighSchools">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Prestige" ColumnName="Prestige" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cities">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.City)">
+        <MappingFragment StoreEntitySet="Cities">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Prestige" ColumnName="Prestige" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UniversityDepartments">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.UniversityDepartment)">
+        <MappingFragment StoreEntitySet="UniversityDepartments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Prestige" ColumnName="Prestige" />
+          <ScalarProperty Name="UniversityId" ColumnName="UniversityId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DepartmentEducationLines">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.DepartmentEducationLine)">
+        <MappingFragment StoreEntitySet="DepartmentEducationLines">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="GeneralEducationLineId" ColumnName="GeneralEducationLineId" />
+          <ScalarProperty Name="UniversityDepartmentId" ColumnName="UniversityDepartmentId" />
+          <ScalarProperty Name="EducationForm" ColumnName="EducationForm" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GeneralEducationLines">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.GeneralEducationLine)">
+        <MappingFragment StoreEntitySet="GeneralEducationLines">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Actual" ColumnName="Actual" />
+          <ScalarProperty Name="ClusterId" ColumnName="ClusterId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DepartmentLinesRequirements">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.DepartmentLinesRequirement)">
+        <MappingFragment StoreEntitySet="DepartmentLinesRequirements">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Requirement" ColumnName="Requirement" />
+          <ScalarProperty Name="DepartmentEducationLineId" ColumnName="DepartmentEducationLineId" />
+          <ScalarProperty Name="DisciplineId" ColumnName="DisciplineId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SchoolDisciplines">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.SchoolDiscipline)">
+        <MappingFragment StoreEntitySet="SchoolDisciplines">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Weights">
+      <EntityTypeMapping TypeName="IsTypeOf(RecomendationSystemModel.Weight)">
+        <MappingFragment StoreEntitySet="Weights">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Coefficient" ColumnName="Coefficient" />
+          <ScalarProperty Name="ClusterId" ColumnName="ClusterId" />
+          <ScalarProperty Name="SchoolTypeId" ColumnName="SchoolTypeId" />
+          <ScalarProperty Name="SchoolDisciplineId" ColumnName="SchoolDisciplineId" />
+          <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+          <ScalarProperty Name="HobbieId" ColumnName="HobbieId" />
+          <ScalarProperty Name="CompetitionId" ColumnName="CompetitionId" />
+          <ScalarProperty Name="DisciplineId" ColumnName="DisciplineId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserSection" TypeName="RecomendationSystemModel.UserSection" StoreEntitySet="UserSection">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="User_Id" />
+      </EndProperty>
+      <EndProperty Name="Section">
+        <ScalarProperty Name="Id" ColumnName="Section_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UserHobbie" TypeName="RecomendationSystemModel.UserHobbie" StoreEntitySet="UserHobbie">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="User_Id" />
+      </EndProperty>
+      <EndProperty Name="Hobbie">
+        <ScalarProperty Name="Id" ColumnName="Hobbie_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UserSchool" TypeName="RecomendationSystemModel.UserSchool" StoreEntitySet="UserSchool">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="User_Id" />
+      </EndProperty>
+      <EndProperty Name="School">
+        <ScalarProperty Name="Id" ColumnName="School_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PreferenceCity" TypeName="RecomendationSystemModel.PreferenceCity" StoreEntitySet="PreferenceCity">
+      <EndProperty Name="Preference">
+        <ScalarProperty Name="Id" ColumnName="Preference_Id" />
+      </EndProperty>
+      <EndProperty Name="City">
+        <ScalarProperty Name="Id" ColumnName="City_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SchoolCity" TypeName="RecomendationSystemModel.SchoolCity" StoreEntitySet="Schools">
+      <EndProperty Name="City">
+        <ScalarProperty Name="Id" ColumnName="City_Id" />
+      </EndProperty>
+      <EndProperty Name="School">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer>
+    <edmx:Connection>
+      <edmx:DesignerInfoPropertySet>
+        <edmx:DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </edmx:DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <edmx:DesignerInfoPropertySet>
+        <edmx:DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <edmx:DesignerProperty Name="EnablePluralization" Value="False" />
+        <edmx:DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <edmx:DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </edmx:DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,78 @@
+﻿<Window x:Class="UI.MainWindow" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
+        xmlns:ViewModels="clr-namespace:UI.ViewModels" 
+        Title="MainWindow" Height="700" Width="800">
+
+    <Window.DataContext>
+        <ViewModels:MainViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="32*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="33*"/>
+                <RowDefinition Height="23*"/>
+                <RowDefinition Height="28*"/>
+                <RowDefinition Height="68*"/>
+            </Grid.RowDefinitions>
+            <TextBlock TextWrapping="Wrap" Text="Пользователи" FontSize="16" FontWeight="Bold"/>
+            <RadioButton x:Name="radioButton" IsChecked="True" GroupName="SomeoneOrEveryone" Grid.Row="1" Margin="0,0.5,0,3.514" Content="Выбрать пользователя" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            
+            <RadioButton Content="Выбрать всех" GroupName="SomeoneOrEveryone" IsChecked="{Binding IsSelectAll, Mode=TwoWay}"
+				Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Left"
+				Height="14.96" Width="92.443"/>
+            <ComboBox Grid.Row="2" VerticalAlignment="Top" Height="21.96" 
+				IsEnabled="{Binding IsChecked, ElementName=radioButton}"
+				ItemsSource="{Binding AllUsers}" SelectedItem="{Binding SelectedUser}"
+				DisplayMemberPath="Name"/>
+
+        </Grid>
+        <Grid Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="273" Width="539" Margin="0,10,0,0">
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Результаты" VerticalAlignment="Top" FontSize="16" Width="218.5" FontWeight="Bold"/>
+            <chartingToolkit:Chart BorderBrush="{x:Null}">
+                <!--<chartingToolkit:Chart.Axes>
+                    <chartingToolkit:LinearAxis Maximum="1" Minimum="-1" Orientation="X" ShowGridLines="True" SeriesHost="{x:Null}"/>
+                    <chartingToolkit:LinearAxis Maximum="1" Minimum="-1" Orientation="Y" ShowGridLines="True" SeriesHost="{x:Null}"/>
+                </chartingToolkit:Chart.Axes>-->
+                <chartingToolkit:ScatterSeries x:Name="KeyWordSeries" 
+					Title="Учебное направление" 
+					ItemsSource="{Binding AllClusters}" 
+					IndependentValueBinding="{Binding Coords.Key, Mode=OneWay}"
+					DependentValueBinding="{Binding Coords.Value, Mode=OneWay}"/>
+                <chartingToolkit:ScatterSeries x:Name="TextsWordSeries" 
+					Title="Ученик" 
+					ItemsSource="{Binding UsersToDisplay}" 
+					IndependentValueBinding="{Binding Coords.Key, Mode=OneWay}"
+					DependentValueBinding="{Binding Coords.Value, Mode=OneWay}"
+					ToolTipService.ShowOnDisabled="True"/>
+            </chartingToolkit:Chart>
+            <ProgressBar HorizontalAlignment="Right" VerticalAlignment="Top" Width="200" Height="15" Value="{Binding CurrentProgress,Mode=OneWay}" Visibility="{Binding IsVisibleProgressBar}"/>
+        </Grid>
+        <Grid Grid.Column="1" Margin="0,10,12,10" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+            <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Рекомендации:" FontWeight="Bold"/>
+
+            <DataGrid ItemsSource="{Binding ResultDictionary, Mode=OneWay}" Grid.RowSpan="2" IsReadOnly="True" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Key}"  Header="Кластер"/>
+                    <DataGridTextColumn Binding="{Binding Value}"   Header="Приоритет"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+    </Grid>
+</Window>
+

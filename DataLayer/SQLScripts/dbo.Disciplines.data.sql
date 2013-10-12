@@ -1,0 +1,16 @@
+SET IDENTITY_INSERT [dbo].[Disciplines] ON
+INSERT INTO [dbo].[Disciplines] ([Id], [Name]) VALUES (1, N'Русский язык')
+INSERT INTO [dbo].[Disciplines] ([Id], [Name]) VALUES (2, N'Математика')
+INSERT INTO [dbo].[Disciplines] ([Id], [Name]) VALUES (3, N'Физика')
+INSERT INTO [dbo].[Disciplines] ([Id], [Name]) VALUES (4, N'Химия')
+INSERT INTO [dbo].[Disciplines] ([Id], [Name]) VALUES (5, N'Информатика')
+INSERT INTO [dbo].[Disciplines] ([Id], [Name]) VALUES (6, N'Биология')
+INSERT INTO [dbo].[Disciplines] ([Id], [Name]) VALUES (7, N'История')
+INSERT INTO [dbo].[Disciplines] ([Id], [Name]) VALUES (8, N'География')
+INSERT INTO [dbo].[Disciplines] ([Id], [Name]) VALUES (9, N'Английский')
+INSERT INTO [dbo].[Disciplines] ([Id], [Name]) VALUES (10, N'Немецкий')
+INSERT INTO [dbo].[Disciplines] ([Id], [Name]) VALUES (11, N'Французский')
+INSERT INTO [dbo].[Disciplines] ([Id], [Name]) VALUES (12, N'Обществознание')
+INSERT INTO [dbo].[Disciplines] ([Id], [Name]) VALUES (13, N'Испанский')
+INSERT INTO [dbo].[Disciplines] ([Id], [Name]) VALUES (14, N'Литература')
+SET IDENTITY_INSERT [dbo].[Disciplines] OFF

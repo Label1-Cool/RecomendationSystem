@@ -1,0 +1,15 @@
+SET IDENTITY_INSERT [dbo].[DepartmentEducationLines] ON
+INSERT INTO [dbo].[DepartmentEducationLines] ([Id], [Code], [GeneralEducationLineId], [UniversityDepartmentId], [EducationForm]) VALUES (1, N'010300', 1, 1, N'ОчнБак')
+INSERT INTO [dbo].[DepartmentEducationLines] ([Id], [Code], [GeneralEducationLineId], [UniversityDepartmentId], [EducationForm]) VALUES (2, N'010400', 1, 1, N'ОчнБак')
+INSERT INTO [dbo].[DepartmentEducationLines] ([Id], [Code], [GeneralEducationLineId], [UniversityDepartmentId], [EducationForm]) VALUES (3, N'010900', 1, 1, N'ОчнБак')
+INSERT INTO [dbo].[DepartmentEducationLines] ([Id], [Code], [GeneralEducationLineId], [UniversityDepartmentId], [EducationForm]) VALUES (4, N'010300', 1, 2, N'ОчнБак')
+INSERT INTO [dbo].[DepartmentEducationLines] ([Id], [Code], [GeneralEducationLineId], [UniversityDepartmentId], [EducationForm]) VALUES (5, N'010500', 1, 2, N'ОчнБак')
+INSERT INTO [dbo].[DepartmentEducationLines] ([Id], [Code], [GeneralEducationLineId], [UniversityDepartmentId], [EducationForm]) VALUES (6, N'010800', 1, 2, N'ОчнБак')
+INSERT INTO [dbo].[DepartmentEducationLines] ([Id], [Code], [GeneralEducationLineId], [UniversityDepartmentId], [EducationForm]) VALUES (7, N'231000', 1, 2, N'ОчнБак')
+INSERT INTO [dbo].[DepartmentEducationLines] ([Id], [Code], [GeneralEducationLineId], [UniversityDepartmentId], [EducationForm]) VALUES (8, N'010701', 1, 2, N'ОчнСпец')
+INSERT INTO [dbo].[DepartmentEducationLines] ([Id], [Code], [GeneralEducationLineId], [UniversityDepartmentId], [EducationForm]) VALUES (9, N'011501', 1, 2, N'ОчнСпец')
+INSERT INTO [dbo].[DepartmentEducationLines] ([Id], [Code], [GeneralEducationLineId], [UniversityDepartmentId], [EducationForm]) VALUES (10, N'031000', 2, 3, N'ОчнБак')
+INSERT INTO [dbo].[DepartmentEducationLines] ([Id], [Code], [GeneralEducationLineId], [UniversityDepartmentId], [EducationForm]) VALUES (11, N'035700', 2, 3, N'ОчнБак')
+INSERT INTO [dbo].[DepartmentEducationLines] ([Id], [Code], [GeneralEducationLineId], [UniversityDepartmentId], [EducationForm]) VALUES (12, N'032700 ', 2, 5, N'ОчнМаг')
+INSERT INTO [dbo].[DepartmentEducationLines] ([Id], [Code], [GeneralEducationLineId], [UniversityDepartmentId], [EducationForm]) VALUES (13, N'035800 ', 2, 5, N'ОчнМаг')
+SET IDENTITY_INSERT [dbo].[DepartmentEducationLines] OFF
