@@ -1,4 +1,4 @@
-RecomendationSystem
+Recomendation Student System
 ========
 
 Студенческий проект по созданию системы рекомендаций по выбору вуза.
