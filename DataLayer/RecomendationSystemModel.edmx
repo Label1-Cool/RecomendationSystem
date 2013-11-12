@@ -1637,8 +1637,9 @@
       <edmx:DesignerInfoPropertySet>
         <edmx:DesignerProperty Name="ValidateOnBuild" Value="true" />
         <edmx:DesignerProperty Name="EnablePluralization" Value="False" />
-        <edmx:DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <edmx:DesignerProperty Name="CodeGenerationStrategy" Value="None" />
         <edmx:DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <edmx:DesignerProperty Name="UseLegacyProvider" Value="True" />
       </edmx:DesignerInfoPropertySet>
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
