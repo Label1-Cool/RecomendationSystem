@@ -1,8 +1,10 @@
-﻿using ModernUI.ViewModels;
+﻿using FirstFloor.ModernUI.Windows;
+using ModernUI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,10 +23,16 @@ namespace ModernUI.Pages
     /// </summary>
     public partial class Home : UserControl
     {
+        HomeViewModel _vm = new HomeViewModel();
         public Home()
         {
             InitializeComponent();
-            DataContext = new HomeViewModel();
+            DataContext = _vm;
         }
+
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            await _vm.Init();
+        } 
     }
 }

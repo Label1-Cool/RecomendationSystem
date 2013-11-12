@@ -8,16 +8,15 @@ using System.Collections.ObjectModel;
 using Logic.Models;
 using System.Threading.Tasks;
 using System.Windows;
+using FirstFloor.ModernUI.Windows;
 
 namespace ModernUI.ViewModels
 {
     public class HomeViewModel : INotifyPropertyChanged
     {   
         #region Fields
-        Progress<int> progressIndicator = new Progress<int>();
-        static int _currentProgress = 0;
-
-        private Visibility _isVisibleProgressBar = Visibility.Visible;
+        private Visibility _isVisibleProgressBar = Visibility.Hidden;
+        private bool _isInitialized = false;
         private bool _isSelectAll;
         private List<UserAnalyzed> _allUsers = new List<UserAnalyzed>();
         private List<ClusterAnalyzed> _allCluster = new List<ClusterAnalyzed>();
@@ -29,26 +28,6 @@ namespace ModernUI.ViewModels
         #endregion
 
         #region Properties
-
-        
-        public int CurrentProgress
-        {
-            get{return _currentProgress;}
-            set
-            {
-                if (_currentProgress!=value)
-                {
-                    _currentProgress = value;
-
-                    if (_currentProgress == 100)
-                    {
-                        IsVisibleProgressBar = Visibility.Hidden;
-                    }
-                    UpdateUI(new PropertyChangedEventArgs("CurrentProgress"));
-                }
-            }
-        }
-
         
         public Visibility IsVisibleProgressBar
         {
@@ -173,22 +152,19 @@ namespace ModernUI.ViewModels
          
         #endregion
 
-        public HomeViewModel()
+        public async Task Init()
         {
-            progressIndicator.ProgressChanged += progressIndicator_ProgressChanged;
-            Init();
-        }
+            if (!_isInitialized)
+            {
+                IsVisibleProgressBar = Visibility.Visible;
 
-        void progressIndicator_ProgressChanged(object sender, int e)
-        {
-            CurrentProgress = e;
-        }
+                await dataExtractor.Init();
+                AllUsers = dataExtractor.UsersCoords;
+                AllClusters = dataExtractor.ClustersCoords;
 
-        private async void Init()
-        {
-            await dataExtractor.Init(progressIndicator);
-            AllUsers = dataExtractor.UsersCoords;
-            AllClusters = dataExtractor.ClustersCoords;
+                IsVisibleProgressBar = Visibility.Hidden;
+                _isInitialized = true;
+            }
         }
         
         #region INotifyPropertyChanged
