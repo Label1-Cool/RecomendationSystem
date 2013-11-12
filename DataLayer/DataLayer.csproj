@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DataLayer</RootNamespace>
     <AssemblyName>DataLayer</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,14 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.1\lib\net45\EntityFramework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -152,22 +156,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="RecomendationSystemModel.edmx.sql" />
-    <Content Include="SQLScripts\dbo.Cities.data.sql" />
-    <Content Include="SQLScripts\dbo.Clusters.data.sql" />
-    <Content Include="SQLScripts\dbo.DepartmentEducationLines.data.sql" />
-    <Content Include="SQLScripts\dbo.DepartmentLinesRequirements.data.sql" />
-    <Content Include="SQLScripts\dbo.Disciplines.data.sql" />
-    <Content Include="SQLScripts\dbo.GeneralEducationLines.data.sql" />
-    <Content Include="SQLScripts\dbo.HighSchools.data.sql" />
-    <Content Include="SQLScripts\dbo.SchoolDisciplines.data.sql" />
-    <Content Include="SQLScripts\dbo.SchoolMarks.data.sql" />
-    <Content Include="SQLScripts\dbo.Schools.data.sql" />
-    <Content Include="SQLScripts\dbo.SchoolTypes.data.sql" />
-    <Content Include="SQLScripts\dbo.UnitedStateExams.data.sql" />
-    <Content Include="SQLScripts\dbo.UniversityDepartments.data.sql" />
-    <Content Include="SQLScripts\dbo.Users.data.sql" />
-    <Content Include="SQLScripts\dbo.Weights.data.sql" />
-    <Content Include="SQLScripts\readysqript%28correct order%29.txt" />
+    <Content Include="SQLScripts\Table%28separately%29\dbo.Cities.data.sql" />
+    <Content Include="SQLScripts\Table%28separately%29\dbo.Clusters.data.sql" />
+    <Content Include="SQLScripts\Table%28separately%29\dbo.DepartmentEducationLines.data.sql" />
+    <Content Include="SQLScripts\Table%28separately%29\dbo.DepartmentLinesRequirements.data.sql" />
+    <Content Include="SQLScripts\Table%28separately%29\dbo.Disciplines.data.sql" />
+    <Content Include="SQLScripts\Table%28separately%29\dbo.GeneralEducationLines.data.sql" />
+    <Content Include="SQLScripts\Table%28separately%29\dbo.HighSchools.data.sql" />
+    <Content Include="SQLScripts\Table%28separately%29\dbo.SchoolDisciplines.data.sql" />
+    <Content Include="SQLScripts\Table%28separately%29\dbo.SchoolMarks.data.sql" />
+    <Content Include="SQLScripts\Table%28separately%29\dbo.Schools.data.sql" />
+    <Content Include="SQLScripts\Table%28separately%29\dbo.SchoolTypes.data.sql" />
+    <Content Include="SQLScripts\Table%28separately%29\dbo.UnitedStateExams.data.sql" />
+    <Content Include="SQLScripts\Table%28separately%29\dbo.UniversityDepartments.data.sql" />
+    <Content Include="SQLScripts\Table%28separately%29\dbo.Users.data.sql" />
+    <Content Include="SQLScripts\Table%28separately%29\dbo.Weights.data.sql" />
+    <Content Include="SQLScripts\readysqript%28correct order%29.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
