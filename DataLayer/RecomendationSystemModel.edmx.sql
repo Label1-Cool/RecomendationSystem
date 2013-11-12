@@ -1,14 +1,14 @@
 
 -- --------------------------------------------------
--- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
+-- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 06/03/2013 18:33:51
--- Generated from EDMX file: C:\Users\Евгений\Desktop\RecomendationSystem\RecomendationSystem\DataLayer\RecomendationSystemModel.edmx
+-- Date Created: 11/12/2013 13:20:25
+-- Generated from EDMX file: C:\Users\EABelockiy\Desktop\RecomendationSystem\DataLayer\RecomendationSystemModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [rs5];
+USE [RecomendationSystemDB];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -523,25 +523,25 @@ GO
 -- Creating primary key on [User_Id], [Section_Id] in table 'UserSection'
 ALTER TABLE [dbo].[UserSection]
 ADD CONSTRAINT [PK_UserSection]
-    PRIMARY KEY NONCLUSTERED ([User_Id], [Section_Id] ASC);
+    PRIMARY KEY CLUSTERED ([User_Id], [Section_Id] ASC);
 GO
 
 -- Creating primary key on [User_Id], [Hobbie_Id] in table 'UserHobbie'
 ALTER TABLE [dbo].[UserHobbie]
 ADD CONSTRAINT [PK_UserHobbie]
-    PRIMARY KEY NONCLUSTERED ([User_Id], [Hobbie_Id] ASC);
+    PRIMARY KEY CLUSTERED ([User_Id], [Hobbie_Id] ASC);
 GO
 
 -- Creating primary key on [User_Id], [School_Id] in table 'UserSchool'
 ALTER TABLE [dbo].[UserSchool]
 ADD CONSTRAINT [PK_UserSchool]
-    PRIMARY KEY NONCLUSTERED ([User_Id], [School_Id] ASC);
+    PRIMARY KEY CLUSTERED ([User_Id], [School_Id] ASC);
 GO
 
 -- Creating primary key on [Preference_Id], [City_Id] in table 'PreferenceCity'
 ALTER TABLE [dbo].[PreferenceCity]
 ADD CONSTRAINT [PK_PreferenceCity]
-    PRIMARY KEY NONCLUSTERED ([Preference_Id], [City_Id] ASC);
+    PRIMARY KEY CLUSTERED ([Preference_Id], [City_Id] ASC);
 GO
 
 -- --------------------------------------------------

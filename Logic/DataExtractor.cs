@@ -10,11 +10,10 @@ using System.Threading.Tasks;
 namespace Logic
 {
     /// <summary>
-    /// Вспомогательтный класс для извлечения информации из бд и представления ее в удобном для дальнейшей работы виде
+    /// Вспомогательтный класс для извлечения информации из бд и представления ее в удобном для дальнейшей обработки методами виде
     /// </summary>
     public  class DataExtractor
     {
-        //static Dictionary<string, double> totalClusters;
          Cluster[] totalArrayClusters;
         //таблица пользователи/кластеры в виде словаря
          Dictionary<string, Dictionary<string, double>> allUserCluster = new Dictionary<string, Dictionary<string, double>>();
@@ -24,28 +23,102 @@ namespace Logic
         public  List<UserAnalyzed> UsersCoords { get; set; }
         public  List<ClusterAnalyzed> ClustersCoords { get; set; }
 
-        public DataExtractor()
-        {
-            //Init();
-        }
 
-        public async Task Init(IProgress<int> progress)
+        public async Task Init()
         {
             var task = Task.Factory.StartNew(() =>
                 {
-                    //Получаем полный список доступных кластеров
-                    using (var context = new RecomendationSystemModelContainer())
-                    {
-                        totalArrayClusters = context.Clusters.ToArray();
-                    }
-                    //Строим таблицу пользователь/кластер
-                    AnalyseAllUserCluster(progress);
-                    //Получаем из нее более простую матрицу
-                    CalculateMatrix();
-                    //Проводим LSA анализ и получаем координаты для пользователей и кластеров
-                    CalculateUserAndClusterCoord();
+                    CalculateInfoForLSA();
+
+                    CalculateInfoForParretoSet();
                 });
             await task;
+        }
+
+        /// <summary>
+        /// Получает иноформацию из бд и приводит ее к матричному виду для дальнейшей обработки алгоритмом построения мн-ва Парето.
+        /// В данной версии считается, что порядок названий в бд меняться на протяжении работы не будет(так по идее и должно быть)
+        /// </summary>
+        private void CalculateInfoForParretoSet()
+        {
+            using(var context = new RecomendationSystemModelContainer())
+            {
+                //TODO: Направлению обучения не хватает названия(одного когда не достаточно)
+                
+                //Получаем списки всех нарпавлений обучения + информация о требованиях
+                var educationLinesAndRequirementTable = (from edLines in context.DepartmentEducationLines
+                        select new
+                        {
+                            Id=edLines.Id,
+                            EducationCode = edLines.Code,
+                            Requrement = (from requirement in edLines.DepartmentLinesRequirement
+                                         select requirement.Requirement)
+                        }).ToList();
+                //Получаем остальные списки: оценки, увлечения, предпочтения
+                
+                var finalParetto = educationLinesAndRequirementTable;
+                //Тут 2 варианта:
+                //1. Получаем 1 общий список со всеми прараметрами и строим мн-во Парето
+                //2. Или несколько, и тогда находим паретто для каждого и ищем пересечение
+                //(Пока делаем только 1-й)
+                for (int i=0;i<educationLinesAndRequirementTable.Count;i++)
+                {
+                    var comparedItemRequirements = educationLinesAndRequirementTable[i].Requrement.ToArray();
+                    for (int j=i+1;j<educationLinesAndRequirementTable.Count;j++)
+                    {
+                        var itemRequirements = educationLinesAndRequirementTable[j].Requrement.ToArray();
+                        bool comparedIsMore = true;
+                        for (int k = 0; k < comparedItemRequirements.Count(); k++)
+                        {
+                            if (comparedItemRequirements[k] < itemRequirements[k])
+                            {
+                                //переход к шагу 5 алгоритма
+                                comparedIsMore = false;
+                                break;
+                            }
+                        }
+
+                        if (comparedIsMore)
+                        {
+                            //т.к наш вектор оказался больше другого, удлаяем другой из общего множества
+                            educationLinesAndRequirementTable.Remove(educationLinesAndRequirementTable[j]);
+                            //т.к. массив по которому мы проходим поменялся
+                            --j;
+                            --i;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                        
+                    }
+                }
+
+                //Дальше алгоритм построения множества паретто
+                //Сравниваем направления обучения по требованиям
+                
+
+
+            }
+        }
+
+        private void CalculateInfoForLSA()
+        {
+            //Получаем полный список доступных кластеров
+            using (var context = new RecomendationSystemModelContainer())
+            {
+                totalArrayClusters = context.Clusters.ToArray();
+            }
+            //Строим таблицу пользователь/кластер
+            AnalyseAllUserCluster();
+            //На выходе что то вроде:
+            //Вася: Русскоий-123
+            //      Математика 170
+            //      ...
+            //Получаем из нее более простую матрицу
+            CalculateMatrix();
+            //Проводим LSA анализ и получаем координаты для пользователей и кластеров
+            CalculateUserAndClusterCoord();
         }
         public  Dictionary<string, double> AnalyseUserCluster(string userName)
         {
@@ -94,13 +167,8 @@ namespace Logic
         /// <summary>
         /// Ищет в бд информацию о пользователях, из которой строит "таблицу": пользователи/кластеры. Реузльтат в переменной allUserCluster
         /// </summary>
-        private void AnalyseAllUserCluster(IProgress<int> progress)
+        private void AnalyseAllUserCluster()
         {
-            if (progress==null)
-            {
-                throw new ArgumentNullException("Progress is null");
-            }
-
             using (var context = new RecomendationSystemModelContainer())
             {
                 int countSteps=context.Users.Count();
@@ -132,7 +200,6 @@ namespace Logic
                     allUserCluster.Add(user.FirstName, clusterResult);
 
                     currentStep++;
-                    progress.Report((currentStep * 100) / countSteps);
                 }
             }
         }
