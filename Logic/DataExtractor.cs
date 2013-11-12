@@ -24,12 +24,7 @@ namespace Logic
         public  List<UserAnalyzed> UsersCoords { get; set; }
         public  List<ClusterAnalyzed> ClustersCoords { get; set; }
 
-        public DataExtractor()
-        {
-            //Init();
-        }
-
-        public async Task Init(IProgress<int> progress)
+        public async Task Init()
         {
             var task = Task.Factory.StartNew(() =>
                 {
@@ -39,7 +34,7 @@ namespace Logic
                         totalArrayClusters = context.Clusters.ToArray();
                     }
                     //Строим таблицу пользователь/кластер
-                    AnalyseAllUserCluster(progress);
+                    AnalyseAllUserCluster();
                     //Получаем из нее более простую матрицу
                     CalculateMatrix();
                     //Проводим LSA анализ и получаем координаты для пользователей и кластеров
@@ -94,13 +89,8 @@ namespace Logic
         /// <summary>
         /// Ищет в бд информацию о пользователях, из которой строит "таблицу": пользователи/кластеры. Реузльтат в переменной allUserCluster
         /// </summary>
-        private void AnalyseAllUserCluster(IProgress<int> progress)
+        private void AnalyseAllUserCluster()
         {
-            if (progress==null)
-            {
-                throw new ArgumentNullException("Progress is null");
-            }
-
             using (var context = new RecomendationSystemModelContainer())
             {
                 int countSteps=context.Users.Count();
@@ -132,7 +122,6 @@ namespace Logic
                     allUserCluster.Add(user.FirstName, clusterResult);
 
                     currentStep++;
-                    progress.Report((currentStep * 100) / countSteps);
                 }
             }
         }
