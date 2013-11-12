@@ -86,9 +86,27 @@ namespace Logic
                             --j;
                             --i;
                         }
-                        else
+                        else//проверяем на равенство эти же объекты, но в другом порядке(шаг 5)
                         {
-                            break;
+                            bool itemIsMore = true;
+                            for (int k = 0; k < comparedItemRequirements.Count(); k++)
+                            {
+                                if ( itemRequirements[k]< comparedItemRequirements[k])
+                                {
+                                    itemIsMore = false;
+                                    break;
+                                }
+                            }
+                            if (itemIsMore)
+                            {
+                                //т.к наш вектор оказался больше другого, удлаяем другой из общего множества
+                                educationLinesAndRequirementTable.Remove(educationLinesAndRequirementTable[i]);
+                                //т.к. массив по которому мы проходим поменялся
+                                --j;
+                                --i;
+                            }
+                            else
+                                ++j;
                         }
                         
                     }
