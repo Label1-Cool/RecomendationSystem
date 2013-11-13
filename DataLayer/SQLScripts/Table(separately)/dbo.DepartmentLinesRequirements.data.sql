@@ -7,7 +7,7 @@ INSERT INTO [dbo].[DepartmentLinesRequirements] ([Id], [Requirement], [Departmen
 INSERT INTO [dbo].[DepartmentLinesRequirements] ([Id], [Requirement], [DepartmentEducationLineId], [DisciplineId]) VALUES (6, 68, 2, 5)
 INSERT INTO [dbo].[DepartmentLinesRequirements] ([Id], [Requirement], [DepartmentEducationLineId], [DisciplineId]) VALUES (7, 78, 3, 1)
 INSERT INTO [dbo].[DepartmentLinesRequirements] ([Id], [Requirement], [DepartmentEducationLineId], [DisciplineId]) VALUES (8, 87, 3, 2)
-INSERT INTO [dbo].[DepartmentLinesRequirements] ([Id], [Requirement], [DepartmentEducationLineId], [DisciplineId]) VALUES (9, 81, 1, 5)
+INSERT INTO [dbo].[DepartmentLinesRequirements] ([Id], [Requirement], [DepartmentEducationLineId], [DisciplineId]) VALUES (9, 81, 3, 5)
 INSERT INTO [dbo].[DepartmentLinesRequirements] ([Id], [Requirement], [DepartmentEducationLineId], [DisciplineId]) VALUES (10, 72, 4, 1)
 INSERT INTO [dbo].[DepartmentLinesRequirements] ([Id], [Requirement], [DepartmentEducationLineId], [DisciplineId]) VALUES (11, 86, 4, 2)
 INSERT INTO [dbo].[DepartmentLinesRequirements] ([Id], [Requirement], [DepartmentEducationLineId], [DisciplineId]) VALUES (12, 79, 4, 5)
