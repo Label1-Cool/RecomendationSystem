@@ -46,77 +46,21 @@ namespace Logic
                 //TODO: Направлению обучения не хватает названия(одного когда не достаточно)
                 
                 //Получаем списки всех нарпавлений обучения + информация о требованиях
-                var educationLinesAndRequirementTable = (from edLines in context.DepartmentEducationLines
-                        select new
+                var educationLinesAndRequirementTable = 
+                    (from edLines in context.DepartmentEducationLines
+                     where edLines.DepartmentLinesRequirement.Count==3//пока захардкодим(Должно быть обязательно указано 3 экзамена егэ (мин.баллы)
+                        select new EducationLineAndRequirementRow()
                         {
                             Id=edLines.Id,
-                            EducationCode = edLines.Code,
-                            Requrement = (from requirement in edLines.DepartmentLinesRequirement
-                                         select requirement.Requirement)
+                            Code = edLines.Code,
+                            Requirements = (from requirement in edLines.DepartmentLinesRequirement
+                                            select requirement.Requirement)
                         }).ToList();
                 //Получаем остальные списки: оценки, увлечения, предпочтения
-                
-                var finalParetto = educationLinesAndRequirementTable;
-                //Тут 2 варианта:
-                //1. Получаем 1 общий список со всеми прараметрами и строим мн-во Парето
-                //2. Или несколько, и тогда находим паретто для каждого и ищем пересечение
-                //(Пока делаем только 1-й)
-                for (int i=0;i<educationLinesAndRequirementTable.Count;i++)
-                {
-                    var comparedItemRequirements = educationLinesAndRequirementTable[i].Requrement.ToArray();
-                    for (int j=i+1;j<educationLinesAndRequirementTable.Count;j++)
-                    {
-                        var itemRequirements = educationLinesAndRequirementTable[j].Requrement.ToArray();
-                        bool comparedIsMore = true;
-                        for (int k = 0; k < comparedItemRequirements.Count(); k++)
-                        {
-                            if (comparedItemRequirements[k] < itemRequirements[k])
-                            {
-                                //переход к шагу 5 алгоритма
-                                comparedIsMore = false;
-                                break;
-                            }
-                        }
 
-                        if (comparedIsMore)
-                        {
-                            //т.к наш вектор оказался больше другого, удлаяем другой из общего множества
-                            educationLinesAndRequirementTable.Remove(educationLinesAndRequirementTable[j]);
-                            //т.к. массив по которому мы проходим поменялся
-                            --j;
-                            --i;
-                        }
-                        else//проверяем на равенство эти же объекты, но в другом порядке(шаг 5)
-                        {
-                            bool itemIsMore = true;
-                            for (int k = 0; k < comparedItemRequirements.Count(); k++)
-                            {
-                                if ( itemRequirements[k]< comparedItemRequirements[k])
-                                {
-                                    itemIsMore = false;
-                                    break;
-                                }
-                            }
-                            if (itemIsMore)
-                            {
-                                //т.к наш вектор оказался больше другого, удлаяем другой из общего множества
-                                educationLinesAndRequirementTable.Remove(educationLinesAndRequirementTable[i]);
-                                //т.к. массив по которому мы проходим поменялся
-                                --j;
-                                --i;
-                            }
-                            else
-                                ++j;
-                        }
-                        
-                    }
-                }
-
-                //Дальше алгоритм построения множества паретто
-                //Сравниваем направления обучения по требованиям
-                
-
-
+                //Дальше алгоритм построения множества Паретто
+                MulticriterialAnalysis multicriterialAnalysis = new MulticriterialAnalysis();
+                var parretoSet = multicriterialAnalysis.ParretoSetCreate(educationLinesAndRequirementTable);
             }
         }
 
@@ -270,5 +214,12 @@ namespace Logic
                     new UserAnalyzed(allUserClusterArray[i].Key, UserCoords[i]));
             }
         }
+    }
+    public class EducationLineAndRequirementRow
+    {
+        public int Id { get; set; }
+        public string Code { get; set; }
+
+        public IEnumerable<int> Requirements { get; set; }
     }
 }
