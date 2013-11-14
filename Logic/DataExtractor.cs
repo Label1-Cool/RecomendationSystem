@@ -30,7 +30,7 @@ namespace Logic
                 {
                     CalculateInfoForLSA();
 
-                    CalculateInfoForParretoSet();
+                    //CalculateInfoForParretoSet();
                 });
             await task;
         }
