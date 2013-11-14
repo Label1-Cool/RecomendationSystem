@@ -33,7 +33,7 @@
   <ItemGroup>
     <Reference Include="alglibnet2">
       <HintPath>..\packages\alglib2\alglibnet2.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.0.1\lib\net45\EntityFramework.dll</HintPath>
@@ -61,7 +61,7 @@
     <ProjectReference Include="..\DataLayer\DataLayer.csproj">
       <Project>{72c02cfc-7307-4918-9de0-1f05f6bdecb2}</Project>
       <Name>DataLayer</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

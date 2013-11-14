@@ -115,7 +115,7 @@
     <ProjectReference Include="..\Logic\Logic.csproj">
       <Project>{0a4ca7bd-9ea8-4ef4-8a58-ebf28ef3e3ea}</Project>
       <Name>Logic</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
