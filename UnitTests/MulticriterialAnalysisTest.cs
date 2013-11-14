@@ -8,6 +8,7 @@ namespace UnitTests
     [TestClass]
     public class MulticriterialAnalysisTest
     {
+        //TODO: Написать еще методов тестирования с другими таблицами
         [TestMethod]
         public void Test_ParretoSetCreate_ExistTable()
         {

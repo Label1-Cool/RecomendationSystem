@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="FirstFloor.ModernUI">
       <HintPath>..\packages\ModernUI.WPF.1.0.5\lib\net45\FirstFloor.ModernUI.dll</HintPath>
@@ -114,6 +115,7 @@
     <ProjectReference Include="..\Logic\Logic.csproj">
       <Project>{0a4ca7bd-9ea8-4ef4-8a58-ebf28ef3e3ea}</Project>
       <Name>Logic</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
