@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/12/2013 13:20:25
--- Generated from EDMX file: C:\Users\EABelockiy\Desktop\RecomendationSystem\DataLayer\RecomendationSystemModel.edmx
+-- Date Created: 11/15/2013 11:48:25
+-- Generated from EDMX file: e:\Slackerburst\University\Graduate work 2013\RecomendationSystem\DataLayer\RecomendationSystemModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -206,7 +206,11 @@ CREATE TABLE [dbo].[Users] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [FirstName] nvarchar(max)  NOT NULL,
     [LastName] nvarchar(max)  NOT NULL,
-    [SchoolEducation] nvarchar(max)  NOT NULL
+    [Gender] nvarchar(max)  NULL,
+    [SchoolEducation] nvarchar(max)  NOT NULL,
+    [Medal] nvarchar(max)  NULL,
+    [Citizenship] nvarchar(max)  NULL,
+    [AverageMark] float  NULL
 );
 GO
 
@@ -324,7 +328,8 @@ CREATE TABLE [dbo].[DepartmentEducationLines] (
     [Code] nvarchar(max)  NOT NULL,
     [GeneralEducationLineId] int  NOT NULL,
     [UniversityDepartmentId] int  NOT NULL,
-    [EducationForm] nvarchar(max)  NOT NULL
+    [EducationForm] nvarchar(max)  NOT NULL,
+    [Name] nvarchar(max)  NULL
 );
 GO
 
