@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\EABelockiy\Desktop\RecomendationSystem\DataLayer\RecomendationSystemModel.edmx'. 
+﻿// T4 code generation is enabled for model 'e:\Slackerburst\University\Graduate work 2013\RecomendationSystem\DataLayer\RecomendationSystemModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

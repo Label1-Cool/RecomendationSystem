@@ -28,7 +28,11 @@ namespace DataLayer
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Gender { get; set; }
         public string SchoolEducation { get; set; }
+        public string Medal { get; set; }
+        public string Citizenship { get; set; }
+        public Nullable<double> AverageMark { get; set; }
     
         public virtual ICollection<Section> Section { get; set; }
         public virtual ICollection<Hobbie> Hobbie { get; set; }

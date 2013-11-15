@@ -171,7 +171,11 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Gender" Type="nvarchar(max)" Nullable="true" />
     <Property Name="SchoolEducation" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Medal" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Citizenship" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="AverageMark" Type="float" Nullable="true" />
   </EntityType>
   <EntityType Name="SchoolTypes">
     <Key>
@@ -290,6 +294,7 @@
     <Property Name="GeneralEducationLineId" Type="int" Nullable="false" />
     <Property Name="UniversityDepartmentId" Type="int" Nullable="false" />
     <Property Name="EducationForm" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="true" />
   </EntityType>
   <EntityType Name="GeneralEducationLines">
     <Key>
@@ -887,6 +892,7 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="String" Name="FirstName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="String" Name="LastName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Gender" Type="String" Nullable="true" />
           <Property Type="String" Name="SchoolEducation" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Section" Relationship="RecomendationSystemModel.UserSection" FromRole="User" ToRole="Section" />
           <NavigationProperty Name="Hobbie" Relationship="RecomendationSystemModel.UserHobbie" FromRole="User" ToRole="Hobbie" />
@@ -895,6 +901,9 @@
           <NavigationProperty Name="ParticipationInCompetition" Relationship="RecomendationSystemModel.UserParticipationInCompetition" FromRole="User" ToRole="ParticipationInCompetition" />
           <NavigationProperty Name="UnitedStateExam" Relationship="RecomendationSystemModel.UserUnitedStateExam" FromRole="User" ToRole="UnitedStateExam" />
           <NavigationProperty Name="SchoolMark" Relationship="RecomendationSystemModel.UserSchoolMark" FromRole="User" ToRole="SchoolMark" />
+          <Property Name="Medal" Type="String" Nullable="true" />
+          <Property Name="Citizenship" Type="String" Nullable="true" />
+          <Property Name="AverageMark" Type="Double" Nullable="true" />
         </EntityType>
         <EntityType Name="SchoolType">
           <Key>
@@ -1116,6 +1125,7 @@
           <Property Type="Int32" Name="UniversityDepartmentId" Nullable="false" />
           <Property Type="String" Name="EducationForm" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="DepartmentLinesRequirement" Relationship="RecomendationSystemModel.DepartmentEducationLineDepartmentLinesRequirement" FromRole="DepartmentEducationLine" ToRole="DepartmentLinesRequirement" />
+          <Property Name="Name" Type="String" Nullable="true" />
         </EntityType>
         <EntityType Name="GeneralEducationLine">
           <Key>
@@ -1404,7 +1414,11 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
           <ScalarProperty Name="SchoolEducation" ColumnName="SchoolEducation" />
+          <ScalarProperty Name="Medal" ColumnName="Medal" />
+          <ScalarProperty Name="Citizenship" ColumnName="Citizenship" />
+          <ScalarProperty Name="AverageMark" ColumnName="AverageMark" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1536,6 +1550,7 @@
           <ScalarProperty Name="GeneralEducationLineId" ColumnName="GeneralEducationLineId" />
           <ScalarProperty Name="UniversityDepartmentId" ColumnName="UniversityDepartmentId" />
           <ScalarProperty Name="EducationForm" ColumnName="EducationForm" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

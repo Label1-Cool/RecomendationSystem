@@ -24,6 +24,7 @@ namespace DataLayer
         public int GeneralEducationLineId { get; set; }
         public int UniversityDepartmentId { get; set; }
         public string EducationForm { get; set; }
+        public string Name { get; set; }
     
         public virtual GeneralEducationLine GeneralEducationLine { get; set; }
         public virtual UniversityDepartment UniversityDepartment { get; set; }
