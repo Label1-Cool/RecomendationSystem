@@ -225,11 +225,12 @@ namespace Logic
 
                         foreach (var weight in stateExam.Discipline.Weight)
                         {
-                            double coeff = weight.Coefficient;
-                            var calcResult = mark * coeff;
-                            string name = weight.Cluster.Name;
-
-                            clusterResult[name] += calcResult;
+                            var calcResult = mark * weight.Coefficient;
+                            //Прибавляет заданному кластуру значение. Именно прибавляет.
+                            //Т.е. если у нас есть к примеру есть значение по математике, 
+                            //и мы смотрим информатику,которая в свою очередь имеет вклад и в Информатику, и в Математику(меньший). 
+                            //Соответсвенно начальное значение математики увеличится
+                            clusterResult[weight.Cluster.Name] += calcResult;
                         }
                     }
                     allUserCluster.Add(new KeyValuePair<int,string>(user.Id,user.FirstName), clusterResult);

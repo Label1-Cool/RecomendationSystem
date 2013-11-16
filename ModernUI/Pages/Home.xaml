@@ -30,12 +30,8 @@
             <Grid Grid.Row="1" Grid.Column="1" MinHeight="300" MinWidth="500">
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Результаты" FontSize="18"/>
                 <chartingToolkit:Chart BorderBrush="{x:Null}">
-                    <!--<chartingToolkit:Chart.Axes>
-                <chartingToolkit:LinearAxis Maximum="1" Minimum="-1" Orientation="X" ShowGridLines="True" SeriesHost="{x:Null}"/>
-                <chartingToolkit:LinearAxis Maximum="1" Minimum="-1" Orientation="Y" ShowGridLines="True" SeriesHost="{x:Null}"/>
-            </chartingToolkit:Chart.Axes>-->
                     <chartingToolkit:ScatterSeries x:Name="KeyWordSeries" 
-				Title="Учебное направление" 
+				Title="Кластер" 
 				ItemsSource="{Binding AllClusters}" 
 				IndependentValueBinding="{Binding Coords.Key, Mode=OneWay}"
 				DependentValueBinding="{Binding Coords.Value, Mode=OneWay}"/>
