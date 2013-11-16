@@ -16,7 +16,8 @@ namespace Logic
     {
          Cluster[] totalArrayClusters;
         //таблица пользователи/кластеры в виде словаря
-         Dictionary<string, Dictionary<string, double>> allUserCluster = new Dictionary<string, Dictionary<string, double>>();
+
+         Dictionary<KeyValuePair<int, string>, Dictionary<string, double>> allUserCluster = new Dictionary<KeyValuePair<int, string>, Dictionary<string, double>>();
         //простое табличное представление  пользователи/кластеры
          double[,] matrixUserCluster;
 
@@ -231,7 +232,7 @@ namespace Logic
                             clusterResult[name] += calcResult;
                         }
                     }
-                    allUserCluster.Add(user.FirstName, clusterResult);
+                    allUserCluster.Add(new KeyValuePair<int,string>(user.Id,user.FirstName), clusterResult);
 
                     currentStep++;
                 }

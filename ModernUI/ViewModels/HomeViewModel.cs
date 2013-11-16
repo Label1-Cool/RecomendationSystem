@@ -59,9 +59,9 @@ namespace ModernUI.ViewModels
                     //обновление отображаемых пользователей на графике и в таблице
                     if (_isSelectAll == true)
                     {
-                        foreach (var user in _allUsers)
+                        foreach (var analysedUser in _allUsers)
                         {
-                            _usersToDisplay.Add(user);
+                            _usersToDisplay.Add(analysedUser);
                         }
                         //Так, или через observable collections(переписать)
                         //_resultDictionary = new Dictionary<string, double>();

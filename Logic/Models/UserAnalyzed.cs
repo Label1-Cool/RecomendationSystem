@@ -7,12 +7,12 @@ namespace Logic.Models
 {
     public class UserAnalyzed
     {
-        public string Name { get; private set; }
+        public KeyValuePair<int, string> User { get; private set; }
         public KeyValuePair<double, double> Coords { get; private set; }
 
-        public UserAnalyzed(string name, KeyValuePair<double, double> coords)
+        public UserAnalyzed(KeyValuePair<int, string> user, KeyValuePair<double, double> coords)
         {
-            Name = name;
+            User = user;
             Coords = coords;
         }
 
