@@ -83,7 +83,7 @@ namespace ModernUI.ViewModels
                 {
                     _allEducationLines = value;
 
-                    UpdateUI(new PropertyChangedEventArgs("AllUsers"));
+                    UpdateUI(new PropertyChangedEventArgs("AllEducationLines"));
                 }
             }
         }
