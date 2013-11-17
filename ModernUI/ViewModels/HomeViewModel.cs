@@ -159,8 +159,8 @@ namespace ModernUI.ViewModels
                 IsVisibleProgressBar = Visibility.Visible;
 
                 await dataExtractor.Init();
-                AllUsers = dataExtractor.UsersCoords;
-                AllClusters = dataExtractor.ClustersCoords;
+                AllUsers = dataExtractor.UsersAnalysed;
+                AllClusters = dataExtractor.UsersClustersAnalysed;
 
                 IsVisibleProgressBar = Visibility.Hidden;
                 _isInitialized = true;

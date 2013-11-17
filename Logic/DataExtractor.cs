@@ -14,16 +14,25 @@ namespace Logic
     /// </summary>
     public  class DataExtractor
     {
-         Cluster[] totalArrayClusters;
-        //таблица пользователи/кластеры в виде словаря
+        #region Fields and Properties
+        Cluster[] totalArrayClusters;
 
-         Dictionary<KeyValuePair<int, string>, Dictionary<string, double>> allUserCluster = new Dictionary<KeyValuePair<int, string>, Dictionary<string, double>>();
-        //простое табличное представление  пользователи/кластеры
-         double[,] matrixUserCluster;
+        //таблица "пользователи/кластеры" в виде словаря
+        Dictionary<KeyValuePair<int, string>, Dictionary<string, double>> allUserCluster = new Dictionary<KeyValuePair<int, string>, Dictionary<string, double>>();
+        //таблица "направления обучения/кластеры" в виде словаря
+        Dictionary<KeyValuePair<int, string>, Dictionary<string, double>> allEducationLineCluster = new Dictionary<KeyValuePair<int, string>, Dictionary<string, double>>();
 
-        public  List<UserAnalyzed> UsersCoords { get; set; }
-        public  List<ClusterAnalyzed> ClustersCoords { get; set; }
+        //простое табличное представление  "пользователи/кластеры"
+        double[,] matrixUserCluster;
+        //простое табличное представление  "направления обучения/кластеры"
+        double[,] matrixEducationLineCluster;
 
+        public List<UserAnalyzed> UsersAnalysed { get; set; }
+        public List<ClusterAnalyzed> UsersClustersAnalysed { get; set; }
+
+        public List<EducationLineAnalyzed> EducationLinesAnalysed { get; set; }
+        public List<ClusterAnalyzed> EducationLinesClustersAnalysed { get; set; }
+        #endregion
 
         public async Task Init()
         {
@@ -36,6 +45,193 @@ namespace Logic
             await task;
         }
 
+        #region LSA
+
+
+        private void CalculateInfoForLSA()
+        {
+            //Получаем полный список доступных кластеров
+            using (var context = new RecomendationSystemModelContainer())
+            {
+                totalArrayClusters = context.Clusters.ToArray();
+            }
+
+            //Строим таблицу пользователь/кластер
+            AnalyseAllUserCluster();
+            //Строим таблицу "направление обучения/кластер"
+            AnalyseAllEducationLineCluster();
+
+            //На выходе что то вроде:
+            //Вася: Русскоий-123
+            //      Математика 170
+            //      ...
+            //Получаем из нее более простую матрицу
+            matrixUserCluster = CalculateMatrix(allUserCluster);
+            //аналогично для направлений обучения
+            matrixEducationLineCluster = CalculateMatrix(allEducationLineCluster);
+
+            //Проводим LSA анализ и получаем координаты для пользователей и кластеров
+            CalculateUserAndClusterCoord();
+            CalculateEducationLineAndClusterCoord();
+        }
+
+        /// <summary>
+        /// Ищет в бд информацию о пользователях, из которой строит "таблицу": пользователи/кластеры. Реузльтат в переменной allUserCluster
+        /// </summary>
+        private void AnalyseAllUserCluster()
+        {
+            using (var context = new RecomendationSystemModelContainer())
+            {
+                int countSteps=context.Users.Count();
+                int currentStep=0;
+                //берем всех пользователей
+                foreach (var user in context.Users)
+                {
+                    Dictionary<string, double> clusterResult = new Dictionary<string, double>();
+                    foreach (var item in totalArrayClusters)
+                    {
+                        clusterResult.Add(item.Name, 0);
+                    }
+                    //заполняем оценками и кластерами
+                    foreach (var stateExam in user.UnitedStateExam)
+                    {
+                        //Получаем текущую дисциплину и ее весовые коэффициенты. Запонляем : Дисциплина/кластер
+                        int mark = stateExam.Result;
+
+                        foreach (var weight in stateExam.Discipline.Weight)
+                        {
+                            var calcResult = mark * weight.Coefficient;
+                            //Прибавляет заданному кластуру значение. Именно прибавляет.
+                            //Т.е. если у нас есть к примеру есть значение по математике, 
+                            //и мы смотрим информатику,которая в свою очередь имеет вклад и в Информатику, и в Математику(меньший). 
+                            //Соответсвенно начальное значение математики увеличится
+                            clusterResult[weight.Cluster.Name] += calcResult;
+                        }
+                    }
+                    allUserCluster.Add(new KeyValuePair<int,string>(user.Id,user.FirstName), clusterResult);
+
+                    currentStep++;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Ищет в бд информацию о направлениях, из которой строит "таблицу": направления/кластеры. Реузльтат в переменной allEducationLineCluster
+        /// </summary>
+        private void AnalyseAllEducationLineCluster()
+        {
+            using (var context = new RecomendationSystemModelContainer())
+            {
+                int countSteps = context.Users.Count();
+                int currentStep = 0;
+
+                //берем все направления
+                foreach (var educationLine in context.DepartmentEducationLines)
+                {
+                    Dictionary<string, double> clusterResult = new Dictionary<string, double>();
+                    foreach (var item in totalArrayClusters)
+                    {
+                        clusterResult.Add(item.Name, 0);
+                    }
+                    //заполняем оценками и кластерами
+                    foreach (var requirement in educationLine.DepartmentLinesRequirement)
+                    {
+                        //Получаем текущую дисциплину и ее весовые коэффициенты. Запонляем : Дисциплина/кластер
+                        int mark = requirement.Requirement;
+
+                        foreach (var weight in requirement.Discipline.Weight)
+                        {
+                            var calcResult = mark * weight.Coefficient;
+                            //Прибавляет заданному кластеру значение. Именно прибавляет.
+                            //Т.е. если у нас есть к примеру есть значение по математике, 
+                            //и мы смотрим информатику,которая в свою очередь имеет вклад и в Информатику, и в Математику(меньший). 
+                            //Соответсвенно начальное значение математики увеличится
+                            clusterResult[weight.Cluster.Name] += calcResult;
+                        }
+                    }
+                    allEducationLineCluster.Add(new KeyValuePair<int, string>(educationLine.Id, educationLine.Name), clusterResult);
+
+                    currentStep++;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Строит матрицу для LSA из словаря
+        /// </summary>
+        /// <param name="clusterDictionary">Словарь, из которого строится матрица</param>
+        /// <returns>Построенная матрица</returns>
+        private  double[,] CalculateMatrix(Dictionary<KeyValuePair<int, string>, Dictionary<string, double>> clusterDictionary)
+        {
+            //Представляем нашу таблицу в более простом виде
+            int row = clusterDictionary.Count;
+            int column = clusterDictionary.FirstOrDefault().Value.Count;
+            var matrixCluster = new double[row, column];
+
+            var allUserClusterArray = clusterDictionary.ToArray();
+            for (int i = 0; i < row; i++)
+            {
+                var nuc2 = allUserClusterArray[i].Value.Values.ToArray();
+                for (int j = 0; j < column; j++)
+                {
+                    matrixCluster[i, j] = nuc2[j];
+                }
+            }
+            return matrixCluster;
+        }
+
+        private void CalculateUserAndClusterCoord()
+        {
+            LSA lsa = new LSA(matrixUserCluster);
+            var ClusterCoords = lsa.FirtsCoords;
+            var ItemCoords = lsa.SecondCoords;
+            int row = matrixUserCluster.GetLength(0);
+            int column = matrixUserCluster.GetLength(1);
+
+            //Проанализируем пользователей
+            UsersAnalysed = new List<UserAnalyzed>();
+            for (int i = 0; i < row; i++)
+            {
+                UsersAnalysed.Add(
+                    new UserAnalyzed(allUserCluster.ToArray()[i].Key, ItemCoords[i]));
+            }
+
+            //Проанализируем кластеры обучения
+            UsersClustersAnalysed = new List<ClusterAnalyzed>();
+            for (int i = 0; i < column; i++)
+            {
+                UsersClustersAnalysed.Add(
+                    new ClusterAnalyzed(totalArrayClusters[i].Name, ClusterCoords[i]));
+            }
+
+        }
+        private void CalculateEducationLineAndClusterCoord()
+        {
+            LSA lsa = new LSA(matrixEducationLineCluster);
+            var ClusterCoords = lsa.FirtsCoords;
+            var ItemCoords = lsa.SecondCoords;
+            int row = matrixEducationLineCluster.GetLength(0);
+            int column = matrixEducationLineCluster.GetLength(1);
+
+            //Проанализируем направления обучения
+            EducationLinesAnalysed = new List<EducationLineAnalyzed>();
+            for (int i = 0; i < row; i++)
+            {
+                EducationLinesAnalysed.Add(
+                    new EducationLineAnalyzed(allEducationLineCluster.ToArray()[i].Key, ItemCoords[i]));
+            }
+
+            //Проанализируем кластеры обучения
+            EducationLinesClustersAnalysed = new List<ClusterAnalyzed>();
+            for (int i = 0; i < column; i++)
+            {
+                EducationLinesClustersAnalysed.Add(
+                    new ClusterAnalyzed(totalArrayClusters[i].Name, ClusterCoords[i]));
+            }
+        }
+        #endregion
+
+        #region Pareto
         /// <summary>
         /// Получает иноформацию из бд и приводит ее к матричному виду для дальнейшей обработки алгоритмом построения мн-ва Парето.
         /// В данной версии считается, что порядок названий в бд меняться на протяжении работы не будет(так по идее и должно быть)
@@ -131,163 +327,11 @@ namespace Logic
                 throw new Exception("Не удалось получить списко информации об направлениях обучения и требованиях");
 
         }
-
         private int RecalculateElementsRow(int ImpotantElement, int notImpotantElement, double teta)
         {
             return (int)(teta * ImpotantElement + (1 - teta) * notImpotantElement);
         }
-
-        private void CalculateInfoForLSA()
-        {
-            //Получаем полный список доступных кластеров
-            using (var context = new RecomendationSystemModelContainer())
-            {
-                totalArrayClusters = context.Clusters.ToArray();
-            }
-            //Строим таблицу пользователь/кластер
-            AnalyseAllUserCluster();
-            //На выходе что то вроде:
-            //Вася: Русскоий-123
-            //      Математика 170
-            //      ...
-            //Получаем из нее более простую матрицу
-            CalculateMatrix();
-            //Проводим LSA анализ и получаем координаты для пользователей и кластеров
-            CalculateUserAndClusterCoord();
-        }
-        public  Dictionary<string, double> AnalyseUserCluster(string userName)
-        {
-            using (var context = new RecomendationSystemModelContainer())
-            {
-                //берем какого то пользователя
-                var user = (from u in context.Users
-                            where u.FirstName == userName
-                            select u).FirstOrDefault();
-                if (user == null)
-                {
-                    throw new NullReferenceException();
-                }
-
-                //Dictionary<string, double> clusterResult = totalClusters;
-                Dictionary<string, double> clusterResult = new Dictionary<string, double>();
-                foreach (var item in totalArrayClusters)
-                {
-                    clusterResult.Add(item.Name, 0);
-                }
-
-                //заполняем оценками и кластерами
-                foreach (var stateExam in user.UnitedStateExam)
-                {
-                    //Получаем текущую дисциплину и ее весовые коэффициенты. Запонляем : Дисциплина/кластер
-                    string discipline = stateExam.Discipline.Name;
-                    int mark = stateExam.Result;
-
-                    foreach (var weight in stateExam.Discipline.Weight)
-                    {
-                        double coeff = weight.Coefficient;
-                        var calcResult = mark * coeff;
-                        string name = weight.Cluster.Name;
-
-                        clusterResult[name] += calcResult;
-                    }
-                }
-
-                //analyseUserCluster = clusterResult
-                //    .OrderByDescending(elem => elem.Value)
-                //    .ToDictionary((keyItem) => keyItem.Key, (valueItem) => valueItem.Value);
-                return clusterResult;
-            }
-        }
-
-        /// <summary>
-        /// Ищет в бд информацию о пользователях, из которой строит "таблицу": пользователи/кластеры. Реузльтат в переменной allUserCluster
-        /// </summary>
-        private void AnalyseAllUserCluster()
-        {
-            using (var context = new RecomendationSystemModelContainer())
-            {
-                int countSteps=context.Users.Count();
-                int currentStep=0;
-                //берем всех пользователей
-                foreach (var user in context.Users)
-                {
-                    Dictionary<string, double> clusterResult = new Dictionary<string, double>();
-                    foreach (var item in totalArrayClusters)
-                    {
-                        clusterResult.Add(item.Name, 0);
-                    }
-                    //заполняем оценками и кластерами
-                    foreach (var stateExam in user.UnitedStateExam)
-                    {
-                        //Получаем текущую дисциплину и ее весовые коэффициенты. Запонляем : Дисциплина/кластер
-                        string discipline = stateExam.Discipline.Name;
-                        int mark = stateExam.Result;
-
-                        foreach (var weight in stateExam.Discipline.Weight)
-                        {
-                            var calcResult = mark * weight.Coefficient;
-                            //Прибавляет заданному кластуру значение. Именно прибавляет.
-                            //Т.е. если у нас есть к примеру есть значение по математике, 
-                            //и мы смотрим информатику,которая в свою очередь имеет вклад и в Информатику, и в Математику(меньший). 
-                            //Соответсвенно начальное значение математики увеличится
-                            clusterResult[weight.Cluster.Name] += calcResult;
-                        }
-                    }
-                    allUserCluster.Add(new KeyValuePair<int,string>(user.Id,user.FirstName), clusterResult);
-
-                    currentStep++;
-                }
-            }
-        }
-        /// <summary>
-        /// Строит матрицу для LSA на основе всех данных из бд
-        /// </summary>
-        private  void CalculateMatrix()
-        {
-            //Представляем нашу таблицу в более простом виде
-            int row = allUserCluster.Count;
-            int column = allUserCluster.FirstOrDefault().Value.Count;
-            matrixUserCluster = new double[row, column];
-
-            var allUserClusterArray = allUserCluster.ToArray();
-            for (int i = 0; i < row; i++)
-            {
-                var nuc2 = allUserClusterArray[i].Value.Values.ToArray();
-                for (int j = 0; j < column; j++)
-                {
-                    matrixUserCluster[i, j] = nuc2[j];
-                }
-            }
-        }
-
-        private  void CalculateUserAndClusterCoord()
-        {
-            LSA lsa = new LSA(matrixUserCluster);
-            var ClusterCoords = lsa.FirtsCoords;
-            var UserCoords = lsa.SecondCoords;
-
-            //создаем списки с результатами
-            //Для кластеров
-            var allUserClusterArray = allUserCluster.ToArray();
-            int row = allUserCluster.Count;
-            int column = allUserCluster.FirstOrDefault().Value.Count;
-
-            ClustersCoords = new List<ClusterAnalyzed>();
-            var clustersArray = allUserClusterArray[0].Value.ToArray();
-            for (int i = 0; i < column; i++)
-            {
-                ClustersCoords.Add(
-                    new ClusterAnalyzed(clustersArray[i].Key, ClusterCoords[i]));
-            }
-
-            //Для пользователей
-            UsersCoords = new List<UserAnalyzed>();
-            for (int i = 0; i < row; i++)
-            {
-                UsersCoords.Add(
-                    new UserAnalyzed(allUserClusterArray[i].Key, UserCoords[i]));
-            }
-        }
+        #endregion
     }
     public class EducationLineAndRequirementRow
     {

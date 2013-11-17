@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Logic.Models
 {
-    public class UserAnalyzed : IItemAnalyzed
+    public class EducationLineAnalyzed : IItemAnalyzed
     {
         public KeyValuePair<int, string> Info { get; private set; }
         public KeyValuePair<double, double> Coords { get; private set; }
 
-        public UserAnalyzed(KeyValuePair<int, string> info, KeyValuePair<double, double> coords)
+        public EducationLineAnalyzed(KeyValuePair<int, string> info, KeyValuePair<double, double> coords)
         {
             Info = info;
             Coords = coords;
         }
+        public EducationLineAnalyzed() { }
 
         public Dictionary<string,double> CalculateOptimalDirections(List<ClusterAnalyzed> allClusters)
         {
