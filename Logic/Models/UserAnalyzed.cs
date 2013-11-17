@@ -34,7 +34,7 @@ namespace Logic.Models
             }
             //сортируем в порядке убывания
             allClustersDirections = allClustersDirections
-                    .OrderByDescending(elem => elem.Value)
+                    .OrderBy(elem => elem.Value)
                     .ToDictionary((keyItem) => keyItem.Key, (valueItem) => valueItem.Value);
             return allClustersDirections;
         }

@@ -31,7 +31,7 @@
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Результаты" FontSize="18"/>
                 <chartingToolkit:Chart BorderBrush="{x:Null}">
                     <chartingToolkit:ScatterSeries x:Name="KeyWordSeries" 
-				Title="Кластер" 
+				Title="Кластер"
 				ItemsSource="{Binding AllClusters}" 
 				IndependentValueBinding="{Binding Coords.Key, Mode=OneWay}"
 				DependentValueBinding="{Binding Coords.Value, Mode=OneWay}"/>
@@ -41,6 +41,7 @@
 				IndependentValueBinding="{Binding Coords.Key, Mode=OneWay}"
 				DependentValueBinding="{Binding Coords.Value, Mode=OneWay}"
 				ToolTipService.ShowOnDisabled="True"/>
+                       
                 </chartingToolkit:Chart>
             </Grid>
             <StackPanel Grid.Row="2" Grid.Column="1"  Margin="20,0,0,0">

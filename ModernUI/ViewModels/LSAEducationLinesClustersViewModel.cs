@@ -67,7 +67,7 @@ namespace ModernUI.ViewModels
                         //Так, или через observable collections(переписать)
                         //_resultDictionary = new Dictionary<string, double>();
                     }
-                    UpdateUI(new PropertyChangedEventArgs("UsersToDisplay"));
+                    
                     UpdateUI(new PropertyChangedEventArgs("ResultDictionary"));
                 }
             }
@@ -114,7 +114,6 @@ namespace ModernUI.ViewModels
                     //обновление отображаемых пользователей
                     _educationLinesToDisplay.Clear();
                     _educationLinesToDisplay.Add(value);
-                    UpdateUI(new PropertyChangedEventArgs("UsersToDisplay"));
 
                     //Обновляем информацию в табличной форме
                     if (_allCluster!=null)
