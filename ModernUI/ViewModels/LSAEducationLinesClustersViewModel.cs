@@ -12,16 +12,17 @@ using FirstFloor.ModernUI.Windows;
 
 namespace ModernUI.ViewModels
 {
-    public class HomeViewModel : INotifyPropertyChanged
+    public class LSAEducationLinesClustersViewModel : INotifyPropertyChanged
     {   
         #region Fields
         private Visibility _isVisibleProgressBar = Visibility.Hidden;
         private bool _isInitialized = false;
         private bool _isSelectAll;
-        private List<UserAnalyzed> _allUsers = new List<UserAnalyzed>();
+        private List<EducationLineAnalyzed> _allEducationLines = new List<EducationLineAnalyzed>();
         private List<ClusterAnalyzed> _allCluster = new List<ClusterAnalyzed>();
-        ObservableCollection<UserAnalyzed> _usersToDisplay = new ObservableCollection<UserAnalyzed>();
-        private UserAnalyzed _selectedUser;
+
+        ObservableCollection<EducationLineAnalyzed> _educationLinesToDisplay = new ObservableCollection<EducationLineAnalyzed>();
+        private EducationLineAnalyzed _selectedEducationLine;
         private Dictionary<string, double> _resultDictionary = new Dictionary<string, double>();
 
         DataExtractor dataExtractor = new DataExtractor();
@@ -54,14 +55,14 @@ namespace ModernUI.ViewModels
                 {
                     _isSelectAll = value;
 
-                    _usersToDisplay.Clear();
+                    _educationLinesToDisplay.Clear();
                     _resultDictionary.Clear();
                     //обновление отображаемых пользователей на графике и в таблице
                     if (_isSelectAll == true)
                     {
-                        foreach (var analysedUser in _allUsers)
+                        foreach (var analysedEducationLine in _allEducationLines)
                         {
-                            _usersToDisplay.Add(analysedUser);
+                            _educationLinesToDisplay.Add(analysedEducationLine);
                         }
                         //Так, или через observable collections(переписать)
                         //_resultDictionary = new Dictionary<string, double>();
@@ -73,46 +74,46 @@ namespace ModernUI.ViewModels
         }
 
         
-        public List<UserAnalyzed> AllUsers
+        public List<EducationLineAnalyzed> AllEducationLines
         {
-            get { return _allUsers; }
+            get { return _allEducationLines; }
             set
             {
-                if (_allUsers != value)
+                if (_allEducationLines != value)
                 {
-                    _allUsers = value;
+                    _allEducationLines = value;
 
                     UpdateUI(new PropertyChangedEventArgs("AllUsers"));
                 }
             }
         }
-        
-        
-        public ObservableCollection<UserAnalyzed> UsersToDisplay
+
+
+        public ObservableCollection<EducationLineAnalyzed> EducationLinesToDisplay
         {
-            get { return _usersToDisplay; }
+            get { return _educationLinesToDisplay; }
             set
             {
-                if (_usersToDisplay != value)
+                if (_educationLinesToDisplay != value)
                 {
-                    _usersToDisplay = value;
+                    _educationLinesToDisplay = value;
                 }
             }
         }
 
-        
-        public UserAnalyzed SelectedUser
+
+        public EducationLineAnalyzed SelectedEducationLies
         {
-            get { return _selectedUser; }
+            get { return _selectedEducationLine; }
             set
             {
-                if (_selectedUser != value)
+                if (_selectedEducationLine != value)
                 {
-                    _selectedUser = value;
+                    _selectedEducationLine = value;
 
                     //обновление отображаемых пользователей
-                    _usersToDisplay.Clear();
-                    _usersToDisplay.Add(value);
+                    _educationLinesToDisplay.Clear();
+                    _educationLinesToDisplay.Add(value);
                     UpdateUI(new PropertyChangedEventArgs("UsersToDisplay"));
 
                     //Обновляем информацию в табличной форме
@@ -158,9 +159,9 @@ namespace ModernUI.ViewModels
             {
                 IsVisibleProgressBar = Visibility.Visible;
 
-                await dataExtractor.Init();
-                AllUsers = dataExtractor.UsersAnalysed;
-                AllClusters = dataExtractor.UsersClustersAnalysed;
+                await dataExtractor.CalculateEducationLinesToClusterForLSA();
+                AllEducationLines = dataExtractor.EducationLinesAnalysed;
+                AllClusters = dataExtractor.EducationLinesClustersAnalysed;
 
                 IsVisibleProgressBar = Visibility.Hidden;
                 _isInitialized = true;

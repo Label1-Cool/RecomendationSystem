@@ -54,6 +54,7 @@
     <Compile Include="Models\ClusterAnalyzed.cs" />
     <Compile Include="Models\DisciplinePriority.cs" />
     <Compile Include="Models\EducationLineAnalyzed.cs" />
+    <Compile Include="Models\IItemAnalyzed.cs" />
     <Compile Include="Models\UserAnalyzed.cs" />
     <Compile Include="MulticriterialAnalysis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

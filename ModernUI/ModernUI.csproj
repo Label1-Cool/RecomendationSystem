@@ -73,7 +73,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="Pages\LSAEducationLinesClusters.xaml.cs">
+      <DependentUpon>LSAEducationLinesClusters.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\LSAEducationLinesClustersViewModel.cs" />
+    <Compile Include="ViewModels\LSAUsersClustersViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -97,7 +101,11 @@
       <DependentUpon>SettingsAppearance.xaml</DependentUpon>
     </Compile>
     <Compile Include="Content\SettingsAppearanceViewModel.cs" />
-    <Page Include="Pages\Home.xaml">
+    <Page Include="Pages\LSAEducationLinesClusters.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\LSAUsersClusters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -105,8 +113,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Compile Include="Pages\Home.xaml.cs">
-      <DependentUpon>Home.xaml</DependentUpon>
+    <Compile Include="Pages\LSAUsersClusters.xaml.cs">
+      <DependentUpon>LSAUsersClusters.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>

@@ -34,47 +34,78 @@ namespace Logic
         public List<ClusterAnalyzed> EducationLinesClustersAnalysed { get; set; }
         #endregion
 
-        public async Task Init()
+        #region LSA
+        public async Task CalculateInfoForLSA()
         {
             var task = Task.Factory.StartNew(() =>
                 {
-                    CalculateInfoForLSA();
+                    //Получаем полный список доступных кластеров
+                    using (var context = new RecomendationSystemModelContainer())
+                    {
+                        totalArrayClusters = context.Clusters.ToArray();
+                    }
 
-                    //CalculateInfoForParretoSet();
+                    //Строим таблицу пользователь/кластер
+                    AnalyseAllUserCluster();
+                    //Строим таблицу "направление обучения/кластер"
+                    AnalyseAllEducationLineCluster();
+
+                    //На выходе что то вроде:
+                    //Вася: Русскоий-123
+                    //      Математика 170
+                    //      ...
+                    //Получаем из нее более простую матрицу
+                    matrixUserCluster = CalculateMatrix(allUserCluster);
+                    //аналогично для направлений обучения
+                    matrixEducationLineCluster = CalculateMatrix(allEducationLineCluster);
+
+                    //Проводим LSA анализ и получаем координаты для пользователей и кластеров
+                    CalculateUserAndClusterCoord();
+                    CalculateEducationLineAndClusterCoord();
                 });
             await task;
         }
-
-        #region LSA
-
-
-        private void CalculateInfoForLSA()
+        public async Task CalculateUserToClusterForLSA()
         {
-            //Получаем полный список доступных кластеров
-            using (var context = new RecomendationSystemModelContainer())
+            var task = Task.Factory.StartNew(() =>
             {
-                totalArrayClusters = context.Clusters.ToArray();
-            }
+                //Получаем полный список доступных кластеров
+                using (var context = new RecomendationSystemModelContainer())
+                {
+                    totalArrayClusters = context.Clusters.ToArray();
+                }
 
-            //Строим таблицу пользователь/кластер
-            AnalyseAllUserCluster();
-            //Строим таблицу "направление обучения/кластер"
-            AnalyseAllEducationLineCluster();
+                //Строим таблицу пользователь/кластер
+                AnalyseAllUserCluster();
 
-            //На выходе что то вроде:
-            //Вася: Русскоий-123
-            //      Математика 170
-            //      ...
-            //Получаем из нее более простую матрицу
-            matrixUserCluster = CalculateMatrix(allUserCluster);
-            //аналогично для направлений обучения
-            matrixEducationLineCluster = CalculateMatrix(allEducationLineCluster);
+                //Получаем из нее более простую матрицу
+                matrixUserCluster = CalculateMatrix(allUserCluster);
 
-            //Проводим LSA анализ и получаем координаты для пользователей и кластеров
-            CalculateUserAndClusterCoord();
-            CalculateEducationLineAndClusterCoord();
+                //Проводим LSA анализ и получаем координаты для пользователей и кластеров
+                CalculateUserAndClusterCoord();
+            });
+            await task;
         }
+        public async Task CalculateEducationLinesToClusterForLSA()
+        {
+            var task = Task.Factory.StartNew(() =>
+            {
+                //Получаем полный список доступных кластеров
+                using (var context = new RecomendationSystemModelContainer())
+                {
+                    totalArrayClusters = context.Clusters.ToArray();
+                }
 
+                //Строим таблицу "направление обучения/кластер"
+                AnalyseAllEducationLineCluster();
+
+                matrixEducationLineCluster = CalculateMatrix(allEducationLineCluster);
+
+                //Проводим LSA анализ и получаем координаты для пользователей и кластеров
+                CalculateEducationLineAndClusterCoord();
+            });
+            await task;
+        }
         /// <summary>
         /// Ищет в бд информацию о пользователях, из которой строит "таблицу": пользователи/кластеры. Реузльтат в переменной allUserCluster
         /// </summary>
