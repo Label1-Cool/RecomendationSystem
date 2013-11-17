@@ -21,11 +21,15 @@ namespace Logic
         Dictionary<KeyValuePair<int, string>, Dictionary<string, double>> allUserCluster = new Dictionary<KeyValuePair<int, string>, Dictionary<string, double>>();
         //таблица "направления обучения/кластеры" в виде словаря
         Dictionary<KeyValuePair<int, string>, Dictionary<string, double>> allEducationLineCluster = new Dictionary<KeyValuePair<int, string>, Dictionary<string, double>>();
+        //таблица "направления обучения/кластеры" в виде словаря
+        List<UserToEducationLine> allUserEducationLine = new List<UserToEducationLine>();
 
         //простое табличное представление  "пользователи/кластеры"
         double[,] matrixUserCluster;
         //простое табличное представление  "направления обучения/кластеры"
         double[,] matrixEducationLineCluster;
+        //простое табличное представление  "пользователи/направления обучения"
+        double[,] matrixUserEducationLine;
 
         public List<UserAnalyzed> UsersAnalysed { get; set; }
         public List<ClusterAnalyzed> UsersClustersAnalysed { get; set; }
@@ -50,18 +54,46 @@ namespace Logic
                     //Строим таблицу "направление обучения/кластер"
                     AnalyseAllEducationLineCluster();
 
-                    //На выходе что то вроде:
-                    //Вася: Русскоий-123
-                    //      Математика 170
-                    //      ...
-                    //Получаем из нее более простую матрицу
-                    matrixUserCluster = CalculateMatrix(allUserCluster);
-                    //аналогично для направлений обучения
-                    matrixEducationLineCluster = CalculateMatrix(allEducationLineCluster);
+                    //Из таблиц пользователь/кластер и "направление обучения/кластер" строим таблицу 
+                    //"пользователь/направление обучения"
 
-                    //Проводим LSA анализ и получаем координаты для пользователей и кластеров
-                    CalculateUserAndClusterCoord();
-                    CalculateEducationLineAndClusterCoord();
+                    
+                    UserToEducationLine[,] userToEducLineMatrix=new UserToEducationLine[allUserCluster.Count,allEducationLineCluster.Count];
+                    //Пробегамеся по всем пользователям и находи расстояние до соотвествующих направлений
+                    foreach (var user in allUserCluster)
+                    {
+                        foreach (var educationLine in allEducationLineCluster)
+                        {
+                            double[] clusterDiff= new double[user.Value.Count];
+                            for (int i = 0; i < user.Value.Count; i++)
+                            {
+                                clusterDiff[i] = Math.Pow(user.Value[totalArrayClusters[i].Name] - educationLine.Value[totalArrayClusters[i].Name],2);
+                            }
+
+                            double distance=0;
+                            for (int i = 0; i < clusterDiff.Length; i++)
+                            {
+                                distance += clusterDiff[i];
+                            }
+                            distance = Math.Sqrt(distance);
+                            var userToEducationLine = new UserToEducationLine
+                            {
+                                UserId=user.Key.Key,
+                                UserName = user.Key.Value,
+
+                                EducationLineId = educationLine.Key.Key,
+                                EducationLineName = educationLine.Key.Value,
+
+                                Value = distance
+                            };
+                            //userToEducLineMatrix
+                        }
+                    }
+
+                    //Получаем из нее более простую матрицу
+                   // matrixUserEducationLine = CalculateMatrix(allUserEducationLine);
+                    //Проводим LSA анализ и получаем координаты для пользователей и направлений
+                    CalculateEducationLineAndUsersCoord();
                 });
             await task;
         }
@@ -95,10 +127,13 @@ namespace Logic
                 {
                     totalArrayClusters = context.Clusters.ToArray();
                 }
-
+                //Строим таблицу пользователь/кластер
+                AnalyseAllUserCluster();
                 //Строим таблицу "направление обучения/кластер"
                 AnalyseAllEducationLineCluster();
 
+                //Получаем из нее более простую матрицу
+                matrixUserCluster = CalculateMatrix(allUserCluster);
                 matrixEducationLineCluster = CalculateMatrix(allEducationLineCluster);
 
                 //Проводим LSA анализ и получаем координаты для пользователей и кластеров
@@ -260,6 +295,31 @@ namespace Logic
                     new ClusterAnalyzed(totalArrayClusters[i].Name, ClusterCoords[i]));
             }
         }
+
+        private void CalculateEducationLineAndUsersCoord()
+        {
+            LSA lsa = new LSA(matrixUserEducationLine);
+            var ClusterCoords = lsa.FirtsCoords;
+            var ItemCoords = lsa.SecondCoords;
+            int row = matrixEducationLineCluster.GetLength(0);
+            int column = matrixEducationLineCluster.GetLength(1);
+
+            //Проанализируем направления обучения
+            EducationLinesAnalysed = new List<EducationLineAnalyzed>();
+            for (int i = 0; i < row; i++)
+            {
+                EducationLinesAnalysed.Add(
+                    new EducationLineAnalyzed(allEducationLineCluster.ToArray()[i].Key, ItemCoords[i]));
+            }
+
+            //Проанализируем кластеры обучения
+            EducationLinesClustersAnalysed = new List<ClusterAnalyzed>();
+            for (int i = 0; i < column; i++)
+            {
+                EducationLinesClustersAnalysed.Add(
+                    new ClusterAnalyzed(totalArrayClusters[i].Name, ClusterCoords[i]));
+            }
+        }
         #endregion
 
         #region Pareto
@@ -370,5 +430,15 @@ namespace Logic
         public string Code { get; set; }
 
         public List<int> Requirements { get; set; }
+    }
+    public class UserToEducationLine
+    {
+        public int UserId { get; set; }
+        public string UserName { get; set; }
+
+        public int EducationLineId { get; set; }
+        public string EducationLineName { get; set; }
+
+        public double Value { get; set; }
     }
 }

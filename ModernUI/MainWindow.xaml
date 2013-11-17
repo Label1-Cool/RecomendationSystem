@@ -9,8 +9,9 @@
     <mui:ModernWindow.MenuLinkGroups>
         <mui:LinkGroup DisplayName="ЛСА">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="Анализ студентов и кластеров" Source="/Pages/LSAUsersClusters.xaml" />
+                <mui:Link DisplayName="Анализ учеников и кластеров" Source="/Pages/LSAUsersClusters.xaml" />
                 <mui:Link DisplayName="Анализ направлений обучения и кластеров" Source="/Pages/LSAEducationLinesClusters.xaml" />
+                <mui:Link DisplayName="Анализ учеников и направлений обучения" Source="/Pages/LSAUsersEducationLines.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         <mui:LinkGroup DisplayName="settings" GroupName="settings">
