@@ -18,18 +18,11 @@ namespace Logic
         Cluster[] totalArrayClusters;
 
         //таблица "пользователи/кластеры" в виде словаря
-        Dictionary<KeyValuePair<int, string>, Dictionary<string, double>> allUserCluster = new Dictionary<KeyValuePair<int, string>, Dictionary<string, double>>();
+        UserToClusterRow[] allUserCluster;
         //таблица "направления обучения/кластеры" в виде словаря
-        Dictionary<KeyValuePair<int, string>, Dictionary<string, double>> allEducationLineCluster = new Dictionary<KeyValuePair<int, string>, Dictionary<string, double>>();
+        EducationLineToClusterRow[,] allEducationLineCluster;
         //таблица "направления обучения/кластеры" в виде словаря
-        List<UserToEducationLine> allUserEducationLine = new List<UserToEducationLine>();
-
-        //простое табличное представление  "пользователи/кластеры"
-        double[,] matrixUserCluster;
-        //простое табличное представление  "направления обучения/кластеры"
-        double[,] matrixEducationLineCluster;
-        //простое табличное представление  "пользователи/направления обучения"
-        double[,] matrixUserEducationLine;
+        UserToEducationLineCell[,] allUserEducationLine;
 
         public List<UserAnalyzed> UsersAnalysed { get; set; }
         public List<ClusterAnalyzed> UsersClustersAnalysed { get; set; }
@@ -58,7 +51,7 @@ namespace Logic
                     //"пользователь/направление обучения"
 
                     
-                    UserToEducationLine[,] userToEducLineMatrix=new UserToEducationLine[allUserCluster.Count,allEducationLineCluster.Count];
+                    UserToEducationLineCell[,] userToEducLineMatrix=new UserToEducationLineCell[allUserCluster.Count,allEducationLineCluster.Count];
                     //Пробегамеся по всем пользователям и находи расстояние до соотвествующих направлений
                     foreach (var user in allUserCluster)
                     {
@@ -76,7 +69,7 @@ namespace Logic
                                 distance += clusterDiff[i];
                             }
                             distance = Math.Sqrt(distance);
-                            var userToEducationLine = new UserToEducationLine
+                            var userToEducationLine = new UserToEducationLineCell
                             {
                                 UserId=user.Key.Key,
                                 UserName = user.Key.Value,
@@ -148,36 +141,42 @@ namespace Logic
         {
             using (var context = new RecomendationSystemModelContainer())
             {
-                int countSteps=context.Users.Count();
-                int currentStep=0;
+                var allUsers = (from user in context.Users
+                               select user).ToArray();
+
+                allUserCluster = new UserToClusterRow[allUsers.Length];
                 //берем всех пользователей
-                foreach (var user in context.Users)
-                {
-                    Dictionary<string, double> clusterResult = new Dictionary<string, double>();
+                for (int i = 0; i < allUsers.Length; i++)
+			    {
+			        Dictionary<string, double> clusterResult = new Dictionary<string, double>();
                     foreach (var item in totalArrayClusters)
                     {
                         clusterResult.Add(item.Name, 0);
                     }
                     //заполняем оценками и кластерами
-                    foreach (var stateExam in user.UnitedStateExam)
+                    foreach (var stateExam in allUsers[i].UnitedStateExam)
                     {
                         //Получаем текущую дисциплину и ее весовые коэффициенты. Запонляем : Дисциплина/кластер
                         int mark = stateExam.Result;
-
                         foreach (var weight in stateExam.Discipline.Weight)
                         {
-                            var calcResult = mark * weight.Coefficient;
                             //Прибавляет заданному кластуру значение. Именно прибавляет.
                             //Т.е. если у нас есть к примеру есть значение по математике, 
                             //и мы смотрим информатику,которая в свою очередь имеет вклад и в Информатику, и в Математику(меньший). 
                             //Соответсвенно начальное значение математики увеличится
-                            clusterResult[weight.Cluster.Name] += calcResult;
+                            clusterResult[weight.Cluster.Name] += mark * weight.Coefficient;
                         }
                     }
-                    allUserCluster.Add(new KeyValuePair<int,string>(user.Id,user.FirstName), clusterResult);
+                    //Результат
+                    allUserCluster[i] = new UserToClusterRow
+                    {
+                        UserId = allUsers[i].Id,
+                        UserName = allUsers[i].FirstName,
 
-                    currentStep++;
-                }
+                        ClusterResult = clusterResult
+                    };
+
+			    }
             }
         }
 
@@ -431,7 +430,7 @@ namespace Logic
 
         public List<int> Requirements { get; set; }
     }
-    public class UserToEducationLine
+    public class UserToEducationLineCell
     {
         public int UserId { get; set; }
         public string UserName { get; set; }
@@ -440,5 +439,19 @@ namespace Logic
         public string EducationLineName { get; set; }
 
         public double Value { get; set; }
+    }
+    public class UserToClusterRow
+    {
+        public int UserId { get; set; }
+        public string UserName { get; set; }
+
+        public Dictionary<string, double> ClusterResult { get; set; }
+    }
+    public class EducationLineToClusterRow
+    {
+        public int UserId { get; set; }
+        public string UserName { get; set; }
+
+        public Dictionary<string, double> ClusterResult { get; set; }
     }
 }
