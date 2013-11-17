@@ -102,7 +102,7 @@ namespace ModernUI.ViewModels
         }
 
 
-        public EducationLineAnalyzed SelectedEducationLies
+        public EducationLineAnalyzed SelectedEducationLine
         {
             get { return _selectedEducationLine; }
             set
