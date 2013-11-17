@@ -17,10 +17,10 @@ namespace Logic
         #region Fields and Properties
         Cluster[] totalArrayClusters;
 
-        //таблица "пользователи/кластеры" в виде словаря
-        UserToClusterRow[] allUserCluster;
-        //таблица "направления обучения/кластеры" в виде словаря
-        EducationLineToClusterRow[,] allEducationLineCluster;
+        //таблица "пользователи/кластеры"
+        List<ItemToClusterRow> allUserCluster=new List<ItemToClusterRow>();
+        //таблица "направления обучения/кластеры"
+        List<ItemToClusterRow> allEducationLineCluster = new List<ItemToClusterRow>();
         //таблица "направления обучения/кластеры" в виде словаря
         UserToEducationLineCell[,] allUserEducationLine;
 
@@ -144,7 +144,6 @@ namespace Logic
                 var allUsers = (from user in context.Users
                                select user).ToArray();
 
-                allUserCluster = new UserToClusterRow[allUsers.Length];
                 //берем всех пользователей
                 for (int i = 0; i < allUsers.Length; i++)
 			    {
@@ -168,14 +167,13 @@ namespace Logic
                         }
                     }
                     //Результат
-                    allUserCluster[i] = new UserToClusterRow
+                    allUserCluster.Add( new ItemToClusterRow
                     {
-                        UserId = allUsers[i].Id,
-                        UserName = allUsers[i].FirstName,
+                        Id = allUsers[i].Id,
+                        Name = allUsers[i].FirstName,
 
                         ClusterResult = clusterResult
-                    };
-
+                    });
 			    }
             }
         }
@@ -224,16 +222,16 @@ namespace Logic
         /// <summary>
         /// Строит матрицу для LSA из словаря
         /// </summary>
-        /// <param name="clusterDictionary">Словарь, из которого строится матрица</param>
+        /// <param name="cluster">Словарь, из которого строится матрица</param>
         /// <returns>Построенная матрица</returns>
-        private  double[,] CalculateMatrix(Dictionary<KeyValuePair<int, string>, Dictionary<string, double>> clusterDictionary)
+        private double[,] CalculateMatrix(List<ItemToClusterRow> cluster)
         {
             //Представляем нашу таблицу в более простом виде
-            int row = clusterDictionary.Count;
-            int column = clusterDictionary.FirstOrDefault().Value.Count;
+            int row = cluster.Count;
+            int column = cluster.FirstOrDefault().ClusterResult.Count;
             var matrixCluster = new double[row, column];
 
-            var allUserClusterArray = clusterDictionary.ToArray();
+            var allUserClusterArray = cluster.ToArray();
             for (int i = 0; i < row; i++)
             {
                 var nuc2 = allUserClusterArray[i].Value.Values.ToArray();
@@ -440,17 +438,10 @@ namespace Logic
 
         public double Value { get; set; }
     }
-    public class UserToClusterRow
+    public class ItemToClusterRow
     {
-        public int UserId { get; set; }
-        public string UserName { get; set; }
-
-        public Dictionary<string, double> ClusterResult { get; set; }
-    }
-    public class EducationLineToClusterRow
-    {
-        public int UserId { get; set; }
-        public string UserName { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
 
         public Dictionary<string, double> ClusterResult { get; set; }
     }
