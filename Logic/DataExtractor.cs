@@ -18,9 +18,9 @@ namespace Logic
         Cluster[] totalArrayClusters;
 
         //таблица "пользователи/кластеры"
-        List<ItemToClusterRow> allUserCluster=new List<ItemToClusterRow>();
+        ItemToClusterCell[,] allUserCluster;
         //таблица "направления обучения/кластеры"
-        List<ItemToClusterRow> allEducationLineCluster = new List<ItemToClusterRow>();
+        ItemToClusterCell[,] allEducationLineCluster;
         //таблица "направления обучения/кластеры" в виде словаря
         UserToEducationLineCell[,] allUserEducationLine;
 
@@ -103,9 +103,6 @@ namespace Logic
                 //Строим таблицу пользователь/кластер
                 AnalyseAllUserCluster();
 
-                //Получаем из нее более простую матрицу
-                matrixUserCluster = CalculateMatrix(allUserCluster);
-
                 //Проводим LSA анализ и получаем координаты для пользователей и кластеров
                 CalculateUserAndClusterCoord();
             });
@@ -143,6 +140,7 @@ namespace Logic
             {
                 var allUsers = (from user in context.Users
                                select user).ToArray();
+                allUserCluster = new ItemToClusterCell[allUsers.Length,totalArrayClusters.Length];
 
                 //берем всех пользователей
                 for (int i = 0; i < allUsers.Length; i++)
@@ -166,14 +164,16 @@ namespace Logic
                             clusterResult[weight.Cluster.Name] += mark * weight.Coefficient;
                         }
                     }
-                    //Результат
-                    allUserCluster.Add( new ItemToClusterRow
-                    {
-                        Id = allUsers[i].Id,
-                        Name = allUsers[i].FirstName,
 
-                        ClusterResult = clusterResult
-                    });
+                    for (int j = 0; j < totalArrayClusters.Length; j++)
+                    {
+                        //Результат
+                        allUserCluster[i, j] = new ItemToClusterCell
+                        {
+                            Id = allUsers[i].Id,
+                            Name = allUsers[i].FirstName,
+                        }; 
+                    }
 			    }
             }
         }
@@ -224,20 +224,18 @@ namespace Logic
         /// </summary>
         /// <param name="cluster">Словарь, из которого строится матрица</param>
         /// <returns>Построенная матрица</returns>
-        private double[,] CalculateMatrix(List<ItemToClusterRow> cluster)
+        private double[,] CalculateMatrix(ItemToClusterCell[,] cluster)
         {
             //Представляем нашу таблицу в более простом виде
-            int row = cluster.Count;
-            int column = cluster.FirstOrDefault().ClusterResult.Count;
+            int row = cluster.GetLength(0);
+            int column = cluster.GetLength(1);
             var matrixCluster = new double[row, column];
 
-            var allUserClusterArray = cluster.ToArray();
             for (int i = 0; i < row; i++)
             {
-                var nuc2 = allUserClusterArray[i].Value.Values.ToArray();
                 for (int j = 0; j < column; j++)
                 {
-                    matrixCluster[i, j] = nuc2[j];
+                    matrixCluster[i, j] = cluster[i,j].Value;
                 }
             }
             return matrixCluster;
@@ -245,18 +243,21 @@ namespace Logic
 
         private void CalculateUserAndClusterCoord()
         {
-            LSA lsa = new LSA(matrixUserCluster);
+            //Получаем чистое представление нашей матрицы(только числа, без доп. информации)
+            var matrix = CalculateMatrix(allUserCluster);
+            int row = matrix.GetLength(0);
+            int column = matrix.GetLength(1);
+
+            LSA lsa = new LSA(matrix);
             var ClusterCoords = lsa.FirtsCoords;
             var ItemCoords = lsa.SecondCoords;
-            int row = matrixUserCluster.GetLength(0);
-            int column = matrixUserCluster.GetLength(1);
 
             //Проанализируем пользователей
             UsersAnalysed = new List<UserAnalyzed>();
             for (int i = 0; i < row; i++)
             {
                 UsersAnalysed.Add(
-                    new UserAnalyzed(allUserCluster.ToArray()[i].Key, ItemCoords[i]));
+                    new UserAnalyzed(new KeyValuePair<int,string>(allUserCluster[i].Id,allUserCluster[i].Name), ItemCoords[i]));
             }
 
             //Проанализируем кластеры обучения
@@ -438,11 +439,13 @@ namespace Logic
 
         public double Value { get; set; }
     }
-    public class ItemToClusterRow
+    public class ItemToClusterCell
     {
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public Dictionary<string, double> ClusterResult { get; set; }
+        public string ClusterName { get; set; }
+
+        public double Value { get; set; }
     }
 }
