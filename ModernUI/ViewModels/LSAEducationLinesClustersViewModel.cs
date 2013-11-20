@@ -118,7 +118,7 @@ namespace ModernUI.ViewModels
                     //Обновляем информацию в табличной форме
                     if (_allCluster!=null)
                     {
-                        _resultDictionary = value.CalculateOptimalDirections(_allCluster);
+                        //_resultDictionary = value.CalculateOptimalDirections(_allCluster);
                         UpdateUI(new PropertyChangedEventArgs("ResultDictionary"));
                     }
                     
