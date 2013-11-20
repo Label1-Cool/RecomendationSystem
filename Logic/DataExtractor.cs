@@ -51,37 +51,37 @@ namespace Logic
                     //"пользователь/направление обучения"
 
                     
-                    UserToEducationLineCell[,] userToEducLineMatrix=new UserToEducationLineCell[allUserCluster.Count,allEducationLineCluster.Count];
-                    //Пробегамеся по всем пользователям и находи расстояние до соотвествующих направлений
-                    foreach (var user in allUserCluster)
-                    {
-                        foreach (var educationLine in allEducationLineCluster)
-                        {
-                            double[] clusterDiff= new double[user.Value.Count];
-                            for (int i = 0; i < user.Value.Count; i++)
-                            {
-                                clusterDiff[i] = Math.Pow(user.Value[totalArrayClusters[i].Name] - educationLine.Value[totalArrayClusters[i].Name],2);
-                            }
+                    //UserToEducationLineCell[,] userToEducLineMatrix=new UserToEducationLineCell[allUserCluster.Count,allEducationLineCluster.Count];
+                    ////Пробегамеся по всем пользователям и находи расстояние до соотвествующих направлений
+                    //foreach (var user in allUserCluster)
+                    //{
+                    //    foreach (var educationLine in allEducationLineCluster)
+                    //    {
+                    //        double[] clusterDiff= new double[user.Value.Count];
+                    //        for (int i = 0; i < user.Value.Count; i++)
+                    //        {
+                    //            clusterDiff[i] = Math.Pow(user.Value[totalArrayClusters[i].Name] - educationLine.Value[totalArrayClusters[i].Name],2);
+                    //        }
 
-                            double distance=0;
-                            for (int i = 0; i < clusterDiff.Length; i++)
-                            {
-                                distance += clusterDiff[i];
-                            }
-                            distance = Math.Sqrt(distance);
-                            var userToEducationLine = new UserToEducationLineCell
-                            {
-                                UserId=user.Key.Key,
-                                UserName = user.Key.Value,
+                    //        double distance=0;
+                    //        for (int i = 0; i < clusterDiff.Length; i++)
+                    //        {
+                    //            distance += clusterDiff[i];
+                    //        }
+                    //        distance = Math.Sqrt(distance);
+                    //        var userToEducationLine = new UserToEducationLineCell
+                    //        {
+                    //            UserId=user.Key.Key,
+                    //            UserName = user.Key.Value,
 
-                                EducationLineId = educationLine.Key.Key,
-                                EducationLineName = educationLine.Key.Value,
+                    //            EducationLineId = educationLine.Key.Key,
+                    //            EducationLineName = educationLine.Key.Value,
 
-                                Value = distance
-                            };
-                            //userToEducLineMatrix
-                        }
-                    }
+                    //            Value = distance
+                    //        };
+                    //        //userToEducLineMatrix
+                    //    }
+                    //}
 
                     //Получаем из нее более простую матрицу
                    // matrixUserEducationLine = CalculateMatrix(allUserEducationLine);
@@ -123,8 +123,8 @@ namespace Logic
                 AnalyseAllEducationLineCluster();
 
                 //Получаем из нее более простую матрицу
-                matrixUserCluster = CalculateMatrix(allUserCluster);
-                matrixEducationLineCluster = CalculateMatrix(allEducationLineCluster);
+                //matrixUserCluster = CalculateMatrix(allUserCluster);
+                //matrixEducationLineCluster = CalculateMatrix(allEducationLineCluster);
 
                 //Проводим LSA анализ и получаем координаты для пользователей и кластеров
                 CalculateEducationLineAndClusterCoord();
@@ -212,7 +212,7 @@ namespace Logic
                             clusterResult[weight.Cluster.Name] += calcResult;
                         }
                     }
-                    allEducationLineCluster.Add(new KeyValuePair<int, string>(educationLine.Id, educationLine.Name), clusterResult);
+                    //allEducationLineCluster.Add(new KeyValuePair<int, string>(educationLine.Id, educationLine.Name), clusterResult);
 
                     currentStep++;
                 }
@@ -220,10 +220,10 @@ namespace Logic
         }
 
         /// <summary>
-        /// Строит матрицу для LSA из словаря
+        /// Строит числовую матрицу для LSA анализа из заданной нечисловой матрицы
         /// </summary>
-        /// <param name="cluster">Словарь, из которого строится матрица</param>
-        /// <returns>Построенная матрица</returns>
+        /// <param name="cluster">Нечисловая матрица, из которого строится числовая матрица</param>
+        /// <returns>Построенная числовая матрица</returns>
         private double[,] CalculateMatrix(ItemToClusterCell[,] cluster)
         {
             //Представляем нашу таблицу в более простом виде
@@ -249,74 +249,74 @@ namespace Logic
             int column = matrix.GetLength(1);
 
             LSA lsa = new LSA(matrix);
-            var ClusterCoords = lsa.FirtsCoords;
-            var ItemCoords = lsa.SecondCoords;
+            //var ClusterCoords = lsa.FirtsCoords;
+            //var ItemCoords = lsa.SecondCoords;
 
             //Проанализируем пользователей
-            UsersAnalysed = new List<UserAnalyzed>();
-            for (int i = 0; i < row; i++)
-            {
-                UsersAnalysed.Add(
-                    new UserAnalyzed(new KeyValuePair<int,string>(allUserCluster[i].Id,allUserCluster[i].Name), ItemCoords[i]));
-            }
+            //UsersAnalysed = new List<UserAnalyzed>();
+            //for (int i = 0; i < row; i++)
+            //{
+            //    UsersAnalysed.Add(
+            //        new UserAnalyzed(new KeyValuePair<int,string>(allUserCluster[i].Id,allUserCluster[i].Name), ItemCoords[i]));
+            //}
 
             //Проанализируем кластеры обучения
             UsersClustersAnalysed = new List<ClusterAnalyzed>();
-            for (int i = 0; i < column; i++)
-            {
-                UsersClustersAnalysed.Add(
-                    new ClusterAnalyzed(totalArrayClusters[i].Name, ClusterCoords[i]));
-            }
+            //for (int i = 0; i < column; i++)
+            //{
+            //    UsersClustersAnalysed.Add(
+            //        new ClusterAnalyzed(totalArrayClusters[i].Name, ClusterCoords[i]));
+            //}
 
         }
         private void CalculateEducationLineAndClusterCoord()
         {
-            LSA lsa = new LSA(matrixEducationLineCluster);
-            var ClusterCoords = lsa.FirtsCoords;
-            var ItemCoords = lsa.SecondCoords;
-            int row = matrixEducationLineCluster.GetLength(0);
-            int column = matrixEducationLineCluster.GetLength(1);
+            //LSA lsa = new LSA(matrixEducationLineCluster);
+            //var ClusterCoords = lsa.FirtsCoords;
+            //var ItemCoords = lsa.SecondCoords;
+            //int row = matrixEducationLineCluster.GetLength(0);
+            //int column = matrixEducationLineCluster.GetLength(1);
 
             //Проанализируем направления обучения
             EducationLinesAnalysed = new List<EducationLineAnalyzed>();
-            for (int i = 0; i < row; i++)
-            {
-                EducationLinesAnalysed.Add(
-                    new EducationLineAnalyzed(allEducationLineCluster.ToArray()[i].Key, ItemCoords[i]));
-            }
+            //for (int i = 0; i < row; i++)
+            //{
+            //    EducationLinesAnalysed.Add(
+            //        new EducationLineAnalyzed(allEducationLineCluster.ToArray()[i].Key, ItemCoords[i]));
+            //}
 
             //Проанализируем кластеры обучения
-            EducationLinesClustersAnalysed = new List<ClusterAnalyzed>();
-            for (int i = 0; i < column; i++)
-            {
-                EducationLinesClustersAnalysed.Add(
-                    new ClusterAnalyzed(totalArrayClusters[i].Name, ClusterCoords[i]));
-            }
+            //EducationLinesClustersAnalysed = new List<ClusterAnalyzed>();
+            //for (int i = 0; i < column; i++)
+            //{
+            //    EducationLinesClustersAnalysed.Add(
+            //        new ClusterAnalyzed(totalArrayClusters[i].Name, ClusterCoords[i]));
+            //}
         }
 
         private void CalculateEducationLineAndUsersCoord()
         {
-            LSA lsa = new LSA(matrixUserEducationLine);
-            var ClusterCoords = lsa.FirtsCoords;
-            var ItemCoords = lsa.SecondCoords;
-            int row = matrixEducationLineCluster.GetLength(0);
-            int column = matrixEducationLineCluster.GetLength(1);
+            //LSA lsa = new LSA(matrixUserEducationLine);
+            //var ClusterCoords = lsa.FirtsCoords;
+            //var ItemCoords = lsa.SecondCoords;
+            //int row = matrixEducationLineCluster.GetLength(0);
+            //int column = matrixEducationLineCluster.GetLength(1);
 
-            //Проанализируем направления обучения
-            EducationLinesAnalysed = new List<EducationLineAnalyzed>();
-            for (int i = 0; i < row; i++)
-            {
-                EducationLinesAnalysed.Add(
-                    new EducationLineAnalyzed(allEducationLineCluster.ToArray()[i].Key, ItemCoords[i]));
-            }
+            ////Проанализируем направления обучения
+            //EducationLinesAnalysed = new List<EducationLineAnalyzed>();
+            //for (int i = 0; i < row; i++)
+            //{
+            //    EducationLinesAnalysed.Add(
+            //        new EducationLineAnalyzed(allEducationLineCluster.ToArray()[i].Key, ItemCoords[i]));
+            //}
 
-            //Проанализируем кластеры обучения
-            EducationLinesClustersAnalysed = new List<ClusterAnalyzed>();
-            for (int i = 0; i < column; i++)
-            {
-                EducationLinesClustersAnalysed.Add(
-                    new ClusterAnalyzed(totalArrayClusters[i].Name, ClusterCoords[i]));
-            }
+            ////Проанализируем кластеры обучения
+            //EducationLinesClustersAnalysed = new List<ClusterAnalyzed>();
+            //for (int i = 0; i < column; i++)
+            //{
+            //    EducationLinesClustersAnalysed.Add(
+            //        new ClusterAnalyzed(totalArrayClusters[i].Name, ClusterCoords[i]));
+            //}
         }
         #endregion
 

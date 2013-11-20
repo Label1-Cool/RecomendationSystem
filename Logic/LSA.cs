@@ -29,45 +29,39 @@ namespace Logic
         const int vtNeeded = 1;
         //Производительность(от 0 до 2)- за счет выделения памяти
         const int additionalMemory = 2;
+        //Размер выходных матриц(напр. 2 - 2 координаты, 3-3координаты. Чем меньше размерность, тем меньше влияние шумов(но совсем маленькая тоже не катит))
         #endregion
         #region Properties
-        public KeyValuePair<double, double>[] FirtsCoords
+        private double[,] _UCoords;
+        /// <summary>
+        /// Обрезанная до 2-й размерности матрица U LSA разложения.
+        /// </summary>
+        public double[,] UCoords
         {
-            get
-            {
-                //Пока берем по 2 строки(2-х мерный график)
-                KeyValuePair<double, double>[] allTextsCoords = new KeyValuePair<double, double>[n];
-                for (int j = 0; j < VT.GetLength(1); j++)
-                {
-                    allTextsCoords[j] = new KeyValuePair<double, double>(VT[0, j], VT[1, j]);
-                }
-                return allTextsCoords;
-            }
+            get { return _UCoords; }
         }
-        public KeyValuePair<double, double>[] SecondCoords
+        private double[,] _VCoords;
+        /// <summary>
+        /// Обрезанная до 2-й размерности матрица V LSA разложения.
+        /// </summary>
+        public double[,] VCoords
         {
-            get
-            {
-                //Пока берем по 2 колонки(2-х мерный график)
-                KeyValuePair<double, double>[] allWordsCoords = new KeyValuePair<double, double>[m];
-                for (int i = 0; i < U.GetLength(0); i++)
-                {
-                    allWordsCoords[i] = new KeyValuePair<double, double>(U[i, 0], U[i, 1]);
-                }
-                return allWordsCoords;
-            }
+            get { return _VCoords; }
         }
         #endregion
         /// <summary>
         /// Констурктор
         /// </summary>
         /// <param name="A">Текущая матрица для разложения</param>
+
         public LSA(double[,] A)
         {
             this.A = A;
 
             m = A.GetLength(0);
             n = A.GetLength(1);
+            _UCoords = new double[m, 2];
+            _VCoords = new double[n, 2];
 
             if (!Calculate())
             {
@@ -82,6 +76,18 @@ namespace Logic
         bool Calculate()
         {
             bool result = alglib.rmatrixsvd(A, m, n, uNeeded, vtNeeded, additionalMemory, out W, out U, out VT);
+
+            for (int i = 0; i < n; i++)
+            {
+                _VCoords[i, 0] = VT[0, i];
+                _VCoords[i, 1] = VT[1, i];
+            }
+            for (int i = 0; i < m; i++)
+            {
+                _UCoords[i, 0] = U[i, 0];
+                _UCoords[i, 1] = U[i, 1];
+            }
+
             return result;
         }
     }
