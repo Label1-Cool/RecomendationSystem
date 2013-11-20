@@ -18,13 +18,10 @@ using System.Windows.Shapes;
 
 namespace ModernUI.Pages
 {
-    /// <summary>
-    /// Interaction logic for Home.xaml
-    /// </summary>
-    public partial class Home : UserControl
+    public partial class LSAEducationLinesClusters : UserControl
     {
-        HomeViewModel _vm = new HomeViewModel();
-        public Home()
+        LSAEducationLinesClustersViewModel _vm = new LSAEducationLinesClustersViewModel();
+        public LSAEducationLinesClusters()
         {
             InitializeComponent();
             DataContext = _vm;

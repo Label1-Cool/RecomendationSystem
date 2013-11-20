@@ -12,7 +12,7 @@ using FirstFloor.ModernUI.Windows;
 
 namespace ModernUI.ViewModels
 {
-    public class HomeViewModel : INotifyPropertyChanged
+    public class LSAUsersClustersViewModel : INotifyPropertyChanged
     {   
         #region Fields
         private Visibility _isVisibleProgressBar = Visibility.Hidden;
@@ -59,14 +59,12 @@ namespace ModernUI.ViewModels
                     //обновление отображаемых пользователей на графике и в таблице
                     if (_isSelectAll == true)
                     {
-                        foreach (var user in _allUsers)
+                        foreach (var analysedUser in _allUsers)
                         {
-                            _usersToDisplay.Add(user);
+                            _usersToDisplay.Add(analysedUser);
                         }
-                        //Так, или через observable collections(переписать)
-                        //_resultDictionary = new Dictionary<string, double>();
                     }
-                    UpdateUI(new PropertyChangedEventArgs("UsersToDisplay"));
+                    //UpdateUI(new PropertyChangedEventArgs("UsersToDisplay"));
                     UpdateUI(new PropertyChangedEventArgs("ResultDictionary"));
                 }
             }
@@ -158,9 +156,9 @@ namespace ModernUI.ViewModels
             {
                 IsVisibleProgressBar = Visibility.Visible;
 
-                await dataExtractor.Init();
-                AllUsers = dataExtractor.UsersCoords;
-                AllClusters = dataExtractor.ClustersCoords;
+                await dataExtractor.CalculateUserToClusterForLSA();
+                AllUsers = dataExtractor.UsersAnalysed;
+                AllClusters = dataExtractor.UsersClustersAnalysed;
 
                 IsVisibleProgressBar = Visibility.Hidden;
                 _isInitialized = true;
