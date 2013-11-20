@@ -5,15 +5,37 @@ using System.Text;
 
 namespace Logic.Models
 {
-    public class ClusterAnalyzed
+    public class ClusterAnalyzed : IItemAnalyzed
     {
-        public string Name { get; private set; }
-        public KeyValuePair<double, double> Coords { get; private set; }
-
-        public ClusterAnalyzed(string name, KeyValuePair<double, double> coords)
+        public int Id
         {
-            Name = name;
-            Coords = coords;
+            get;
+            private set;
+        }
+        public string Name
+        {
+            get;
+            private set;
+        }
+
+        public double XCoord
+        {
+            get;
+            private set;
+        }
+        public double YCoord
+        {
+            get;
+            private set;
+        }
+
+        public ClusterAnalyzed(ItemToClusterCell user, double xCoord, double yCoord)
+        {
+            Id = user.Id;
+            Name = user.ClusterName;
+
+            XCoord = xCoord;
+            YCoord = yCoord;
         }
     }
 }

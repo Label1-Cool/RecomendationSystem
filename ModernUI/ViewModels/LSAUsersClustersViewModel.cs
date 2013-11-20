@@ -63,10 +63,8 @@ namespace ModernUI.ViewModels
                         {
                             _usersToDisplay.Add(analysedUser);
                         }
-                        //Так, или через observable collections(переписать)
-                        //_resultDictionary = new Dictionary<string, double>();
                     }
-                    UpdateUI(new PropertyChangedEventArgs("UsersToDisplay"));
+                    //UpdateUI(new PropertyChangedEventArgs("UsersToDisplay"));
                     UpdateUI(new PropertyChangedEventArgs("ResultDictionary"));
                 }
             }

@@ -8,37 +8,35 @@ namespace Logic.Models
 {
     public class EducationLineAnalyzed : IItemAnalyzed
     {
-        public KeyValuePair<int, string> Info { get; private set; }
-        public KeyValuePair<double, double> Coords { get; private set; }
-
-        public EducationLineAnalyzed(KeyValuePair<int, string> info, KeyValuePair<double, double> coords)
+        public int Id
         {
-            Info = info;
-            Coords = coords;
+            get;
+            private set;
         }
-        public EducationLineAnalyzed() { }
-
-        public Dictionary<string,double> CalculateOptimalDirections(List<ClusterAnalyzed> allClusters)
+        public string Name
         {
-            Dictionary<string, double> allClustersDirections = new Dictionary<string, double>();
-            foreach (var cluster in allClusters)
-            {
-                //cluster.Coords
-                double x1 = this.Coords.Key;
-                double x2 = cluster.Coords.Key;
-                double y1 = this.Coords.Value;
-                double y2 = cluster.Coords.Value;
+            get;
+            private set;
+        }
 
-                double d = Math.Pow(x2 - x1,2) + Math.Pow(y2 - y1,2);
+        public double XCoord
+        {
+            get;
+            private set;
+        }
+        public double YCoord
+        {
+            get;
+            private set;
+        }
 
-                double distance = Math.Sqrt(d);
-                allClustersDirections.Add(cluster.Name, distance);
-            }
-            //сортируем в порядке убывания
-            allClustersDirections = allClustersDirections
-                    .OrderBy(elem => elem.Value)
-                    .ToDictionary((keyItem) => keyItem.Key, (valueItem) => valueItem.Value);
-            return allClustersDirections;
+        public EducationLineAnalyzed(ItemToClusterCell user, double xCoord, double yCoord)
+        {
+            Id = user.Id;
+            Name = user.Name;
+
+            XCoord = xCoord;
+            YCoord = yCoord;
         }
     }
 }
