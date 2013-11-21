@@ -66,10 +66,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Pages\LSAUsersEducationLines.xaml.cs">
+    <Compile Include="Pages\LSA\LSAUsersEducationLines.xaml.cs">
       <DependentUpon>LSAUsersEducationLines.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\LSAEducationLinesClusters.xaml.cs">
+    <Compile Include="Pages\LSA\LSAEducationLinesClusters.xaml.cs">
       <DependentUpon>LSAEducationLinesClusters.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\LSAEducationLinesClustersViewModel.cs" />
@@ -98,15 +98,15 @@
       <DependentUpon>SettingsAppearance.xaml</DependentUpon>
     </Compile>
     <Compile Include="Content\SettingsAppearanceViewModel.cs" />
-    <Page Include="Pages\LSAUsersEducationLines.xaml">
+    <Page Include="Pages\LSA\LSAUsersEducationLines.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\LSAEducationLinesClusters.xaml">
+    <Page Include="Pages\LSA\LSAEducationLinesClusters.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\LSAUsersClusters.xaml">
+    <Page Include="Pages\LSA\LSAUsersClusters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -114,7 +114,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Compile Include="Pages\LSAUsersClusters.xaml.cs">
+    <Compile Include="Pages\LSA\LSAUsersClusters.xaml.cs">
       <DependentUpon>LSAUsersClusters.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Settings.xaml.cs">
@@ -134,6 +134,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Pages\MulticritterialAnalysis\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

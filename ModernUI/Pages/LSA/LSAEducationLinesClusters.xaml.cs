@@ -16,12 +16,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ModernUI.Pages
+namespace ModernUI.Pages.LSA
 {
-    public partial class LSAUsersEducationLines : UserControl
+    public partial class LSAEducationLinesClusters : UserControl
     {
-        LSAUsersEducationLinesViewModel _vm = new LSAUsersEducationLinesViewModel();
-        public LSAUsersEducationLines()
+        LSAEducationLinesClustersViewModel _vm = new LSAEducationLinesClustersViewModel();
+        public LSAEducationLinesClusters()
         {
             InitializeComponent();
             DataContext = _vm;

@@ -108,7 +108,7 @@ namespace ModernUI.ViewModels
             {
                 IsVisibleProgressBar = Visibility.Visible;
 
-                var dataExtractor = DataExtractor.Instance;
+                var dataExtractor = DataAnalyzer.Instance;
 
                 if (dataExtractor.UsersToClusterPosition == null || dataExtractor.ClustersToUserPosition == null)
                 {

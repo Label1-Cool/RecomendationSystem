@@ -23,39 +23,39 @@ namespace UnitTests
             var y5=new List<int>();
             y5.AddRange(new int[]{3,1,2,3});
             
-            List<EducationLineAndRequirementRow> table = new List<EducationLineAndRequirementRow>();
-            table.Add(new EducationLineAndRequirementRow
+            List<EducationLineAndEducationLineRow> table = new List<EducationLineAndEducationLineRow>();
+            table.Add(new EducationLineAndEducationLineRow
                 {
                     Code = "y1",
                     Id = 1,
                     Requirements = y1
                 });
-            table.Add(new EducationLineAndRequirementRow
+            table.Add(new EducationLineAndEducationLineRow
             {
                 Code = "y2",
                 Id = 2,
                 Requirements = y2
             });
-            table.Add(new EducationLineAndRequirementRow
+            table.Add(new EducationLineAndEducationLineRow
             {
                 Code = "y3",
                 Id = 3,
                 Requirements = y3
             });
-            table.Add(new EducationLineAndRequirementRow
+            table.Add(new EducationLineAndEducationLineRow
             {
                 Code = "y4",
                 Id = 4,
                 Requirements = y4
             });
-            table.Add(new EducationLineAndRequirementRow
+            table.Add(new EducationLineAndEducationLineRow
             {
                 Code = "y5",
                 Id = 5,
                 Requirements = y5
             });
             
-            var answerTable = new List<EducationLineAndRequirementRow>();
+            var answerTable = new List<EducationLineAndEducationLineRow>();
             answerTable.Add(table[0]);
             answerTable.Add(table[1]);
             answerTable.Add(table[4]);
