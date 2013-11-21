@@ -18,10 +18,10 @@ namespace ModernUI.ViewModels
         private Visibility _isVisibleProgressBar = Visibility.Hidden;
         private bool _isInitialized = false;
         private bool _isSelectAll;
-        private List<EducationLineToClusterAnalyzed> _allEducationLines = new List<EducationLineToClusterAnalyzed>();
-        private List<ClusterAnalyzed> _allCluster = new List<ClusterAnalyzed>();
+        private List<ItemPosition> _allEducationLines = new List<ItemPosition>();
+        private List<ItemPosition> _allCluster = new List<ItemPosition>();
 
-        private EducationLineToClusterAnalyzed _selectedEducationLine;
+        private ItemPosition _selectedEducationLine;
         private Dictionary<string, double> _resultDictionary = new Dictionary<string, double>();
 
         
@@ -61,14 +61,14 @@ namespace ModernUI.ViewModels
             }
         }
 
-        
-        public List<EducationLineToClusterAnalyzed> AllEducationLines
+
+        public List<ItemPosition> AllEducationLines
         {
             get { return _allEducationLines; }
         }
 
 
-        public EducationLineToClusterAnalyzed SelectedEducationLine
+        public ItemPosition SelectedEducationLine
         {
             get { return _selectedEducationLine; }
             set
@@ -87,8 +87,8 @@ namespace ModernUI.ViewModels
             }
         }
 
-        
-        public List<ClusterAnalyzed> AllClusters
+
+        public List<ItemPosition> AllClusters
         {
             get { return _allCluster; }
         }
@@ -112,12 +112,12 @@ namespace ModernUI.ViewModels
 
                 var dataExtractor = DataExtractor.Instance;
 
-                if (dataExtractor.EducationLinesAnalysed == null || dataExtractor.EducationLinesClustersAnalysed == null)
+                if (dataExtractor.EducationLinesToClusterPosition == null || dataExtractor.ClustersToEducationLinesPosition == null)
                 {
                     await dataExtractor.CalculateEducationLinesToClusterForLSA();
 
-                    _allEducationLines = dataExtractor.EducationLinesAnalysed;
-                    _allCluster = dataExtractor.EducationLinesClustersAnalysed;
+                    _allEducationLines = dataExtractor.EducationLinesToClusterPosition;
+                    _allCluster = dataExtractor.ClustersToEducationLinesPosition;
                     UpdateUI(new PropertyChangedEventArgs("AllEducationLines"));
                     UpdateUI(new PropertyChangedEventArgs("AllClusters"));
                 }

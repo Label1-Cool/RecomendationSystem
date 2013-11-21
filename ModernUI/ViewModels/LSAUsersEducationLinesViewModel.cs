@@ -18,11 +18,11 @@ namespace ModernUI.ViewModels
         private Visibility _isVisibleProgressBar = Visibility.Hidden;
         private bool _isInitialized = false;
 
-        private List<UserEducationLineAnalysed> _allUsersToEducationLine = new List<UserEducationLineAnalysed>();
-        private List<EducationLineToUserAnalysed> _allEducationLineToUsers = new List<EducationLineToUserAnalysed>();
+        private List<ItemPosition> _allUsersToEducationLine = new List<ItemPosition>();
+        private List<ItemPosition> _allEducationLineToUsers = new List<ItemPosition>();
 
-        ObservableCollection<UserEducationLineAnalysed> _usersToDisplay = new ObservableCollection<UserEducationLineAnalysed>();
-        private UserEducationLineAnalysed _selectedUser;
+        ObservableCollection<ItemPosition> _usersToDisplay = new ObservableCollection<ItemPosition>();
+        private ItemPosition _selectedUser;
 
         private Dictionary<string, double> _distance = new Dictionary<string, double>();
 
@@ -45,16 +45,16 @@ namespace ModernUI.ViewModels
         }
 
 
-        public List<UserEducationLineAnalysed> AllUsersToEducationLine
+        public List<ItemPosition> AllUsersToEducationLine
         {
             get { return _allUsersToEducationLine; }
         }
-        public List<EducationLineToUserAnalysed> AllEducationLineToUsers
+        public List<ItemPosition> AllEducationLineToUsers
         {
             get { return _allEducationLineToUsers; }
         }
 
-        public UserEducationLineAnalysed SelectedUser
+        public ItemPosition SelectedUser
         {
             get { return _selectedUser; }
             set
@@ -93,8 +93,8 @@ namespace ModernUI.ViewModels
                 var dataExtractor = DataExtractor.Instance;
 
                 await dataExtractor.CalculateUserToEducationLinesForLSA();
-                _allUsersToEducationLine = dataExtractor.UsersToEducationLinesAnalysed;
-                _allEducationLineToUsers = dataExtractor.EducationLinesToUsersAnalysed;
+                _allUsersToEducationLine = dataExtractor.UsersToEducationLinesPosition;
+                _allEducationLineToUsers = dataExtractor.EducationLinesToUsersPosition;
 
                 UpdateUI(new PropertyChangedEventArgs("AllUsersToEducationLine"));
                 UpdateUI(new PropertyChangedEventArgs("AllEducationLineToUsers"));

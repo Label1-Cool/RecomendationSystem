@@ -51,13 +51,8 @@
   <ItemGroup>
     <Compile Include="DataExtractor.cs" />
     <Compile Include="LSA.cs" />
-    <Compile Include="Models\ClusterAnalyzed.cs" />
     <Compile Include="Models\DisciplinePriority.cs" />
-    <Compile Include="Models\EducationLineToClusterAnalyzed.cs" />
-    <Compile Include="Models\EducationLineToUserAnalysed.cs" />
-    <Compile Include="Models\IItemAnalyzed.cs" />
-    <Compile Include="Models\UserClusterAnalyzed.cs" />
-    <Compile Include="Models\UserEducationLineAnalysed.cs" />
+    <Compile Include="Models\ItemPosition.cs" />
     <Compile Include="MulticriterialAnalysis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

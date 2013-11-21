@@ -18,9 +18,9 @@ namespace ModernUI.ViewModels
         private Visibility _isVisibleProgressBar = Visibility.Hidden;
         private bool _isInitialized = false;
         private bool _isSelectAll;
-        private List<UserClusterAnalyzed> _allUsers = new List<UserClusterAnalyzed>();
-        private List<ClusterAnalyzed> _allCluster = new List<ClusterAnalyzed>();
-        private UserClusterAnalyzed _selectedUser;
+        private List<ItemPosition> _allUsers = new List<ItemPosition>();
+        private List<ItemPosition> _allCluster = new List<ItemPosition>();
+        private ItemPosition _selectedUser;
         private Dictionary<string, double> _resultDictionary = new Dictionary<string, double>();
 
         
@@ -60,12 +60,12 @@ namespace ModernUI.ViewModels
         }
 
         
-        public List<UserClusterAnalyzed> AllUsers
+        public List<ItemPosition> AllUsers
         {
             get { return _allUsers; }
         }
-        
-        public UserClusterAnalyzed SelectedUser
+
+        public ItemPosition SelectedUser
         {
             get { return _selectedUser; }
             set
@@ -85,8 +85,8 @@ namespace ModernUI.ViewModels
             }
         }
 
-        
-        public List<ClusterAnalyzed> AllClusters
+
+        public List<ItemPosition> AllClusters
         {
             get { return _allCluster; }
         }
@@ -110,12 +110,12 @@ namespace ModernUI.ViewModels
 
                 var dataExtractor = DataExtractor.Instance;
 
-                if (dataExtractor.UsersAnalysed == null || dataExtractor.UsersClustersAnalysed == null)
+                if (dataExtractor.UsersToClusterPosition == null || dataExtractor.ClustersToUserPosition == null)
                 {
                     await dataExtractor.CalculateUserToClusterForLSA();
 
-                    _allUsers = dataExtractor.UsersAnalysed;
-                    _allCluster = dataExtractor.UsersClustersAnalysed;
+                    _allUsers = dataExtractor.UsersToClusterPosition;
+                    _allCluster = dataExtractor.ClustersToUserPosition;
                     UpdateUI(new PropertyChangedEventArgs("AllUsers"));
                     UpdateUI(new PropertyChangedEventArgs("AllClusters"));
                 }

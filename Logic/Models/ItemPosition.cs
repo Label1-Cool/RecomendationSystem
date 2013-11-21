@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace Logic.Models
 {
-    public class EducationLineToUserAnalysed
+    public class ItemPosition
     {
         public int Id
         {
             get;
             private set;
         }
+
         public string Name
         {
             get;
@@ -30,30 +31,30 @@ namespace Logic.Models
             private set;
         }
 
-        public EducationLineToUserAnalysed(UserToEducationLineCell userToEducationLineCell, double xCoord, double yCoord)
+        public ItemPosition(int itemId, string itemName, double xCoord, double yCoord)
         {
-            Id = userToEducationLineCell.EducationLineId;
-            Name = userToEducationLineCell.EducationLineName;
+            Id = itemId;
+            Name = itemName;
 
             XCoord = xCoord;
             YCoord = yCoord;
         }
 
-        public Dictionary<string, double> CalculateOptimalDirections(List<ClusterAnalyzed> allClusters)
+        public Dictionary<string, double> CalculateOptimalDirections(List<ItemPosition> secondItemsPosition)
         {
             Dictionary<string, double> allClustersDirections = new Dictionary<string, double>();
-            foreach (var cluster in allClusters)
+            foreach (var secondItemPosition in secondItemsPosition)
             {
                 //cluster.Coords
                 double x1 = this.XCoord;
-                double x2 = cluster.XCoord;
+                double x2 = secondItemPosition.XCoord;
                 double y1 = this.YCoord;
-                double y2 = cluster.YCoord;
+                double y2 = secondItemPosition.YCoord;
 
                 double d = Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2);
 
                 double distance = Math.Sqrt(d);
-                allClustersDirections.Add(cluster.Name, distance);
+                allClustersDirections.Add(secondItemPosition.Name, distance);
             }
             //сортируем в порядке убывания
             allClustersDirections = allClustersDirections
