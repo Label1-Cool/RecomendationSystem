@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Logic.Models
 {
-    public class EducationLineAnalyzed : IItemAnalyzed
+    public class UserClusterAnalyzed : IItemAnalyzed
     {
+
         public int Id
         {
             get;
@@ -30,10 +30,10 @@ namespace Logic.Models
             private set;
         }
 
-        public EducationLineAnalyzed(ItemToClusterCell educationLine, double xCoord, double yCoord)
+        public UserClusterAnalyzed(ItemToClusterCell user, double xCoord, double yCoord)
         {
-            Id = educationLine.Id;
-            Name = educationLine.Name;
+            Id = user.Id;
+            Name = user.Name;
 
             XCoord = xCoord;
             YCoord = yCoord;

@@ -13,24 +13,22 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="400"/>
+                <ColumnDefinition MinWidth="500"/>
             </Grid.ColumnDefinitions>
             <ProgressBar Grid.Row="0" Grid.ColumnSpan="2" IsIndeterminate="True" Visibility="{Binding IsVisibleProgressBar}"/>
             <StackPanel Grid.Row="1">
-                <TextBlock TextWrapping="Wrap" Text="Учебные направления" FontSize="16"/>
-                <RadioButton x:Name="radioButton" IsChecked="True" GroupName="SomeoneOrEveryone" Content="Выбрать направление" Margin="0,20,0,0"/>
-                <ComboBox Margin="0,10,0,0"
+                <TextBlock TextWrapping="Wrap" Text="Пользователи" FontSize="16"/>
+                <ComboBox Margin="0,10,0,0" Width="200"
     			IsEnabled="{Binding IsChecked, ElementName=radioButton}"
-    			ItemsSource="{Binding AllEducationLines}" SelectedItem="{Binding SelectedEducationLine}"
-    			DisplayMemberPath="Info.Value"/>
-                <RadioButton Margin="0,10,0,0" Content="Выбрать все направления" GroupName="SomeoneOrEveryone" IsChecked="{Binding IsSelectAll, Mode=TwoWay}"/>
+    			ItemsSource="{Binding AllUsersToEducationLine}" SelectedItem="{Binding SelectedUser}"
+    			DisplayMemberPath="Name"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1"  Margin="20,0,0,0">
                 <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" Text="Близость" FontSize="18" />
 
-                <DataGrid ItemsSource="{Binding ResultDictionary, Mode=OneWay}" IsReadOnly="True" AutoGenerateColumns="False">
+                <DataGrid IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding Distance}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Key}"  Header="Кластер"/>
+                        <DataGridTextColumn Binding="{Binding Key}"  Header="Направление"/>
                         <DataGridTextColumn Binding="{Binding Value}" Header="Приоритет"/>
                     </DataGrid.Columns>
                 </DataGrid>

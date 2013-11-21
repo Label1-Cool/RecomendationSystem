@@ -18,13 +18,13 @@ namespace ModernUI.ViewModels
         private Visibility _isVisibleProgressBar = Visibility.Hidden;
         private bool _isInitialized = false;
         private bool _isSelectAll;
-        private List<EducationLineAnalyzed> _allEducationLines = new List<EducationLineAnalyzed>();
+        private List<EducationLineToClusterAnalyzed> _allEducationLines = new List<EducationLineToClusterAnalyzed>();
         private List<ClusterAnalyzed> _allCluster = new List<ClusterAnalyzed>();
 
-        private EducationLineAnalyzed _selectedEducationLine;
+        private EducationLineToClusterAnalyzed _selectedEducationLine;
         private Dictionary<string, double> _resultDictionary = new Dictionary<string, double>();
 
-        DataExtractor dataExtractor = new DataExtractor();
+        
         #endregion
 
         #region Properties
@@ -62,22 +62,13 @@ namespace ModernUI.ViewModels
         }
 
         
-        public List<EducationLineAnalyzed> AllEducationLines
+        public List<EducationLineToClusterAnalyzed> AllEducationLines
         {
             get { return _allEducationLines; }
-            set
-            {
-                if (_allEducationLines != value)
-                {
-                    _allEducationLines = value;
-
-                    UpdateUI(new PropertyChangedEventArgs("AllEducationLines"));
-                }
-            }
         }
 
 
-        public EducationLineAnalyzed SelectedEducationLine
+        public EducationLineToClusterAnalyzed SelectedEducationLine
         {
             get { return _selectedEducationLine; }
             set
@@ -92,7 +83,6 @@ namespace ModernUI.ViewModels
                         _resultDictionary = value.CalculateOptimalDirections(_allCluster);
                         UpdateUI(new PropertyChangedEventArgs("ResultDictionary"));
                     }
-                    
                 }
             }
         }
@@ -101,15 +91,6 @@ namespace ModernUI.ViewModels
         public List<ClusterAnalyzed> AllClusters
         {
             get { return _allCluster; }
-            set 
-            {
-                if (_allCluster != value)
-                {
-                    _allCluster = value;
-
-                    UpdateUI(new PropertyChangedEventArgs("AllClusters"));
-                }
-            }
         }
 
         /// <summary>
@@ -129,10 +110,17 @@ namespace ModernUI.ViewModels
             {
                 IsVisibleProgressBar = Visibility.Visible;
 
-                await dataExtractor.CalculateEducationLinesToClusterForLSA();
-                AllEducationLines = dataExtractor.EducationLinesAnalysed;
-                AllClusters = dataExtractor.EducationLinesClustersAnalysed;
+                var dataExtractor = DataExtractor.Instance;
 
+                if (dataExtractor.EducationLinesAnalysed == null || dataExtractor.EducationLinesClustersAnalysed == null)
+                {
+                    await dataExtractor.CalculateEducationLinesToClusterForLSA();
+
+                    _allEducationLines = dataExtractor.EducationLinesAnalysed;
+                    _allCluster = dataExtractor.EducationLinesClustersAnalysed;
+                    UpdateUI(new PropertyChangedEventArgs("AllEducationLines"));
+                    UpdateUI(new PropertyChangedEventArgs("AllClusters"));
+                }
                 IsVisibleProgressBar = Visibility.Hidden;
                 _isInitialized = true;
             }

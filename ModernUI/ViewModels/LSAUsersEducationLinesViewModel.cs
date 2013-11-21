@@ -17,14 +17,15 @@ namespace ModernUI.ViewModels
         #region Fields
         private Visibility _isVisibleProgressBar = Visibility.Hidden;
         private bool _isInitialized = false;
-        private bool _isSelectAll;
-        private List<UserAnalyzed> _allUsers = new List<UserAnalyzed>();
-        private List<ClusterAnalyzed> _allCluster = new List<ClusterAnalyzed>();
-        ObservableCollection<UserAnalyzed> _usersToDisplay = new ObservableCollection<UserAnalyzed>();
-        private UserAnalyzed _selectedUser;
-        private Dictionary<string, double> _resultDictionary = new Dictionary<string, double>();
 
-        DataExtractor dataExtractor = new DataExtractor();
+        private List<UserEducationLineAnalysed> _allUsersToEducationLine = new List<UserEducationLineAnalysed>();
+        private List<EducationLineToUserAnalysed> _allEducationLineToUsers = new List<EducationLineToUserAnalysed>();
+
+        ObservableCollection<UserEducationLineAnalysed> _usersToDisplay = new ObservableCollection<UserEducationLineAnalysed>();
+        private UserEducationLineAnalysed _selectedUser;
+
+        private Dictionary<string, double> _distance = new Dictionary<string, double>();
+
         #endregion
 
         #region Properties
@@ -44,64 +45,16 @@ namespace ModernUI.ViewModels
         }
 
 
-
-        public bool IsSelectAll
+        public List<UserEducationLineAnalysed> AllUsersToEducationLine
         {
-            get { return _isSelectAll; }
-            set
-            {
-                if (_isSelectAll != value)
-                {
-                    _isSelectAll = value;
-
-                    _usersToDisplay.Clear();
-                    _resultDictionary.Clear();
-                    //обновление отображаемых пользователей на графике и в таблице
-                    if (_isSelectAll == true)
-                    {
-                        foreach (var analysedUser in _allUsers)
-                        {
-                            _usersToDisplay.Add(analysedUser);
-                        }
-                        //Так, или через observable collections(переписать)
-                        //_resultDictionary = new Dictionary<string, double>();
-                    }
-                    UpdateUI(new PropertyChangedEventArgs("UsersToDisplay"));
-                    UpdateUI(new PropertyChangedEventArgs("ResultDictionary"));
-                }
-            }
+            get { return _allUsersToEducationLine; }
+        }
+        public List<EducationLineToUserAnalysed> AllEducationLineToUsers
+        {
+            get { return _allEducationLineToUsers; }
         }
 
-
-        public List<UserAnalyzed> AllUsers
-        {
-            get { return _allUsers; }
-            set
-            {
-                if (_allUsers != value)
-                {
-                    _allUsers = value;
-
-                    UpdateUI(new PropertyChangedEventArgs("AllUsers"));
-                }
-            }
-        }
-
-
-        public ObservableCollection<UserAnalyzed> UsersToDisplay
-        {
-            get { return _usersToDisplay; }
-            set
-            {
-                if (_usersToDisplay != value)
-                {
-                    _usersToDisplay = value;
-                }
-            }
-        }
-
-
-        public UserAnalyzed SelectedUser
+        public UserEducationLineAnalysed SelectedUser
         {
             get { return _selectedUser; }
             set
@@ -110,44 +63,23 @@ namespace ModernUI.ViewModels
                 {
                     _selectedUser = value;
 
-                    //обновление отображаемых пользователей
-                    _usersToDisplay.Clear();
-                    _usersToDisplay.Add(value);
-                    UpdateUI(new PropertyChangedEventArgs("UsersToDisplay"));
-
                     //Обновляем информацию в табличной форме
-                    if (_allCluster != null)
+                    if (_allEducationLineToUsers != null)
                     {
-                        //_resultDictionary = value.CalculateOptimalDirections(_allCluster);
-                        UpdateUI(new PropertyChangedEventArgs("ResultDictionary"));
+                        _distance = value.CalculateOptimalDirections(_allEducationLineToUsers);
+                        UpdateUI(new PropertyChangedEventArgs("Distance"));
                     }
 
                 }
             }
         }
 
-
-        public List<ClusterAnalyzed> AllClusters
-        {
-            get { return _allCluster; }
-            set
-            {
-                if (_allCluster != value)
-                {
-                    _allCluster = value;
-
-                    UpdateUI(new PropertyChangedEventArgs("AllClusters"));
-                }
-            }
-        }
-
         /// <summary>
-        /// Для отображения в DataGrid
+        /// Расстояние мд направлением и пользователем. Для отображения в DataGrid
         /// </summary>
-        public Dictionary<string, double> ResultDictionary
+        public Dictionary<string, double> Distance
         {
-            get { return _resultDictionary; }
-            set { _resultDictionary = value; }
+            get { return _distance; }
         }
 
         #endregion
@@ -158,9 +90,14 @@ namespace ModernUI.ViewModels
             {
                 IsVisibleProgressBar = Visibility.Visible;
 
+                var dataExtractor = DataExtractor.Instance;
+
                 await dataExtractor.CalculateUserToEducationLinesForLSA();
-                AllUsers = dataExtractor.UsersAnalysed;
-                AllClusters = dataExtractor.UsersClustersAnalysed;
+                _allUsersToEducationLine = dataExtractor.UsersToEducationLinesAnalysed;
+                _allEducationLineToUsers = dataExtractor.EducationLinesToUsersAnalysed;
+
+                UpdateUI(new PropertyChangedEventArgs("AllUsersToEducationLine"));
+                UpdateUI(new PropertyChangedEventArgs("AllEducationLineToUsers"));
 
                 IsVisibleProgressBar = Visibility.Hidden;
                 _isInitialized = true;

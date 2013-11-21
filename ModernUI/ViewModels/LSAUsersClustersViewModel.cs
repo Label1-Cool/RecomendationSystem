@@ -18,12 +18,12 @@ namespace ModernUI.ViewModels
         private Visibility _isVisibleProgressBar = Visibility.Hidden;
         private bool _isInitialized = false;
         private bool _isSelectAll;
-        private List<UserAnalyzed> _allUsers = new List<UserAnalyzed>();
+        private List<UserClusterAnalyzed> _allUsers = new List<UserClusterAnalyzed>();
         private List<ClusterAnalyzed> _allCluster = new List<ClusterAnalyzed>();
-        private UserAnalyzed _selectedUser;
+        private UserClusterAnalyzed _selectedUser;
         private Dictionary<string, double> _resultDictionary = new Dictionary<string, double>();
 
-        DataExtractor dataExtractor = new DataExtractor();
+        
         #endregion
 
         #region Properties
@@ -60,21 +60,12 @@ namespace ModernUI.ViewModels
         }
 
         
-        public List<UserAnalyzed> AllUsers
+        public List<UserClusterAnalyzed> AllUsers
         {
             get { return _allUsers; }
-            set
-            {
-                if (_allUsers != value)
-                {
-                    _allUsers = value;
-
-                    UpdateUI(new PropertyChangedEventArgs("AllUsers"));
-                }
-            }
         }
         
-        public UserAnalyzed SelectedUser
+        public UserClusterAnalyzed SelectedUser
         {
             get { return _selectedUser; }
             set
@@ -98,15 +89,6 @@ namespace ModernUI.ViewModels
         public List<ClusterAnalyzed> AllClusters
         {
             get { return _allCluster; }
-            set 
-            {
-                if (_allCluster != value)
-                {
-                    _allCluster = value;
-
-                    UpdateUI(new PropertyChangedEventArgs("AllClusters"));
-                }
-            }
         }
 
         /// <summary>
@@ -126,9 +108,17 @@ namespace ModernUI.ViewModels
             {
                 IsVisibleProgressBar = Visibility.Visible;
 
-                await dataExtractor.CalculateUserToClusterForLSA();
-                AllUsers = dataExtractor.UsersAnalysed;
-                AllClusters = dataExtractor.UsersClustersAnalysed;
+                var dataExtractor = DataExtractor.Instance;
+
+                if (dataExtractor.UsersAnalysed == null || dataExtractor.UsersClustersAnalysed == null)
+                {
+                    await dataExtractor.CalculateUserToClusterForLSA();
+
+                    _allUsers = dataExtractor.UsersAnalysed;
+                    _allCluster = dataExtractor.UsersClustersAnalysed;
+                    UpdateUI(new PropertyChangedEventArgs("AllUsers"));
+                    UpdateUI(new PropertyChangedEventArgs("AllClusters"));
+                }
 
                 IsVisibleProgressBar = Visibility.Hidden;
                 _isInitialized = true;
