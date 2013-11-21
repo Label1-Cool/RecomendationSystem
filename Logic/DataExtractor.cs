@@ -18,7 +18,14 @@ namespace Logic
         private static volatile DataExtractor instance;
         private static object syncRoot = new Object();
 
-        private DataExtractor() { }
+        private DataExtractor() 
+        {
+            //Получаем полный список доступных кластеров
+            using (var context = new RecomendationSystemModelContainer())
+            {
+                totalArrayClusters = context.Clusters.ToArray();
+            }
+        }
         public static DataExtractor Instance
         {
             get
@@ -62,12 +69,6 @@ namespace Logic
         {
             var task = Task.Factory.StartNew(() =>
             {
-                //Получаем полный список доступных кластеров
-                using (var context = new RecomendationSystemModelContainer())
-                {
-                    totalArrayClusters = context.Clusters.ToArray();
-                }
-
                 //Строим таблицу пользователь/кластер. Значение считается на основе перемножения весов предметов и оценок по предметам 
                 //+ сложение влияющих предметов(если 1 предмет имеет веса как по своему, так и по остальным)
                 if (allUserCluster == null)
@@ -92,10 +93,10 @@ namespace Logic
                 //берем всех пользователей
                 for (int i = 0; i < allUsers.Length; i++)
                 {
-                    Dictionary<string, double> clusterResult = new Dictionary<string, double>();
+                    Dictionary<Cluster, double> clusterResult = new Dictionary<Cluster, double>();
                     foreach (var item in totalArrayClusters)
                     {
-                        clusterResult.Add(item.Name, 0);
+                        clusterResult.Add(item, 0);
                     }
                     //заполняем оценками и кластерами
                     foreach (var stateExam in allUsers[i].UnitedStateExam)
@@ -105,11 +106,14 @@ namespace Logic
                         foreach (var weight in stateExam.Discipline.Weight)
                         {
                             var t = weight.Cluster;
+                            var cluster = (from  item in totalArrayClusters
+                                           where item.Name == weight.Cluster.Name
+                                          select item).SingleOrDefault();
                             //Прибавляет заданному кластуру значение. Именно прибавляет.
                             //Т.е. если у нас есть к примеру есть значение по математике, 
                             //и мы смотрим информатику,которая в свою очередь имеет вклад и в Информатику, и в Математику(меньший). 
                             //Соответсвенно начальное значение математики увеличится
-                            clusterResult[weight.Cluster.Name] += mark * weight.Coefficient;
+                            clusterResult[cluster] += mark * weight.Coefficient;
                         }
                     }
                     for (int j = 0; j < totalArrayClusters.Length; j++)
@@ -120,7 +124,8 @@ namespace Logic
                             UserId = allUsers[i].Id,
                             UserName = allUsers[i].FirstName,
 
-                            ClusterName = clusterResult.ElementAtOrDefault(j).Key,
+                            ClusterId = clusterResult.ElementAtOrDefault(j).Key.Id,
+                            ClusterName = clusterResult.ElementAtOrDefault(j).Key.Name,
                             Value = clusterResult.ElementAtOrDefault(j).Value
                         };
                     }
@@ -168,11 +173,6 @@ namespace Logic
         {
             var task = Task.Factory.StartNew(() =>
             {
-                //Получаем полный список доступных кластеров
-                using (var context = new RecomendationSystemModelContainer())
-                {
-                    totalArrayClusters = context.Clusters.ToArray();
-                }
                 //Строим таблицу пользователь/кластер
                 if (allEducationLinesCluster == null)
                     allEducationLinesCluster=AnalyseAllEducationLineCluster();
@@ -196,10 +196,10 @@ namespace Logic
                 //пробешамеся по всем направлениям
                 for (int i = 0; i < allEducationLines.Length; i++)
                 {
-                    Dictionary<string, double> clusterResult = new Dictionary<string, double>();
+                    Dictionary<Cluster, double> clusterResult = new Dictionary<Cluster, double>();
                     foreach (var item in totalArrayClusters)
                     {
-                        clusterResult.Add(item.Name, 0);
+                        clusterResult.Add(item, 0);
                     }
                     //заполняем оценками и кластерами
                     foreach (var requipment in allEducationLines[i].DepartmentLinesRequirement)
@@ -209,8 +209,14 @@ namespace Logic
                         foreach (var weight in requipment.Discipline.Weight)
                         {
                             var t = weight.Cluster;
-                            //Прибавляет заданному кластуру значение
-                            clusterResult[weight.Cluster.Name] += mark * weight.Coefficient;
+                            var cluster = (from item in totalArrayClusters
+                                           where item.Name == weight.Cluster.Name
+                                           select item).SingleOrDefault();
+                            //Прибавляет заданному кластуру значение. Именно прибавляет.
+                            //Т.е. если у нас есть к примеру есть значение по математике, 
+                            //и мы смотрим информатику,которая в свою очередь имеет вклад и в Информатику, и в Математику(меньший). 
+                            //Соответсвенно начальное значение математики увеличится
+                            clusterResult[cluster] += mark * weight.Coefficient;
                         }
                     }
 
@@ -222,7 +228,8 @@ namespace Logic
                             EducationLineId = allEducationLines[i].Id,
                             EducationLineName = allEducationLines[i].Name,
 
-                            ClusterName = clusterResult.ElementAtOrDefault(j).Key,
+                            ClusterId = clusterResult.ElementAtOrDefault(j).Key.Id,
+                            ClusterName = clusterResult.ElementAtOrDefault(j).Key.Name,
                             Value = clusterResult.ElementAtOrDefault(j).Value
                         };
                     }
@@ -267,11 +274,6 @@ namespace Logic
         {
             var task = Task.Factory.StartNew(() =>
             {
-                //Получаем полный список доступных кластеров
-                using (var context = new RecomendationSystemModelContainer())
-                {
-                    totalArrayClusters = context.Clusters.ToArray();
-                }
                 if (allUserCluster == null)
                     allUserCluster = AnalyseAllUserCluster();
                 if (allEducationLinesCluster == null)
