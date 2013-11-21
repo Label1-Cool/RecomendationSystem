@@ -20,7 +20,6 @@ namespace ModernUI.ViewModels
         private bool _isSelectAll;
         private List<UserAnalyzed> _allUsers = new List<UserAnalyzed>();
         private List<ClusterAnalyzed> _allCluster = new List<ClusterAnalyzed>();
-        ObservableCollection<UserAnalyzed> _usersToDisplay = new ObservableCollection<UserAnalyzed>();
         private UserAnalyzed _selectedUser;
         private Dictionary<string, double> _resultDictionary = new Dictionary<string, double>();
 
@@ -54,17 +53,7 @@ namespace ModernUI.ViewModels
                 {
                     _isSelectAll = value;
 
-                    _usersToDisplay.Clear();
                     _resultDictionary.Clear();
-                    //обновление отображаемых пользователей на графике и в таблице
-                    if (_isSelectAll == true)
-                    {
-                        foreach (var analysedUser in _allUsers)
-                        {
-                            _usersToDisplay.Add(analysedUser);
-                        }
-                    }
-                    //UpdateUI(new PropertyChangedEventArgs("UsersToDisplay"));
                     UpdateUI(new PropertyChangedEventArgs("ResultDictionary"));
                 }
             }
@@ -85,20 +74,6 @@ namespace ModernUI.ViewModels
             }
         }
         
-        
-        public ObservableCollection<UserAnalyzed> UsersToDisplay
-        {
-            get { return _usersToDisplay; }
-            set
-            {
-                if (_usersToDisplay != value)
-                {
-                    _usersToDisplay = value;
-                }
-            }
-        }
-
-        
         public UserAnalyzed SelectedUser
         {
             get { return _selectedUser; }
@@ -107,11 +82,6 @@ namespace ModernUI.ViewModels
                 if (_selectedUser != value)
                 {
                     _selectedUser = value;
-
-                    //обновление отображаемых пользователей
-                    _usersToDisplay.Clear();
-                    _usersToDisplay.Add(value);
-                    UpdateUI(new PropertyChangedEventArgs("UsersToDisplay"));
 
                     //Обновляем информацию в табличной форме
                     if (_allCluster!=null)

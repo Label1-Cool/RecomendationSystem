@@ -22,7 +22,7 @@
                 <ComboBox Margin="0,10,0,0"
     			IsEnabled="{Binding IsChecked, ElementName=radioButton}"
     			ItemsSource="{Binding AllEducationLines}" SelectedItem="{Binding SelectedEducationLine}"
-    			DisplayMemberPath="Info.Value"/>
+    			DisplayMemberPath="Name"/>
                 <RadioButton Margin="0,10,0,0" Content="Выбрать все направления" GroupName="SomeoneOrEveryone" IsChecked="{Binding IsSelectAll, Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1"  Margin="20,0,0,0">

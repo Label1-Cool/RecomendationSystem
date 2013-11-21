@@ -21,7 +21,6 @@ namespace ModernUI.ViewModels
         private List<EducationLineAnalyzed> _allEducationLines = new List<EducationLineAnalyzed>();
         private List<ClusterAnalyzed> _allCluster = new List<ClusterAnalyzed>();
 
-        ObservableCollection<EducationLineAnalyzed> _educationLinesToDisplay = new ObservableCollection<EducationLineAnalyzed>();
         private EducationLineAnalyzed _selectedEducationLine;
         private Dictionary<string, double> _resultDictionary = new Dictionary<string, double>();
 
@@ -55,18 +54,7 @@ namespace ModernUI.ViewModels
                 {
                     _isSelectAll = value;
 
-                    _educationLinesToDisplay.Clear();
                     _resultDictionary.Clear();
-                    //обновление отображаемых пользователей на графике и в таблице
-                    if (_isSelectAll == true)
-                    {
-                        foreach (var analysedEducationLine in _allEducationLines)
-                        {
-                            _educationLinesToDisplay.Add(analysedEducationLine);
-                        }
-                        //Так, или через observable collections(переписать)
-                        //_resultDictionary = new Dictionary<string, double>();
-                    }
                     
                     UpdateUI(new PropertyChangedEventArgs("ResultDictionary"));
                 }
@@ -89,19 +77,6 @@ namespace ModernUI.ViewModels
         }
 
 
-        public ObservableCollection<EducationLineAnalyzed> EducationLinesToDisplay
-        {
-            get { return _educationLinesToDisplay; }
-            set
-            {
-                if (_educationLinesToDisplay != value)
-                {
-                    _educationLinesToDisplay = value;
-                }
-            }
-        }
-
-
         public EducationLineAnalyzed SelectedEducationLine
         {
             get { return _selectedEducationLine; }
@@ -111,14 +86,10 @@ namespace ModernUI.ViewModels
                 {
                     _selectedEducationLine = value;
 
-                    //обновление отображаемых пользователей
-                    _educationLinesToDisplay.Clear();
-                    _educationLinesToDisplay.Add(value);
-
                     //Обновляем информацию в табличной форме
                     if (_allCluster!=null)
                     {
-                        //_resultDictionary = value.CalculateOptimalDirections(_allCluster);
+                        _resultDictionary = value.CalculateOptimalDirections(_allCluster);
                         UpdateUI(new PropertyChangedEventArgs("ResultDictionary"));
                     }
                     
