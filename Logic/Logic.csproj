@@ -49,13 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataExtractor.cs" />
+    <Compile Include="DataAnalyzer.cs" />
     <Compile Include="LSA.cs" />
-    <Compile Include="Models\ClusterAnalyzed.cs" />
-    <Compile Include="Models\DisciplinePriority.cs" />
-    <Compile Include="Models\EducationLineAnalyzed.cs" />
-    <Compile Include="Models\IItemAnalyzed.cs" />
-    <Compile Include="Models\UserAnalyzed.cs" />
+    <Compile Include="Models\Cells.cs" />
+    <Compile Include="Models\ItemPosition.cs" />
     <Compile Include="MulticriterialAnalysis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

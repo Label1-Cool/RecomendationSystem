@@ -18,13 +18,12 @@ namespace ModernUI.ViewModels
         private Visibility _isVisibleProgressBar = Visibility.Hidden;
         private bool _isInitialized = false;
         private bool _isSelectAll;
-        private List<UserAnalyzed> _allUsers = new List<UserAnalyzed>();
-        private List<ClusterAnalyzed> _allCluster = new List<ClusterAnalyzed>();
-        ObservableCollection<UserAnalyzed> _usersToDisplay = new ObservableCollection<UserAnalyzed>();
-        private UserAnalyzed _selectedUser;
+        private List<ItemPosition> _allUsers = new List<ItemPosition>();
+        private List<ItemPosition> _allCluster = new List<ItemPosition>();
+        private ItemPosition _selectedUser;
         private Dictionary<string, double> _resultDictionary = new Dictionary<string, double>();
 
-        DataExtractor dataExtractor = new DataExtractor();
+        
         #endregion
 
         #region Properties
@@ -54,52 +53,19 @@ namespace ModernUI.ViewModels
                 {
                     _isSelectAll = value;
 
-                    _usersToDisplay.Clear();
                     _resultDictionary.Clear();
-                    //обновление отображаемых пользователей на графике и в таблице
-                    if (_isSelectAll == true)
-                    {
-                        foreach (var analysedUser in _allUsers)
-                        {
-                            _usersToDisplay.Add(analysedUser);
-                        }
-                    }
-                    //UpdateUI(new PropertyChangedEventArgs("UsersToDisplay"));
                     UpdateUI(new PropertyChangedEventArgs("ResultDictionary"));
                 }
             }
         }
 
         
-        public List<UserAnalyzed> AllUsers
+        public List<ItemPosition> AllUsers
         {
             get { return _allUsers; }
-            set
-            {
-                if (_allUsers != value)
-                {
-                    _allUsers = value;
-
-                    UpdateUI(new PropertyChangedEventArgs("AllUsers"));
-                }
-            }
-        }
-        
-        
-        public ObservableCollection<UserAnalyzed> UsersToDisplay
-        {
-            get { return _usersToDisplay; }
-            set
-            {
-                if (_usersToDisplay != value)
-                {
-                    _usersToDisplay = value;
-                }
-            }
         }
 
-        
-        public UserAnalyzed SelectedUser
+        public ItemPosition SelectedUser
         {
             get { return _selectedUser; }
             set
@@ -107,11 +73,6 @@ namespace ModernUI.ViewModels
                 if (_selectedUser != value)
                 {
                     _selectedUser = value;
-
-                    //обновление отображаемых пользователей
-                    _usersToDisplay.Clear();
-                    _usersToDisplay.Add(value);
-                    UpdateUI(new PropertyChangedEventArgs("UsersToDisplay"));
 
                     //Обновляем информацию в табличной форме
                     if (_allCluster!=null)
@@ -124,19 +85,10 @@ namespace ModernUI.ViewModels
             }
         }
 
-        
-        public List<ClusterAnalyzed> AllClusters
+
+        public List<ItemPosition> AllClusters
         {
             get { return _allCluster; }
-            set 
-            {
-                if (_allCluster != value)
-                {
-                    _allCluster = value;
-
-                    UpdateUI(new PropertyChangedEventArgs("AllClusters"));
-                }
-            }
         }
 
         /// <summary>
@@ -156,9 +108,17 @@ namespace ModernUI.ViewModels
             {
                 IsVisibleProgressBar = Visibility.Visible;
 
-                await dataExtractor.CalculateUserToClusterForLSA();
-                AllUsers = dataExtractor.UsersAnalysed;
-                AllClusters = dataExtractor.UsersClustersAnalysed;
+                var dataExtractor = DataAnalyzer.Instance;
+
+                if (dataExtractor.UsersToClusterPosition == null || dataExtractor.ClustersToUserPosition == null)
+                {
+                    await dataExtractor.CalculateUserToClusterForLSA();
+
+                    _allUsers = dataExtractor.UsersToClusterPosition;
+                    _allCluster = dataExtractor.ClustersToUserPosition;
+                    UpdateUI(new PropertyChangedEventArgs("AllUsers"));
+                    UpdateUI(new PropertyChangedEventArgs("AllClusters"));
+                }
 
                 IsVisibleProgressBar = Visibility.Hidden;
                 _isInitialized = true;

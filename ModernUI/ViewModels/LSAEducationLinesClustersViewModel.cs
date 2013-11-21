@@ -18,14 +18,13 @@ namespace ModernUI.ViewModels
         private Visibility _isVisibleProgressBar = Visibility.Hidden;
         private bool _isInitialized = false;
         private bool _isSelectAll;
-        private List<EducationLineAnalyzed> _allEducationLines = new List<EducationLineAnalyzed>();
-        private List<ClusterAnalyzed> _allCluster = new List<ClusterAnalyzed>();
+        private List<ItemPosition> _allEducationLines = new List<ItemPosition>();
+        private List<ItemPosition> _allCluster = new List<ItemPosition>();
 
-        ObservableCollection<EducationLineAnalyzed> _educationLinesToDisplay = new ObservableCollection<EducationLineAnalyzed>();
-        private EducationLineAnalyzed _selectedEducationLine;
+        private ItemPosition _selectedEducationLine;
         private Dictionary<string, double> _resultDictionary = new Dictionary<string, double>();
 
-        DataExtractor dataExtractor = new DataExtractor();
+        
         #endregion
 
         #region Properties
@@ -55,54 +54,21 @@ namespace ModernUI.ViewModels
                 {
                     _isSelectAll = value;
 
-                    _educationLinesToDisplay.Clear();
                     _resultDictionary.Clear();
-                    //обновление отображаемых пользователей на графике и в таблице
-                    if (_isSelectAll == true)
-                    {
-                        foreach (var analysedEducationLine in _allEducationLines)
-                        {
-                            _educationLinesToDisplay.Add(analysedEducationLine);
-                        }
-                        //Так, или через observable collections(переписать)
-                        //_resultDictionary = new Dictionary<string, double>();
-                    }
                     
                     UpdateUI(new PropertyChangedEventArgs("ResultDictionary"));
                 }
             }
         }
 
-        
-        public List<EducationLineAnalyzed> AllEducationLines
+
+        public List<ItemPosition> AllEducationLines
         {
             get { return _allEducationLines; }
-            set
-            {
-                if (_allEducationLines != value)
-                {
-                    _allEducationLines = value;
-
-                    UpdateUI(new PropertyChangedEventArgs("AllEducationLines"));
-                }
-            }
         }
 
 
-        public ObservableCollection<EducationLineAnalyzed> EducationLinesToDisplay
-        {
-            get { return _educationLinesToDisplay; }
-            set
-            {
-                if (_educationLinesToDisplay != value)
-                {
-                    _educationLinesToDisplay = value;
-                }
-            }
-        }
-
-
-        public EducationLineAnalyzed SelectedEducationLine
+        public ItemPosition SelectedEducationLine
         {
             get { return _selectedEducationLine; }
             set
@@ -111,34 +77,20 @@ namespace ModernUI.ViewModels
                 {
                     _selectedEducationLine = value;
 
-                    //обновление отображаемых пользователей
-                    _educationLinesToDisplay.Clear();
-                    _educationLinesToDisplay.Add(value);
-
                     //Обновляем информацию в табличной форме
                     if (_allCluster!=null)
                     {
-                        //_resultDictionary = value.CalculateOptimalDirections(_allCluster);
+                        _resultDictionary = value.CalculateOptimalDirections(_allCluster);
                         UpdateUI(new PropertyChangedEventArgs("ResultDictionary"));
                     }
-                    
                 }
             }
         }
 
-        
-        public List<ClusterAnalyzed> AllClusters
+
+        public List<ItemPosition> AllClusters
         {
             get { return _allCluster; }
-            set 
-            {
-                if (_allCluster != value)
-                {
-                    _allCluster = value;
-
-                    UpdateUI(new PropertyChangedEventArgs("AllClusters"));
-                }
-            }
         }
 
         /// <summary>
@@ -158,10 +110,17 @@ namespace ModernUI.ViewModels
             {
                 IsVisibleProgressBar = Visibility.Visible;
 
-                await dataExtractor.CalculateEducationLinesToClusterForLSA();
-                AllEducationLines = dataExtractor.EducationLinesAnalysed;
-                AllClusters = dataExtractor.EducationLinesClustersAnalysed;
+                var dataExtractor = DataAnalyzer.Instance;
 
+                if (dataExtractor.EducationLinesToClusterPosition == null || dataExtractor.ClustersToEducationLinesPosition == null)
+                {
+                    await dataExtractor.CalculateEducationLinesToClusterForLSA();
+
+                    _allEducationLines = dataExtractor.EducationLinesToClusterPosition;
+                    _allCluster = dataExtractor.ClustersToEducationLinesPosition;
+                    UpdateUI(new PropertyChangedEventArgs("AllEducationLines"));
+                    UpdateUI(new PropertyChangedEventArgs("AllClusters"));
+                }
                 IsVisibleProgressBar = Visibility.Hidden;
                 _isInitialized = true;
             }

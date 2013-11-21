@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="ModernUI.Pages.LSA.LSAUsersEducationLines"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ViewModels="clr-namespace:ModernUI.ViewModels" 
+             mc:Ignorable="d" Loaded="UserControl_Loaded">
+    <ScrollViewer>
+        <Grid Style="{StaticResource ContentRoot}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="300"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition MinWidth="500"/>
+            </Grid.ColumnDefinitions>
+            <ProgressBar Grid.Row="0" Grid.ColumnSpan="2" IsIndeterminate="True" Visibility="{Binding IsVisibleProgressBar}"/>
+            <StackPanel Grid.Row="1">
+                <TextBlock TextWrapping="Wrap" Text="Пользователи" FontSize="16"/>
+                <ComboBox Margin="0,10,0,0" Width="200"
+    			IsEnabled="{Binding IsChecked, ElementName=radioButton}"
+    			ItemsSource="{Binding AllUsersToEducationLine}" SelectedItem="{Binding SelectedUser}"
+    			DisplayMemberPath="Name"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1"  Margin="20,0,0,0" Height="300" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" Text="Близость" FontSize="18" />
+
+                <DataGrid IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding LSADistance}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Key}"  Header="Направление"/>
+                        <DataGridTextColumn Binding="{Binding Value}" Header="Приоритет"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" Text="Близость" FontSize="18" />
+
+                <DataGrid IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding SelectedPureDistance.Cells}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding EducationLineName}"  Header="Направление"/>
+                        <DataGridTextColumn Binding="{Binding Value}" Header="Приоритет"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                
+            </StackPanel>
+
+        </Grid>
+    </ScrollViewer>
+</UserControl>

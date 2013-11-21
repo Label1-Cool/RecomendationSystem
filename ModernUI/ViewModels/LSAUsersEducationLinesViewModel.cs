@@ -17,14 +17,17 @@ namespace ModernUI.ViewModels
         #region Fields
         private Visibility _isVisibleProgressBar = Visibility.Hidden;
         private bool _isInitialized = false;
-        private bool _isSelectAll;
-        private List<UserAnalyzed> _allUsers = new List<UserAnalyzed>();
-        private List<ClusterAnalyzed> _allCluster = new List<ClusterAnalyzed>();
-        ObservableCollection<UserAnalyzed> _usersToDisplay = new ObservableCollection<UserAnalyzed>();
-        private UserAnalyzed _selectedUser;
-        private Dictionary<string, double> _resultDictionary = new Dictionary<string, double>();
 
-        DataExtractor dataExtractor = new DataExtractor();
+        private List<ItemPosition> _allUsersToEducationLine = new List<ItemPosition>();
+        private List<ItemPosition> _allEducationLineToUsers = new List<ItemPosition>();
+        private List<UserAndDistancesRow> _allUserToEducationLineDistance = new List<UserAndDistancesRow>();
+
+        ObservableCollection<ItemPosition> _usersToDisplay = new ObservableCollection<ItemPosition>();
+        private ItemPosition _selectedUser;
+
+        private Dictionary<string, double> _LSADistance = new Dictionary<string, double>();
+        private UserAndDistancesRow _selectedPureDistance = new UserAndDistancesRow();
+
         #endregion
 
         #region Properties
@@ -44,64 +47,21 @@ namespace ModernUI.ViewModels
         }
 
 
-
-        public bool IsSelectAll
+        public List<ItemPosition> AllUsersToEducationLine
         {
-            get { return _isSelectAll; }
-            set
-            {
-                if (_isSelectAll != value)
-                {
-                    _isSelectAll = value;
-
-                    _usersToDisplay.Clear();
-                    _resultDictionary.Clear();
-                    //обновление отображаемых пользователей на графике и в таблице
-                    if (_isSelectAll == true)
-                    {
-                        foreach (var analysedUser in _allUsers)
-                        {
-                            _usersToDisplay.Add(analysedUser);
-                        }
-                        //Так, или через observable collections(переписать)
-                        //_resultDictionary = new Dictionary<string, double>();
-                    }
-                    UpdateUI(new PropertyChangedEventArgs("UsersToDisplay"));
-                    UpdateUI(new PropertyChangedEventArgs("ResultDictionary"));
-                }
-            }
+            get { return _allUsersToEducationLine; }
+        }
+        public List<ItemPosition> AllEducationLineToUsers
+        {
+            get { return _allEducationLineToUsers; }
         }
 
-
-        public List<UserAnalyzed> AllUsers
+        public List<UserAndDistancesRow> AllUserToEducationLineDistance
         {
-            get { return _allUsers; }
-            set
-            {
-                if (_allUsers != value)
-                {
-                    _allUsers = value;
-
-                    UpdateUI(new PropertyChangedEventArgs("AllUsers"));
-                }
-            }
+            get { return _allUserToEducationLineDistance; }
         }
 
-
-        public ObservableCollection<UserAnalyzed> UsersToDisplay
-        {
-            get { return _usersToDisplay; }
-            set
-            {
-                if (_usersToDisplay != value)
-                {
-                    _usersToDisplay = value;
-                }
-            }
-        }
-
-
-        public UserAnalyzed SelectedUser
+        public ItemPosition SelectedUser
         {
             get { return _selectedUser; }
             set
@@ -110,46 +70,37 @@ namespace ModernUI.ViewModels
                 {
                     _selectedUser = value;
 
-                    //обновление отображаемых пользователей
-                    _usersToDisplay.Clear();
-                    _usersToDisplay.Add(value);
-                    UpdateUI(new PropertyChangedEventArgs("UsersToDisplay"));
-
                     //Обновляем информацию в табличной форме
-                    if (_allCluster != null)
+                    if (_allEducationLineToUsers != null)
                     {
-                        //_resultDictionary = value.CalculateOptimalDirections(_allCluster);
-                        UpdateUI(new PropertyChangedEventArgs("ResultDictionary"));
+                        _LSADistance = value.CalculateOptimalDirections(_allEducationLineToUsers);
+                        UpdateUI(new PropertyChangedEventArgs("LSADistance"));
+
+                        _selectedPureDistance = (from item in _allUserToEducationLineDistance
+                                         where item.Id == _selectedUser.Id
+                                         select item).SingleOrDefault();
+                        UpdateUI(new PropertyChangedEventArgs("SelectedPureDistance"));
                     }
 
                 }
             }
         }
 
-
-        public List<ClusterAnalyzed> AllClusters
+        /// <summary>
+        /// Расстояние мд направлением и пользователем(ЛСА). Для отображения в DataGrid
+        /// </summary>
+        public Dictionary<string, double> LSADistance
         {
-            get { return _allCluster; }
-            set
-            {
-                if (_allCluster != value)
-                {
-                    _allCluster = value;
-
-                    UpdateUI(new PropertyChangedEventArgs("AllClusters"));
-                }
-            }
+            get { return _LSADistance; }
         }
 
         /// <summary>
-        /// Для отображения в DataGrid
+        /// Расстояние мд направлением и пользователем(ЛСА). Для отображения в DataGrid
         /// </summary>
-        public Dictionary<string, double> ResultDictionary
+        public UserAndDistancesRow SelectedPureDistance
         {
-            get { return _resultDictionary; }
-            set { _resultDictionary = value; }
+            get { return _selectedPureDistance; }
         }
-
         #endregion
 
         public async Task Init()
@@ -158,10 +109,18 @@ namespace ModernUI.ViewModels
             {
                 IsVisibleProgressBar = Visibility.Visible;
 
-                await dataExtractor.CalculateUserToEducationLinesForLSA();
-                AllUsers = dataExtractor.UsersAnalysed;
-                AllClusters = dataExtractor.UsersClustersAnalysed;
+                var dataExtractor = DataAnalyzer.Instance;
 
+                await dataExtractor.CalculateUserToEducationLinesForLSA();
+                _allUsersToEducationLine = dataExtractor.UsersToEducationLinesPosition;
+                _allEducationLineToUsers = dataExtractor.EducationLinesToUsersPosition;
+
+                _allUserToEducationLineDistance = dataExtractor.UsersToEducationsDistances;
+
+                UpdateUI(new PropertyChangedEventArgs("AllUsersToEducationLine"));
+                UpdateUI(new PropertyChangedEventArgs("AllEducationLineToUsers"));
+
+                UpdateUI(new PropertyChangedEventArgs("AllUserToEducationLineDistance"));
                 IsVisibleProgressBar = Visibility.Hidden;
                 _isInitialized = true;
             }
