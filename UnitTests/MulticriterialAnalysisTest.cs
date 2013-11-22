@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using Logic;
+using Logic.Models;
 
 namespace UnitTests
 {
@@ -22,40 +23,40 @@ namespace UnitTests
             y4.AddRange(new int[]{5,0,1,2});
             var y5=new List<int>();
             y5.AddRange(new int[]{3,1,2,3});
-            
-            List<EducationLineAndEducationLineRow> table = new List<EducationLineAndEducationLineRow>();
-            table.Add(new EducationLineAndEducationLineRow
+
+            List<EducationLineAndRequirementRow> table = new List<EducationLineAndRequirementRow>();
+            table.Add(new EducationLineAndRequirementRow
                 {
                     Code = "y1",
                     Id = 1,
                     Requirements = y1
                 });
-            table.Add(new EducationLineAndEducationLineRow
+            table.Add(new EducationLineAndRequirementRow
             {
                 Code = "y2",
                 Id = 2,
                 Requirements = y2
             });
-            table.Add(new EducationLineAndEducationLineRow
+            table.Add(new EducationLineAndRequirementRow
             {
                 Code = "y3",
                 Id = 3,
                 Requirements = y3
             });
-            table.Add(new EducationLineAndEducationLineRow
+            table.Add(new EducationLineAndRequirementRow
             {
                 Code = "y4",
                 Id = 4,
                 Requirements = y4
             });
-            table.Add(new EducationLineAndEducationLineRow
+            table.Add(new EducationLineAndRequirementRow
             {
                 Code = "y5",
                 Id = 5,
                 Requirements = y5
             });
-            
-            var answerTable = new List<EducationLineAndEducationLineRow>();
+
+            var answerTable = new List<EducationLineAndRequirementRow>();
             answerTable.Add(table[0]);
             answerTable.Add(table[1]);
             answerTable.Add(table[4]);
