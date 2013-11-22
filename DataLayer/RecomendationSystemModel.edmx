@@ -86,10 +86,6 @@
       <End Role="City" EntitySet="Cities" />
       <End Role="University" EntitySet="HighSchools" />
     </AssociationSet>
-    <AssociationSet Name="ClusterGeneralEducationLine" Association="RecomendationSystemModel.Store.ClusterGeneralEducationLine">
-      <End Role="Cluster" EntitySet="Clusters" />
-      <End Role="GeneralEducationLine" EntitySet="GeneralEducationLines" />
-    </AssociationSet>
     <AssociationSet Name="GeneralEducationLineDepartmentEducationLine" Association="RecomendationSystemModel.Store.GeneralEducationLineDepartmentEducationLine">
       <End Role="GeneralEducationLine" EntitySet="GeneralEducationLines" />
       <End Role="DepartmentEducationLine" EntitySet="DepartmentEducationLines" />
@@ -291,10 +287,12 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Code" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="GeneralEducationLineId" Type="int" Nullable="false" />
+    <Property Name="GeneralEducationLineId" Type="int" Nullable="true" />
     <Property Name="UniversityDepartmentId" Type="int" Nullable="false" />
     <Property Name="EducationForm" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="RequiredSum" Type="int" Nullable="true" />
+    <Property Name="Actual" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="GeneralEducationLines">
     <Key>
@@ -303,8 +301,6 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Code" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Actual" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="ClusterId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="DepartmentLinesRequirements">
     <Key>
@@ -440,20 +436,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="ClusterGeneralEducationLine">
-    <End Role="Cluster" Type="RecomendationSystemModel.Store.Clusters" Multiplicity="1" />
-    <End Role="GeneralEducationLine" Type="RecomendationSystemModel.Store.GeneralEducationLines" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Cluster">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="GeneralEducationLine">
-        <PropertyRef Name="ClusterId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="GeneralEducationLineDepartmentEducationLine">
-    <End Role="GeneralEducationLine" Type="RecomendationSystemModel.Store.GeneralEducationLines" Multiplicity="1" />
+    <End Role="GeneralEducationLine" Type="RecomendationSystemModel.Store.GeneralEducationLines" Multiplicity="0..1" />
     <End Role="DepartmentEducationLine" Type="RecomendationSystemModel.Store.DepartmentEducationLines" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="GeneralEducationLine">
@@ -802,10 +786,6 @@
             <End Role="City" EntitySet="Cities" />
             <End Role="University" EntitySet="HighSchools" />
           </AssociationSet>
-          <AssociationSet Name="ClusterGeneralEducationLine" Association="RecomendationSystemModel.ClusterGeneralEducationLine">
-            <End Role="Cluster" EntitySet="Clusters" />
-            <End Role="GeneralEducationLine" EntitySet="GeneralEducationLines" />
-          </AssociationSet>
           <AssociationSet Name="GeneralEducationLineDepartmentEducationLine" Association="RecomendationSystemModel.GeneralEducationLineDepartmentEducationLine">
             <End Role="GeneralEducationLine" EntitySet="GeneralEducationLines" />
             <End Role="DepartmentEducationLine" EntitySet="DepartmentEducationLines" />
@@ -1065,7 +1045,6 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="GeneralEducationLine" Relationship="RecomendationSystemModel.ClusterGeneralEducationLine" FromRole="Cluster" ToRole="GeneralEducationLine" />
           <NavigationProperty Name="Weight" Relationship="RecomendationSystemModel.ClusterWeight" FromRole="Cluster" ToRole="Weight" />
         </EntityType>
         <Association Name="DisciplineUnitedStateExam">
@@ -1120,12 +1099,14 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="String" Name="Code" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="GeneralEducationLine" Relationship="RecomendationSystemModel.GeneralEducationLineDepartmentEducationLine" FromRole="DepartmentEducationLine" ToRole="GeneralEducationLine" />
-          <Property Type="Int32" Name="GeneralEducationLineId" Nullable="false" />
+          <Property Type="Int32" Name="GeneralEducationLineId" Nullable="true" />
           <NavigationProperty Name="UniversityDepartment" Relationship="RecomendationSystemModel.UniversityDepartmentDepartmentEducationLine" FromRole="DepartmentEducationLine" ToRole="UniversityDepartment" />
           <Property Type="Int32" Name="UniversityDepartmentId" Nullable="false" />
           <Property Type="String" Name="EducationForm" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="DepartmentLinesRequirement" Relationship="RecomendationSystemModel.DepartmentEducationLineDepartmentLinesRequirement" FromRole="DepartmentEducationLine" ToRole="DepartmentLinesRequirement" />
           <Property Name="Name" Type="String" Nullable="true" />
+          <Property Name="RequiredSum" Type="Int32" Nullable="true" />
+          <Property Name="Actual" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="GeneralEducationLine">
           <Key>
@@ -1134,9 +1115,6 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="String" Name="Code" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="Cluster" Relationship="RecomendationSystemModel.ClusterGeneralEducationLine" FromRole="GeneralEducationLine" ToRole="Cluster" />
-          <Property Type="String" Name="Actual" Nullable="false" />
-          <Property Type="Int32" Name="ClusterId" Nullable="false" />
           <NavigationProperty Name="DepartmentEducationLine" Relationship="RecomendationSystemModel.GeneralEducationLineDepartmentEducationLine" FromRole="GeneralEducationLine" ToRole="DepartmentEducationLine" />
         </EntityType>
         <Association Name="PreferenceCity">
@@ -1155,20 +1133,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ClusterGeneralEducationLine">
-          <End Type="RecomendationSystemModel.Cluster" Role="Cluster" Multiplicity="1" />
-          <End Type="RecomendationSystemModel.GeneralEducationLine" Role="GeneralEducationLine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cluster">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="GeneralEducationLine">
-              <PropertyRef Name="ClusterId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="GeneralEducationLineDepartmentEducationLine">
-          <End Type="RecomendationSystemModel.GeneralEducationLine" Role="GeneralEducationLine" Multiplicity="1" />
+          <End Type="RecomendationSystemModel.GeneralEducationLine" Role="GeneralEducationLine" Multiplicity="0..1" />
           <End Type="RecomendationSystemModel.DepartmentEducationLine" Role="DepartmentEducationLine" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="GeneralEducationLine">
@@ -1551,6 +1517,8 @@
           <ScalarProperty Name="UniversityDepartmentId" ColumnName="UniversityDepartmentId" />
           <ScalarProperty Name="EducationForm" ColumnName="EducationForm" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="RequiredSum" ColumnName="RequiredSum" />
+          <ScalarProperty Name="Actual" ColumnName="Actual" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1560,8 +1528,6 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Actual" ColumnName="Actual" />
-          <ScalarProperty Name="ClusterId" ColumnName="ClusterId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

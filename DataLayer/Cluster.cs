@@ -16,14 +16,12 @@ namespace DataLayer
     {
         public Cluster()
         {
-            this.GeneralEducationLine = new HashSet<GeneralEducationLine>();
             this.Weight = new HashSet<Weight>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
     
-        public virtual ICollection<GeneralEducationLine> GeneralEducationLine { get; set; }
         public virtual ICollection<Weight> Weight { get; set; }
     }
 }

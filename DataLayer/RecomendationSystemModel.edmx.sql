@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/15/2013 11:48:25
+-- Date Created: 11/22/2013 15:26:05
 -- Generated from EDMX file: e:\Slackerburst\University\Graduate work 2013\RecomendationSystem\DataLayer\RecomendationSystemModel.edmx
 -- --------------------------------------------------
 
@@ -58,9 +58,6 @@ IF OBJECT_ID(N'[dbo].[FK_PreferenceCity_City]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_CityUniversity]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[HighSchools] DROP CONSTRAINT [FK_CityUniversity];
-GO
-IF OBJECT_ID(N'[dbo].[FK_ClusterGeneralEducationLine]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[GeneralEducationLines] DROP CONSTRAINT [FK_ClusterGeneralEducationLine];
 GO
 IF OBJECT_ID(N'[dbo].[FK_GeneralEducationLineDepartmentEducationLine]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[DepartmentEducationLines] DROP CONSTRAINT [FK_GeneralEducationLineDepartmentEducationLine];
@@ -326,10 +323,12 @@ GO
 CREATE TABLE [dbo].[DepartmentEducationLines] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Code] nvarchar(max)  NOT NULL,
-    [GeneralEducationLineId] int  NOT NULL,
+    [GeneralEducationLineId] int  NULL,
     [UniversityDepartmentId] int  NOT NULL,
     [EducationForm] nvarchar(max)  NOT NULL,
-    [Name] nvarchar(max)  NULL
+    [Name] nvarchar(max)  NULL,
+    [RequiredSum] int  NULL,
+    [Actual] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -337,9 +336,7 @@ GO
 CREATE TABLE [dbo].[GeneralEducationLines] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Code] nvarchar(max)  NOT NULL,
-    [Name] nvarchar(max)  NOT NULL,
-    [Actual] nvarchar(max)  NOT NULL,
-    [ClusterId] int  NOT NULL
+    [Name] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -727,20 +724,6 @@ ADD CONSTRAINT [FK_CityUniversity]
 CREATE INDEX [IX_FK_CityUniversity]
 ON [dbo].[HighSchools]
     ([CityId]);
-GO
-
--- Creating foreign key on [ClusterId] in table 'GeneralEducationLines'
-ALTER TABLE [dbo].[GeneralEducationLines]
-ADD CONSTRAINT [FK_ClusterGeneralEducationLine]
-    FOREIGN KEY ([ClusterId])
-    REFERENCES [dbo].[Clusters]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_ClusterGeneralEducationLine'
-CREATE INDEX [IX_FK_ClusterGeneralEducationLine]
-ON [dbo].[GeneralEducationLines]
-    ([ClusterId]);
 GO
 
 -- Creating foreign key on [GeneralEducationLineId] in table 'DepartmentEducationLines'
