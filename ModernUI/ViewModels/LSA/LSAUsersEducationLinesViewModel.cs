@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using FirstFloor.ModernUI.Windows;
 
-namespace ModernUI.ViewModels
+namespace ModernUI.ViewModels.LSA
 {
     public class LSAUsersEducationLinesViewModel : INotifyPropertyChanged
     {
@@ -109,13 +109,13 @@ namespace ModernUI.ViewModels
             {
                 IsVisibleProgressBar = Visibility.Visible;
 
-                var dataExtractor = DataAnalyzer.Instance;
+                var analysis = UserToEducationLineAnalysis.Instance;
 
-                await dataExtractor.CalculateUserToEducationLinesForLSA();
-                _allUsersToEducationLine = dataExtractor.UsersToEducationLinesPosition;
-                _allEducationLineToUsers = dataExtractor.EducationLinesToUsersPosition;
+                await analysis.CalculateUserToEducationLinesForLSA();
+                _allUsersToEducationLine = analysis.UsersToEducationLinesPosition;
+                _allEducationLineToUsers = analysis.EducationLinesToUsersPosition;
 
-                _allUserToEducationLineDistance = dataExtractor.UsersToEducationsDistances;
+                _allUserToEducationLineDistance = analysis.UsersToEducationsDistances;
 
                 UpdateUI(new PropertyChangedEventArgs("AllUsersToEducationLine"));
                 UpdateUI(new PropertyChangedEventArgs("AllEducationLineToUsers"));

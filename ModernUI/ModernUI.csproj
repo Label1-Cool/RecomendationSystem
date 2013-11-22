@@ -72,9 +72,9 @@
     <Compile Include="Pages\LSA\LSAEducationLinesClusters.xaml.cs">
       <DependentUpon>LSAEducationLinesClusters.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\LSAEducationLinesClustersViewModel.cs" />
-    <Compile Include="ViewModels\LSAUsersClustersViewModel.cs" />
-    <Compile Include="ViewModels\LSAUsersEducationLinesViewModel.cs" />
+    <Compile Include="ViewModels\LSA\LSAEducationLinesClustersViewModel.cs" />
+    <Compile Include="ViewModels\LSA\LSAUsersClustersViewModel.cs" />
+    <Compile Include="ViewModels\LSA\LSAUsersEducationLinesViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
