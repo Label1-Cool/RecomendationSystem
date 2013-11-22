@@ -9,8 +9,9 @@ using Logic.Models;
 using System.Threading.Tasks;
 using System.Windows;
 using FirstFloor.ModernUI.Windows;
+using Logic.Analysis;
 
-namespace ModernUI.ViewModels
+namespace ModernUI.ViewModels.LSA
 {
     public class LSAEducationLinesClustersViewModel : INotifyPropertyChanged
     {   
@@ -110,17 +111,15 @@ namespace ModernUI.ViewModels
             {
                 IsVisibleProgressBar = Visibility.Visible;
 
-                var dataExtractor = DataAnalyzer.Instance;
+                var analysis = EducationLineToClusterAnalysis.Instance;
 
-                if (dataExtractor.EducationLinesToClusterPosition == null || dataExtractor.ClustersToEducationLinesPosition == null)
-                {
-                    await dataExtractor.CalculateEducationLinesToClusterForLSA();
+                await analysis.CalculateEducationLinesToClusterForLSA();
 
-                    _allEducationLines = dataExtractor.EducationLinesToClusterPosition;
-                    _allCluster = dataExtractor.ClustersToEducationLinesPosition;
-                    UpdateUI(new PropertyChangedEventArgs("AllEducationLines"));
-                    UpdateUI(new PropertyChangedEventArgs("AllClusters"));
-                }
+                _allEducationLines = analysis.EducationLinesToClusterPosition;
+                _allCluster = analysis.ClustersToEducationLinesPosition;
+                UpdateUI(new PropertyChangedEventArgs("AllEducationLines"));
+                UpdateUI(new PropertyChangedEventArgs("AllClusters"));
+
                 IsVisibleProgressBar = Visibility.Hidden;
                 _isInitialized = true;
             }
