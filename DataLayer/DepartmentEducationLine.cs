@@ -21,10 +21,12 @@ namespace DataLayer
     
         public int Id { get; set; }
         public string Code { get; set; }
-        public int GeneralEducationLineId { get; set; }
+        public Nullable<int> GeneralEducationLineId { get; set; }
         public int UniversityDepartmentId { get; set; }
         public string EducationForm { get; set; }
         public string Name { get; set; }
+        public Nullable<int> RequiredSum { get; set; }
+        public string Actual { get; set; }
     
         public virtual GeneralEducationLine GeneralEducationLine { get; set; }
         public virtual UniversityDepartment UniversityDepartment { get; set; }
