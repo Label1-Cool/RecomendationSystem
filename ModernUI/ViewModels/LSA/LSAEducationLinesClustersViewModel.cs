@@ -9,6 +9,7 @@ using Logic.Models;
 using System.Threading.Tasks;
 using System.Windows;
 using FirstFloor.ModernUI.Windows;
+using Logic.Analysis;
 
 namespace ModernUI.ViewModels.LSA
 {

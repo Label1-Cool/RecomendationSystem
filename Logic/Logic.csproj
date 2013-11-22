@@ -49,14 +49,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UserToEducationLineAnalysis.cs" />
-    <Compile Include="EducationLineToClusterAnalysis.cs" />
+    <Compile Include="Analysis\UserToEducationLineAnalysis.cs" />
+    <Compile Include="Analysis\EducationLineToClusterAnalysis.cs" />
     <Compile Include="LSA.cs" />
     <Compile Include="Models\Cells.cs" />
     <Compile Include="Models\ItemPosition.cs" />
+    <Compile Include="Models\Rows.cs" />
     <Compile Include="MulticriterialAnalysis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserToClusterAnalysis.cs" />
+    <Compile Include="Analysis\UserToClusterAnalysis.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLayer\DataLayer.csproj">
