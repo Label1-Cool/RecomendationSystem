@@ -83,6 +83,7 @@ namespace ModernUI.ViewModels.LSA
                     {
                         _resultDictionary = value.CalculateOptimalDirections(_allCluster);
                         UpdateUI(new PropertyChangedEventArgs("ResultDictionary"));
+                        UpdateUI(new PropertyChangedEventArgs("SelectedEducationLine"));
                     }
                 }
             }
@@ -119,6 +120,8 @@ namespace ModernUI.ViewModels.LSA
                 _allCluster = analysis.ClustersToEducationLinesPosition;
                 UpdateUI(new PropertyChangedEventArgs("AllEducationLines"));
                 UpdateUI(new PropertyChangedEventArgs("AllClusters"));
+
+                SelectedEducationLine = _allEducationLines.FirstOrDefault();
 
                 IsVisibleProgressBar = Visibility.Hidden;
                 _isInitialized = true;

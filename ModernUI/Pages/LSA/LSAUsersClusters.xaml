@@ -8,24 +8,21 @@
     <ScrollViewer>
         <Grid Style="{StaticResource ContentRoot}">
             <Grid.RowDefinitions>
+                <RowDefinition Height="300"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="400"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition MinWidth="500"/>
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="500" />
             </Grid.ColumnDefinitions>
-            <ProgressBar Grid.Row="0" Grid.ColumnSpan="2" IsIndeterminate="True" Visibility="{Binding IsVisibleProgressBar}"/>
-            <StackPanel Grid.Row="1">
+            <StackPanel Grid.Row="0">
                 <TextBlock TextWrapping="Wrap" Text="Пользователи" FontSize="16"/>
-                <RadioButton x:Name="radioButton" IsChecked="True" GroupName="SomeoneOrEveryone" Content="Выбрать пользователя" Margin="0,20,0,0"/>
                 <ComboBox Margin="0,10,0,0"
     			IsEnabled="{Binding IsChecked, ElementName=radioButton}"
     			ItemsSource="{Binding AllUsers}" SelectedItem="{Binding SelectedUser}"
     			DisplayMemberPath="Name"/>
-                <RadioButton Margin="0,10,0,0" Content="Выбрать всех пользователей" GroupName="SomeoneOrEveryone" IsChecked="{Binding IsSelectAll, Mode=TwoWay}"/>
             </StackPanel>
-            <StackPanel Grid.Row="1" Grid.Column="1"  Margin="20,0,0,0">
+            <StackPanel Grid.Row="0" Grid.Column="1"  Margin="20,0,0,0">
                 <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" Text="Близость" FontSize="18" />
 
                 <DataGrid ItemsSource="{Binding ResultDictionary, Mode=OneWay}" IsReadOnly="True" AutoGenerateColumns="False">
@@ -35,6 +32,8 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
+            <ProgressBar Grid.Row="1" Grid.ColumnSpan="2" IsIndeterminate="True" Visibility="{Binding IsVisibleProgressBar}"/>
+
 
         </Grid>
     </ScrollViewer>

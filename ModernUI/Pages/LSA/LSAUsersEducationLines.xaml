@@ -8,22 +8,21 @@
     <ScrollViewer>
         <Grid Style="{StaticResource ContentRoot}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="300"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition MinWidth="500"/>
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="500" />
             </Grid.ColumnDefinitions>
-            <ProgressBar Grid.Row="0" Grid.ColumnSpan="2" IsIndeterminate="True" Visibility="{Binding IsVisibleProgressBar}"/>
-            <StackPanel Grid.Row="1">
+            <StackPanel Grid.Row="0">
                 <TextBlock TextWrapping="Wrap" Text="Пользователи" FontSize="16"/>
-                <ComboBox Margin="0,10,0,0" Width="200"
+                <ComboBox Margin="0,10,0,0" 
     			IsEnabled="{Binding IsChecked, ElementName=radioButton}"
     			ItemsSource="{Binding AllUsersToEducationLine}" SelectedItem="{Binding SelectedUser}"
     			DisplayMemberPath="Name"/>
             </StackPanel>
-            <StackPanel Grid.Row="1" Grid.Column="1"  Margin="20,0,0,0" Height="300" VerticalAlignment="Top">
+            <StackPanel Grid.Row="0" Grid.Column="1"  Margin="20,0,0,0" Height="300" VerticalAlignment="Top">
                 <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" Text="Близость" FontSize="18" />
 
                 <DataGrid IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding LSADistance}">
@@ -43,7 +42,7 @@
                 </DataGrid>
                 
             </StackPanel>
-
+            <ProgressBar Grid.Row="1" Grid.ColumnSpan="2" IsIndeterminate="True" Visibility="{Binding IsVisibleProgressBar}"/>
         </Grid>
     </ScrollViewer>
 </UserControl>

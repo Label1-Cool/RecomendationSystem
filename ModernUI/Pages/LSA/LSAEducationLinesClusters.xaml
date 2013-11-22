@@ -8,26 +8,22 @@
     <ScrollViewer>
         <Grid Style="{StaticResource ContentRoot}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="300"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition MinWidth="500"/>
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="500" />
             </Grid.ColumnDefinitions>
-            <ProgressBar Grid.Row="0" Grid.ColumnSpan="2" IsIndeterminate="True" Visibility="{Binding IsVisibleProgressBar}"/>
-            <StackPanel Grid.Row="1">
+            <StackPanel Grid.Row="0">
                 <TextBlock TextWrapping="Wrap" Text="Учебные направления" FontSize="16"/>
-                <RadioButton x:Name="radioButton" IsChecked="True" GroupName="SomeoneOrEveryone" Content="Выбрать направление" Margin="0,20,0,0"/>
                 <ComboBox Margin="0,10,0,0"
     			IsEnabled="{Binding IsChecked, ElementName=radioButton}"
     			ItemsSource="{Binding AllEducationLines}" SelectedItem="{Binding SelectedEducationLine}"
     			DisplayMemberPath="Name"/>
-                <RadioButton Margin="0,10,0,0" Content="Выбрать все направления" GroupName="SomeoneOrEveryone" IsChecked="{Binding IsSelectAll, Mode=TwoWay}"/>
             </StackPanel>
-            <StackPanel Grid.Row="1" Grid.Column="1"  Margin="20,0,0,0">
+            <StackPanel Grid.Row="0" Grid.Column="1"  Margin="20,0,0,0">
                 <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" Text="Близость" FontSize="18" />
-
                 <DataGrid ItemsSource="{Binding ResultDictionary, Mode=OneWay}" IsReadOnly="True" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Key}"  Header="Кластер"/>
@@ -35,6 +31,8 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
+            <ProgressBar Grid.Row="1" Grid.ColumnSpan="2" IsIndeterminate="True" Visibility="{Binding IsVisibleProgressBar}"/>
+
 
         </Grid>
     </ScrollViewer>
