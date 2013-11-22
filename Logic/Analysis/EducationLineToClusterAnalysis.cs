@@ -66,7 +66,7 @@ namespace Logic.Analysis
             await task;
         }
         /// <summary>
-        /// Ищет в бд информацию о направлениях, из которой строит "таблицу": направления/кластеры. Реузльтат в переменной allEducationLineCluster
+        /// Ищет в бд информацию о направлениях, из которой строит "таблицу": направления/кластеры.
         /// </summary>
         private EducationLineToClusterCell[,] AnalyseAllEducationLineCluster()
         {
@@ -109,7 +109,7 @@ namespace Logic.Analysis
                         allEducationLinesClusterMatrix[i, j] = new EducationLineToClusterCell
                         {
                             EducationLineId = allEducationLines[i].Id,
-                            EducationLineName = allEducationLines[i].Name,
+                            EducationLineName = allEducationLines[i].Name + ", " + allEducationLines[i].EducationForm,
 
                             ClusterId = clusterResult.ElementAtOrDefault(j).Key.Id,
                             ClusterName = clusterResult.ElementAtOrDefault(j).Key.Name,
