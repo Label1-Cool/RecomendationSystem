@@ -81,6 +81,7 @@ namespace ModernUI.ViewModels.LSA
                                          where item.Id == _selectedUser.Id
                                          select item).SingleOrDefault();
                         UpdateUI(new PropertyChangedEventArgs("SelectedPureDistance"));
+                        UpdateUI(new PropertyChangedEventArgs("SelectedUser"));
                     }
 
                 }
@@ -122,6 +123,10 @@ namespace ModernUI.ViewModels.LSA
                 UpdateUI(new PropertyChangedEventArgs("AllEducationLineToUsers"));
 
                 UpdateUI(new PropertyChangedEventArgs("AllUserToEducationLineDistance"));
+
+                SelectedUser = _allUsersToEducationLine.FirstOrDefault();
+
+
                 IsVisibleProgressBar = Visibility.Hidden;
                 _isInitialized = true;
             }

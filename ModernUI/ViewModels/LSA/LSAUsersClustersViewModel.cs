@@ -80,6 +80,8 @@ namespace ModernUI.ViewModels.LSA
                     {
                         _resultDictionary = value.CalculateOptimalDirections(_allCluster);
                         UpdateUI(new PropertyChangedEventArgs("ResultDictionary"));
+
+                        UpdateUI(new PropertyChangedEventArgs("SelectedUser"));
                     }
                     
                 }
@@ -117,6 +119,8 @@ namespace ModernUI.ViewModels.LSA
                 _allCluster = analysis.ClustersToUserPosition;
                 UpdateUI(new PropertyChangedEventArgs("AllUsers"));
                 UpdateUI(new PropertyChangedEventArgs("AllClusters"));
+
+                SelectedUser = _allUsers.FirstOrDefault();
 
                 IsVisibleProgressBar = Visibility.Hidden;
                 _isInitialized = true;
