@@ -22,10 +22,7 @@ namespace DataLayer
         public int Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
-        public string Actual { get; set; }
-        public int ClusterId { get; set; }
     
-        public virtual Cluster Cluster { get; set; }
         public virtual ICollection<DepartmentEducationLine> DepartmentEducationLine { get; set; }
     }
 }
